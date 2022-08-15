@@ -1,0 +1,123 @@
+mat-sidenav {
+    margin: 0px;
+    width: 245px;
+    border-right: none;
+    padding: 0px;
+    padding-top: 0px;
+    text-align: center;
+    padding-left: 0;
+    padding-right: 10;
+    top:18
+  }
+  
+  .content {
+    //height: calc(100vh - 100px);
+    border-radius: 0px;
+    
+   
+  
+    padding: 16px;
+  
+    overflow: auto;
+  }
+  
+  mat-sidenav-container {
+    height: calc(100vh);
+  }
+
+.mat-drawer-side.mat-drawer-end {
+    border-left: none;
+    border-right: none;
+}
+
+// #matSidenav {
+//   border-left: none;
+//   border-right: solid 1px #fe998b;
+// }
+  
+  .menu-button {
+    
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+   
+  
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+  
+  
+  mat-divider {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background-color:orange;
+  }
+  
+
+
+
+  .community-area {
+    position: relative;
+    z-index: 2;
+    background: transparent;
+    overflow:hidden;
+    
+  }
+
+  .community-area:before {
+    position: absolute;
+    content: "";
+    height: 100%;
+    width: 100%;
+    bottom: -40%;
+    left: -21%;
+    background: url("/assets/img/liveShape-bg.svg") no-repeat;
+    z-index: -1;
+  }
+
+  .mat-expansion-panel {
+    box-sizing: content-box;
+    display: block;
+    margin: 0;
+    border-radius: 4px;
+    overflow: hidden;
+    transition: margin 225ms cubic-bezier(0.4, 0, 0.2, 1),box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+.mat-expansion-panel-header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px;
+  padding-right: 1px;
+  border-radius: inherit;
+  transition: height 225ms cubic-bezier(0.4, 0, 0.2, 1);
+  font-family:inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+// .example-headers-align .mat-expansion-panel-header-title,
+// .example-headers-align .mat-expansion-panel-header-description {
+//   flex-basis: 0;
+// }
+
+// .example-headers-align .mat-expansion-panel-header-description {
+//   justify-content:center;
+//   align-items: center;
+// }
+// .example-headers-align .mat-expansion-panel-header-title {
+//   margin: 0;
+// }
+
+::ng-deep .mat-drawer-backdrop.mat-drawer-shown {
+  top: 12px;
+}
+
+.mat-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button {
+  
+  padding: 0 6px;
+
+}
+

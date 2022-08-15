@@ -1,0 +1,114 @@
+/* You can add global styles to this file, and also import other style files */
+
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+@import '~animate.css/animate.min';
+@import url("https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.css");
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700');
+
+
+
+
+
+*, ::before, ::after {
+  box-sizing: border-box;
+  border-width: 0;
+  border-style: solid;
+  border-color: #abb6c1;
+}
+
+::before,
+::after {
+  --tw-content: '';
+}
+
+/*
+1. Use a consistent sensible line-height in all browsers.
+2. Prevent adjustments of font size after orientation changes in iOS.
+3. Use a more readable tab size.
+4. Use the user's configured `sans` font-family by default.
+*/
+
+html {
+  line-height: 1.5;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+  -moz-tab-size: 4;
+  /* 3 */
+  -o-tab-size: 4;
+     tab-size: 4;
+  /* 3 */
+  font-family: Open Sans;
+  /* 4 */
+}
+
+/*
+1. Remove the margin in all browsers.
+2. Inherit line-height from `html` so users can set them as a class directly on the `html` element.
+*/
+
+body {
+  margin: 0;
+  /* 1 */
+  line-height: inherit;
+  /* 2 */
+}
+
+
+
+
+.font-sans {
+    font-family: Open Sans;
+  }
+  
+  .text-size-base {
+    font-size: 1rem;
+  }
+  
+  .text-size-sm {
+    font-size: 0.875rem;
+  }
+  
+  .text-size-xs {
+    font-size: 0.75rem;
+  }
+  
+  .text-size-lg {
+    font-size: 1.125rem;
+  }
+  
+  .text-size-xxs {
+    font-size: 0.65rem;
+  }
+  
+  .text-size-xl {
+    font-size: 1.25rem;
+  }
+  
+  .text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  
+  .text-size-inherit {
+    font-size: inherit;
+  }
+  
+  .text-size-3xs {
+    font-size: 0.5rem;
+  }
+  
+  .text-size-xs-em {
+    font-size: 0.75em;
+  }
+
+
+
+
+
+
+
+

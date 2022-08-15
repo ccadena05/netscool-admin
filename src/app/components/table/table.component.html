@@ -1,0 +1,48 @@
+<table
+  mat-table
+  [dataSource]="dataSource2"
+  matTableExporter
+  #exporter="matTableExporter"
+>
+  <ng-container [matColumnDef]="col.key" *ngFor="let col of columnsSchema">
+    <th mat-header-cell *matHeaderCellDef>
+     {{ col.label }}
+     
+    </th>
+
+    <td mat-cell *matCellDef="let element">
+      <div [ngSwitch]="col.type" *ngIf="!element.isEdit">
+        <!-- <div class="btn-edit" *ngSwitchCase="'isEdit'">
+              <button mat-button (click)="element.isEdit = !element.isEdit">
+                Edit
+              </button>
+            </div> -->
+        <!-- <span *ngSwitchCase="'date'">
+                    {{ element[col.key] | date: 'mediumDate' }}
+                  </span> -->
+        <span *ngSwitchDefault>
+          <a
+            *ngIf="!element[col.key].editable"
+            [ngClass]="
+              element[col.key].observaciones ? 'font-bold text-blue-600' : ''
+            "
+            [matTooltip]="element[col.key].observaciones"
+            >{{ element[col.key].dato ? element[col.key].dato : "S/C" }}
+          </a>
+
+          <a
+            *ngIf="element[col.key].editable"
+            class="cursor-pointer"
+            [matTooltip]="element[col.key].observaciones"
+            [ngClass]="
+              element[col.key].observaciones ? 'font-bold text-blue-600' : ''
+            "
+            >{{ element[col.key].dato ? element[col.key].dato : "S/C" }}
+          </a>
+        </span>
+      </div>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns2"></tr>
+</table>
