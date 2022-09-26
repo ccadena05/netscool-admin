@@ -13,143 +13,179 @@ import { environment } from 'src/environments/environment';
 import { NgwWowService } from 'ngx-wow';
 import { slideInAnimation } from 'src/app/components/animations';
 import { menu } from "src/app/private/menu";
+import { Q } from '@angular/cdk/keycodes';
 export interface Menu {
-  link: string;
-  icon: string;
+   link: string;
+   icon: string;
 }
 
 @UntilDestroy()
 @Component({
-  selector: 'app-private',
-  templateUrl: './private.component.html',
-  styleUrls: ['./private.component.scss'],
-  animations:[slideInAnimation]
+   selector: 'app-private',
+   templateUrl: './private.component.html',
+   styleUrls: ['./private.component.scss'],
+   animations: [slideInAnimation]
 })
 export class PrivateComponent implements OnInit {
-  
-  sideMenu = menu;
-  panelOpenState = false;
-  showFiller = false;
-  @ViewChild('sidenav') sidenav!: MatSidenav;
-  @ViewChild('sidenav2') sidenav2!: MatSidenav;
-  email: string;
-  displayName: string;
-  avatar: string;
-  avatarPreCarga: string;
-  menu: Menu[];
-  logoChange: string;
-  constructor(
-    private jwtAuth: JwtAuthService,
-    private observer: BreakpointObserver,
-    private router: Router,
-    private manager: CloudinaryWidgetManager,
-    private provider: ProviderService,
-    private _snackBar: MatSnackBar,
-    private wowService: NgwWowService,
-  ) {
 
-   
-     
-      this.wowService.init(); 
-   
-    this.menu = [
-      {
-        link: '/dashboard',
-        icon: 'dashboard',
-      },
-    ];
-    this.email = this.jwtAuth.getUser().email;
-    this.displayName = this.jwtAuth.getUser().displayName;
-    this.avatar = this.jwtAuth.getUserPhoto()
-      ? this.jwtAuth.getUserPhoto()
-      : 'assets/img/avatardefault.png';
-    this.avatarPreCarga = 'assets/img/avatardefault.png';
-    this.logoChange = this.jwtAuth.getColor();
-  }
+   sideMenu = menu;
+   panelOpenState = false;
+   showFiller = false;
+   @ViewChild('sidenav') sidenav!: MatSidenav;
+   @ViewChild('sidenav2') sidenav2!: MatSidenav;
+   email: string;
+   displayName: string;
+   avatar: string;
+   avatarPreCarga: string;
+   menu: Menu[];
+   logoChange: string;
+   ready: boolean = false;
+   location: any;
+   currentRoute: any;
 
-  logout() {
-    return this.jwtAuth.signout();
-  }
-  ngOnInit(): void {
-   // --------
-   let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-   let themeToggleLightIcon = document.getElementById(
-     'theme-toggle-light-icon'
-   );
+   constructor(
+      private jwtAuth: JwtAuthService,
+      private observer: BreakpointObserver,
+      private router: Router,
+      private manager: CloudinaryWidgetManager,
+      private provider: ProviderService,
+      private _snackBar: MatSnackBar,
+      private wowService: NgwWowService,
+   ) {
 
-   // Change the icons inside the button based on previous settings
-   if (this.jwtAuth.getColor() === 'dark') {
-     themeToggleLightIcon!.classList.remove('hidden');
-   } else {
-     themeToggleDarkIcon!.classList.remove('hidden');
+
+
+      this.wowService.init();
+      this.getRuta();
+      this.getBreadCrumb();
+      this.menu = [
+         {
+            link: '/dashboard',
+            icon: 'dashboard',
+         },
+      ];
+      this.email = this.jwtAuth.getUser().email;
+      this.displayName = this.jwtAuth.getUser().displayName;
+      this.avatar = this.jwtAuth.getUserPhoto()
+         ? this.jwtAuth.getUserPhoto()
+         : 'assets/img/avatardefault.png';
+      this.avatarPreCarga = 'assets/img/avatardefault.png';
+      this.logoChange = this.jwtAuth.getColor();
    }
 
-   this.observer
-      .observe(['(max-width: 800px)'])
-      .pipe(delay(1), untilDestroyed(this))
-      .subscribe((res) => {
-        if (res.matches) {
-          this.sidenav.mode = 'over';
-          this.sidenav.close();
-        } else {
-          this.sidenav.mode = 'side';
-          this.sidenav.open();
-        }
+   logout() {
+      return this.jwtAuth.signout();
+   }
+   ngOnInit(): void {
+      // --------
+      let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+      let themeToggleLightIcon = document.getElementById(
+         'theme-toggle-light-icon'
+      );
+
+      // Change the icons inside the button based on previous settings
+      if (this.jwtAuth.getColor() === 'dark') {
+         themeToggleLightIcon?.classList.remove('hidden');
+      } else {
+         themeToggleDarkIcon?.classList.remove('hidden');
+      }
+
+      this.observer
+         .observe(['(max-width: 768px)'])
+         .pipe(delay(1), untilDestroyed(this))
+         .subscribe((res) => {
+            if (res.matches) {
+               this.sidenav.mode = 'over';
+               this.sidenav.close();
+            } else {
+               this.sidenav.mode = 'side';
+               this.sidenav.open();
+            }
+         });
+
+      // this.router.events
+      //   .pipe(
+      //     untilDestroyed(this),
+      //     filter((e) => e instanceof NavigationEnd)
+      //   )
+      //   .subscribe(() => {
+      //     if (this.sidenav.mode === 'over') {
+      //       this.sidenav.close();
+      //     }
+      //   });
+
+
+   }
+
+   /* receiveBreadcrumbs($event: any) {
+      this.location = $event;
+      console.log(this.location);
+
+   } */
+
+   getRuta() {
+      this.router.events.subscribe({
+         next: (event: any) => {
+            if (event instanceof NavigationEnd) {
+               this.currentRoute = event.url;
+               // console.log(this.currentRoute)
+               this.sideMenu.forEach((element: any) => {
+                  element.menu.forEach((elem: any) => {
+                     if(event.url == elem.link){
+                        this.location = elem.item;
+                        // console.log('Breadcrumb', elem.item);
+                     } else if(event.url == '/dashboard') {
+                        this.location = 'Dashboard';
+                     }
+                  });
+               });
+               // console.log(this.location);
+
+            }
+         }
       });
+   }
 
-    // this.router.events
-    //   .pipe(
-    //     untilDestroyed(this),
-    //     filter((e) => e instanceof NavigationEnd)
-    //   )
-    //   .subscribe(() => {
-    //     if (this.sidenav.mode === 'over') {
-    //       this.sidenav.close();
-    //     }
-    //   });
+   getBreadCrumb() {
 
-     
-  }
+   }
+
+   // onOpen(): void {
+   //   this.manager.open({ uploadPreset: environment.presets }).subscribe({
+   //     next: (resp: any) => {
+   //       if (resp.event === 'success') {
+   //         this.avatarPreCarga = resp.info.secure_url;
+   //         this.provider
+   //           .BD_ActionPostHeder('perfil', 'updateFoto', {
+   //             foto: resp.info.secure_url,
+   //           })
+   //           .subscribe({
+   //             next: (data: any) => {
+   //               if (data['Mensaje'] === '1') {
+   //                 this.jwtAuth.changeUserPhoto(this.avatarPreCarga);
+   //                 this.avatar = this.avatarPreCarga;
+   //                 this._snackBar.open('Proceso ejecutado con éxito', 'Cerrar', {
+   //                   duration: 3000,
+   //                 });
+   //               } else {
+   //                 this._snackBar.open('Error', 'Cerrar', {
+   //                   duration: 3000,
+   //                 });
+   //               }
+   //             },
+   //             error: (err) => {
+   //               //console.log(err.message);
+   //               //this.jwtAuth.signout();
+   //             },
+   //           });
+   //       }
+   //     },
+   //     error: (err) => {
+   //       console.log(err.message);
+   //     },
+   //   });
+   // }
 
 
-
-
-  // onOpen(): void {
-  //   this.manager.open({ uploadPreset: environment.presets }).subscribe({
-  //     next: (resp: any) => {
-  //       if (resp.event === 'success') {
-  //         this.avatarPreCarga = resp.info.secure_url;
-  //         this.provider
-  //           .BD_ActionPostHeder('perfil', 'updateFoto', {
-  //             foto: resp.info.secure_url,
-  //           })
-  //           .subscribe({
-  //             next: (data: any) => {
-  //               if (data['Mensaje'] === '1') {
-  //                 this.jwtAuth.changeUserPhoto(this.avatarPreCarga);
-  //                 this.avatar = this.avatarPreCarga;
-  //                 this._snackBar.open('Proceso ejecutado con éxito', 'Cerrar', {
-  //                   duration: 3000,
-  //                 });
-  //               } else {
-  //                 this._snackBar.open('Error', 'Cerrar', {
-  //                   duration: 3000,
-  //                 });
-  //               }
-  //             },
-  //             error: (err) => {
-  //               //console.log(err.message);
-  //               //this.jwtAuth.signout();
-  //             },
-  //           });
-  //       }
-  //     },
-  //     error: (err) => {
-  //       console.log(err.message);
-  //     },
-  //   });
-  // }
-
-  
 
 }

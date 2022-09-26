@@ -63,52 +63,69 @@ body {
 .font-sans {
     font-family: Open Sans;
   }
-  
+
   .text-size-base {
     font-size: 1rem;
   }
-  
+
   .text-size-sm {
     font-size: 0.875rem;
   }
-  
+
   .text-size-xs {
     font-size: 0.75rem;
   }
-  
+
   .text-size-lg {
     font-size: 1.125rem;
   }
-  
+
   .text-size-xxs {
     font-size: 0.65rem;
   }
-  
+
   .text-size-xl {
     font-size: 1.25rem;
   }
-  
+
   .text-xs {
     font-size: 0.75rem;
     line-height: 1rem;
   }
-  
+
   .text-size-inherit {
     font-size: inherit;
   }
-  
+
   .text-size-3xs {
     font-size: 0.5rem;
   }
-  
+
   .text-size-xs-em {
     font-size: 0.75em;
   }
 
+input[type='text']:focus{
+  box-shadow: none !important;
+  // border: 0 !important;
+  outline: 0 !important;
+}
 
 
+* {
+  transition-property: all/* color background-color, border-color, text-decoration-color, fill, stroke */;
+//   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+//   transition-duration: 300ms;
+}
 
+*:focus-visible{
+   outline: none !important;
+}
 
-
-
-
+@font-face {
+   font-family: poppins;
+   src: url('assets/fonts/Poppins/Poppins-Light.ttf');
+ }
+*:not(mat-icon, i) {
+   font-family: poppins !important;
+}

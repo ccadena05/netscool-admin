@@ -23,6 +23,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // document.documentElement.classList.add("dark");
+
      // --------
    let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
    let themeToggleLightIcon = document.getElementById(
@@ -30,15 +32,17 @@ export class HeaderComponent implements OnInit {
    );
 
    // Change the icons inside the button based on previous settings
-   if (this.jwtAuth.getColor() === 'dark') {
-     themeToggleLightIcon!.classList.remove('hidden');
+   if (this.jwtAuth.getColor() === "dark") {
+     themeToggleLightIcon?.classList.remove('hidden');
    } else {
-     themeToggleDarkIcon!.classList.remove('hidden');
+     themeToggleDarkIcon?.classList.remove('hidden');
    }
+   console.log(this.jwtAuth.getColor());
+      
   }
 
   checkColor() {
-    if (this.jwtAuth.getColor() === 'dark') return true;
+    if (this.jwtAuth.getColor() === "dark") return true;
     return false;
   }
 
@@ -52,22 +56,22 @@ export class HeaderComponent implements OnInit {
       'theme-toggle-light-icon'
     );
     // toggle icons inside button
-    themeToggleDarkIcon!.classList.toggle('hidden');
-    themeToggleLightIcon!.classList.toggle('hidden');
+    themeToggleDarkIcon?.classList.toggle('hidden');
+    themeToggleLightIcon?.classList.toggle('hidden');
     let color2: string;
-    color2 = 'light';
+    color2 = "light";
     // if set via local storage previously
     if (this.jwtAuth.getColor()) {
-      if (this.jwtAuth.getColor() === 'light') {
-        document.body.classList.add('dark');
-        document.body.classList.remove('light');
-        this.jwtAuth.setColor('dark');
-        color2 = 'dark';
+      if (this.jwtAuth.getColor() === "light") {
+        document.body.classList.add("dark");
+        document.body.classList.remove("light");
+        this.jwtAuth.setColor("dark");
+        color2 = "dark";
       } else {
-        document.body.classList.remove('dark');
-        document.body.classList.add('light');
-        this.jwtAuth.setColor('light');
-        color2 = 'light';
+        document.body.classList.remove("dark");
+        document.body.classList.add("light");
+        this.jwtAuth.setColor("light");
+        color2 = "light";
       }
 
       // if NOT set via local storage previously

@@ -1,11 +1,150 @@
+<div *ngIf="!ready">
+   <app-waiter></app-waiter>
+</div>
+<div>
+    <!-- Navbar -->
+  <!-- <app-breadcrumbs></app-breadcrumbs> -->
 
-  <!-- Navbar -->
-  <app-breadcrumbs></app-breadcrumbs>
+  <mat-table #table [dataSource]="dataSource">
 
-
+   <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+     <mat-header-cell *matHeaderCellDef>{{ column.header }}</mat-header-cell>
+     <mat-cell *matCellDef="let row">{{ column.cell(row) }}</mat-cell>
+   </ng-container>
+   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+   <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+ </mat-table>
   <!-- end Navbar -->
 
   <!-- cards -->
+  <div #content class="w-full p-6 grid grid-cols-12 gap-6 overflow-hidden">
+     <div class="col-span-12">
+      {{content.clientWidth}}
+     </div> <!-- 640 768 1024 1280 1536 -->
+      <div [ngClass]="content.clientWidth <= 640 ? 'col-span-12' : content.clientWidth > 640 && content.clientWidth < 1024 ? 'col-span-6' : content.clientWidth >= 1024 ? 'col-span-3' : 'col-span-3'" class="rounded-xl bg-white dark:bg-dark-blue-100 dark:text-slate-300 shadow-lg p-3 flex justify-between items-center gap-x-2">
+         <div>
+            <div class="text-sm font-semibold">Alumnos activos</div>
+            <div class="text-lg font-bold">{{dataCharts?.TOTAL}}</div>
+         </div>
+         <div class="h-12 w-12 bg-gradient-fuchsia rounded-xl flex">
+            <mat-icon class="m-auto !text-white">diversity_3</mat-icon>
+         </div>
+      </div>
+
+      <div [ngClass]="content.clientWidth <= 640 ? 'col-span-12' : content.clientWidth > 640 && content.clientWidth < 1024 ? 'col-span-6' : content.clientWidth >= 1024 ? 'col-span-3' : 'col-span-3'" class="rounded-xl bg-white dark:bg-dark-blue-100 dark:text-slate-300 shadow-lg p-3 flex justify-between items-center gap-x-2">
+         <div>
+            <div class="text-sm font-semibold">Alumnos becados</div>
+            <div class="text-lg font-bold">{{dataCharts?.BECADOS + ' / ' + dataCharts?.TOTAL}}<span class="text-lime-500 text-xs mx-1">{{dataCharts?.PORCENTAJE + '%'}}</span></div>
+         </div>
+         <div class="h-12 w-12 bg-gradient-fuchsia rounded-xl flex">
+            <mat-icon class="m-auto !text-white">attach_money</mat-icon>
+         </div>
+      </div>
+
+      <div [ngClass]="content.clientWidth <= 640 ? 'col-span-12' : content.clientWidth > 640 && content.clientWidth < 1024 ? 'col-span-6' : content.clientWidth >= 1024 ? 'col-span-3' : 'col-span-3'" class="rounded-xl bg-white dark:bg-dark-blue-100 dark:text-slate-300 shadow-lg p-3 flex justify-between items-center gap-x-2">
+         <div>
+            <div class="text-sm font-semibold">Bajas de alumnos</div>
+            <div class="text-lg font-bold">{{dataCharts?.BAJAS}} </div>
+         </div>
+         <div class="h-12 w-12 bg-gradient-fuchsia rounded-xl flex">
+            <mat-icon class="m-auto !text-white">person_remove</mat-icon>
+         </div>
+      </div>
+
+      <div [ngClass]="content.clientWidth <= 640 ? 'col-span-12' : content.clientWidth > 640 && content.clientWidth < 1024 ? 'col-span-6' : content.clientWidth >= 1024 ? 'col-span-3' : 'col-span-3'" class="rounded-xl bg-white dark:bg-dark-blue-100 dark:text-slate-300 shadow-lg p-3 flex justify-between items-center gap-x-2">
+         <div>
+            <div class="text-sm font-semibold">Promedio global</div>
+            <div class="text-lg font-bold">{{dataCharts?.PROMEDIOG}} </div>
+         </div>
+         <div class="h-12 w-12 bg-gradient-fuchsia rounded-xl flex">
+            <mat-icon class="m-auto !text-white">insights</mat-icon>
+         </div>
+      </div>
+
+      <div [ngClass]="content.clientWidth <= 640 ? 'col-span-12' : content.clientWidth > 640 && content.clientWidth < 1024 ? 'col-span-6' : content.clientWidth >= 1024 ? 'col-span-3' : 'col-span-3'" class="rounded-xl bg-white dark:bg-dark-blue-100 dark:text-slate-300 shadow-lg p-3 flex justify-between items-center gap-x-2">
+         <div>
+            <div class="text-sm font-semibold">Alumnos egresados</div>
+            <div class="text-lg font-bold">{{dataCharts?.EGRESADOS}} </div>
+         </div>
+         <div class="h-12 w-12 bg-gradient-fuchsia rounded-xl flex">
+            <mat-icon class="m-auto !text-white">done</mat-icon>
+         </div>
+      </div>
+
+      <div [ngClass]="content.clientWidth <= 640 ? 'col-span-12' : content.clientWidth > 640 && content.clientWidth < 1024 ? 'col-span-6' : content.clientWidth >= 1024 ? 'col-span-3' : 'col-span-3'" class="rounded-xl bg-white dark:bg-dark-blue-100 dark:text-slate-300 shadow-lg p-3 flex justify-between items-center gap-x-2">
+         <div>
+            <div class="text-sm font-semibold">Egresados sin terminar</div>
+            <div class="text-lg font-bold">{{dataCharts?.EGRESADOSSINTERMINAR}} </div>
+         </div>
+         <div class="h-12 w-12 bg-gradient-fuchsia rounded-xl flex">
+            <mat-icon class="m-auto !text-white">person</mat-icon>
+         </div>
+      </div>
+
+      <div [ngClass]="content.clientWidth <= 640 ? 'col-span-12' : content.clientWidth > 640 && content.clientWidth < 1024 ? 'col-span-6' : content.clientWidth >= 1024 ? 'col-span-3' : 'col-span-3'" class="rounded-xl bg-white dark:bg-dark-blue-100 dark:text-slate-300 shadow-lg p-3 flex justify-between items-center gap-x-2">
+         <div>
+            <div class="text-sm font-semibold">Alumnos certificados</div>
+            <div class="text-lg font-bold">{{dataCharts?.CERTIFICADOS}} </div>
+         </div>
+         <div class="h-12 w-12 bg-gradient-fuchsia rounded-xl flex">
+            <mat-icon class="m-auto !text-white">receipt_long</mat-icon>
+         </div>
+      </div>
+
+      <div [ngClass]="content.clientWidth <= 640 ? 'col-span-12' : content.clientWidth > 640 && content.clientWidth < 1024 ? 'col-span-6' : content.clientWidth >= 1024 ? 'col-span-3' : 'col-span-3'" class="rounded-xl bg-white dark:bg-dark-blue-100 dark:text-slate-300 shadow-lg p-3 flex justify-between items-center gap-x-2">
+         <div>
+            <div class="text-sm font-semibold">Alumnos titulados</div>
+            <div class="text-lg font-bold">{{dataCharts?.TITULADOS}} </div>
+         </div>
+         <div class="h-12 w-12 bg-gradient-fuchsia rounded-xl flex">
+            <mat-icon class="m-auto !text-white">school</mat-icon>
+         </div>
+      </div>
+
+      <div [ngClass]="content.clientWidth <= 640 ? 'col-span-12' : content.clientWidth > 640 && content.clientWidth < 1024 ? 'col-span-6' : content.clientWidth >= 1024 ? 'col-span-3' : 'col-span-3'" class="rounded-xl bg-white dark:bg-dark-blue-100 dark:text-slate-300 shadow-lg p-3 flex justify-between items-center gap-x-2">
+         <div>
+            <div class="text-sm font-semibold">Prospectos</div>
+            <div class="text-lg font-bold">{{dataCharts?.PROSPECTOS}} </div>
+         </div>
+         <div class="h-12 w-12 bg-gradient-fuchsia rounded-xl flex">
+            <mat-icon class="m-auto !text-white">person_add</mat-icon>
+         </div>
+      </div>
+
+      <div [ngClass]="content.clientWidth <= 640 ? 'col-span-12' : content.clientWidth > 640 && content.clientWidth < 1024 ? 'col-span-6' : content.clientWidth >= 1024 ? 'col-span-3' : 'col-span-3'" class="rounded-xl bg-white dark:bg-dark-blue-100 dark:text-slate-300 shadow-lg p-3 flex justify-between items-center gap-x-2">
+         <div>
+            <div class="text-sm font-semibold">Ingresos {{mesN}}</div>
+            <div class="text-lg font-bold">{{'$' + dataCharts?.TOTALES}} </div>
+         </div>
+         <div class="h-12 w-12 bg-gradient-fuchsia rounded-xl flex">
+            <mat-icon class="m-auto !text-white">paid</mat-icon>
+         </div>
+      </div>
+
+      <div [ngClass]="content.clientWidth <= 640 ? 'col-span-12' : content.clientWidth > 640 && content.clientWidth < 1024 ? 'col-span-6' : content.clientWidth >= 1024 ? 'col-span-3' : 'col-span-3'" class="rounded-xl bg-white dark:bg-dark-blue-100 dark:text-slate-300 shadow-lg p-3 flex justify-between items-center gap-x-2">
+         <div>
+            <div class="text-sm font-semibold">Alumnos inscritos</div>
+            <div class="text-lg font-bold">{{dataCharts?.INSCRITOS}} </div>
+         </div>
+         <div class="h-12 w-12 bg-gradient-fuchsia rounded-xl flex">
+            <mat-icon class="m-auto !text-white">request_quote</mat-icon>
+         </div>
+      </div>
+
+      <div [ngClass]="content.clientWidth <= 640 ? 'col-span-12' : content.clientWidth > 640 && content.clientWidth < 1024 ? 'col-span-6' : content.clientWidth >= 1024 ? 'col-span-3' : 'col-span-3'" class="rounded-xl bg-white dark:bg-dark-blue-100 dark:text-slate-300 shadow-lg p-3 flex justify-between items-center gap-x-2">
+         <div>
+            <div class="text-sm font-semibold">Inscritos becados</div>
+            <div class="text-lg font-bold">{{dataCharts?.INSCRITOSBECA + ' / ' + dataCharts?.INSCRITOS}} <span class="text-lime-500 text-xs mx-1">{{dataCharts?.PORCENTAJEBECA + '%'}}</span></div>
+         </div>
+         <div class="h-12 w-12 bg-gradient-fuchsia rounded-xl flex">
+            <mat-icon class="m-auto !text-white">percent</mat-icon>
+         </div>
+      </div>
+
+      <div [chart]="forecast" class="col-span-4 rounded-xl bg-white dark:bg-dark-blue-100 dark:text-slate-300 shadow-lg p-3"></div>
+
+
+  </div>
   <div class="w-full px-6 py-6 mx-auto">
     <!-- row 1 -->
     <div class="flex flex-wrap -mx-3">
@@ -714,6 +853,8 @@
       </div>
     </div>
 
-  
+
   </div>
   <!-- end cards -->
+
+</div>

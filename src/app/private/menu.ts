@@ -7,42 +7,50 @@ export const menu = [
           {
              item: "Alumnos",
              icon:'face',
-             link:'/alumnos'
+             link:'/m/alumnos',
+             action: 'index'
           },
           {
             item: "Egresados",
-            icon:'face',
-            link:'/demo'
+            icon:'school',
+            link:'/m/egresados',
+            action: 'index'
           },
           {
             item: "Contactos",
-            icon:'face',
-            link:'/demo'
+            icon:'contacts',
+            link:'/m/contactos',
+            action: 'index'
           },
           {
             item: "Programas académicos",
-            icon:'face',
-            link:'/demo'
+            icon:'import_contacts',
+            link:'/m/programa_academico',
+            action: 'index'
           },
           {
             item: "Maestros",
-            icon:'face',
-            link:'/demo'
+            icon:'supervisor_account',
+            link:'/m/maestros',
+            action: 'index'
           },
           {
             item: "Materias",
-            icon:'face',
-            link:'/demo'
-          }, 
+            icon:'menu_book',
+            link:'/m/materias',
+            action: 'index'
+          },
           {
             item: "Horarios",
-            icon:'face',
-            link:'/demo'
-          }, 
+            icon:'schedule',
+            link:'/m/horarios',
+            action: 'index'
+          },
           {
             item: "Fechas de inscripciones",
-            icon:'face',
-            link:'/demo'
+            icon:'calendar_today',
+            link:'/m/fecha-inscripcion',
+            action: 'index'
           },
        ]
     },
@@ -53,48 +61,57 @@ export const menu = [
         menu: [
           {
             item: "Prospectos",
-            icon:'face',
-            link:'/demo'
+            icon:'location_searching',
+            link:'/m/prospectos',
+            action: 'index'
           },
           {
             item: "Eventos de prospección",
-            icon:'face',
-            link:'/demo'
+            icon:'event_note',
+            link:'/m/evento_pre_registro',
+            action: 'index'
           },
           {
             item: "Documentos",
-            icon:'face',
-            link:'/demo'
+            icon:'article',
+            link:'/m/documento_nombre',
+            action: 'index'
           },
           {
             item: "Metas",
-            icon:'face',
-            link:'/demo'
+            icon:'flag',
+            link:'/m/meta_preregistro',
+            action: 'index'
           },
           {
             item: "Escuelas de procedencia",
-            icon:'face',
-            link:'/demo'
+            icon:'location_city',
+            link:'/m/escuela_procedencia',
+            action: 'index'
           },
           {
             item: "Registros de ferias",
-            icon:'face',
-            link:'/demo'
+            icon:'app_registration',
+            link:'/m/registro_feria',
+            action: 'index'
           },
           {
             item: "Admisión de pagos",
-            icon:'face',
-            link:'/demo'
+            icon:'payments',
+            link:'/m/admision_pagos',
+            action: 'index_admision_pagos'
           },
           {
             item: "Periodos de prospección ",
-            icon:'face',
-            link:'/demo'
+            icon:'date_range',
+            link:'/m/periodo_pre_registro',
+            action: 'index'
           },
           {
             item: "Medios de registro ",
-            icon:'face',
-            link:'/demo'
+            icon:'cloud',
+            link:'/m/redes_sociales',
+            action: 'index'
           },
        ]
     },
@@ -104,20 +121,41 @@ export const menu = [
       icon:'pie_chart',
       menu: [
         {
-          item: "Adiós1",
+          item: "Conciliacion",
           icon:'face',
-          link:'/perfil'
+          link:'/perfil',
+          action: 'index'
         },
         {
-          item: "Adiós2",
-          icon:'face',
-          link:'/demo'
+          item: "Pagos",
+          icon:'paid',
+          link:'/demo',
+          action: 'index'
         },
         {
-          item: "Adiós3",
-          icon:'face',
-          link:'/demo'
+          item: "Bancos",
+          icon:'account_balance',
+          link:'/m/banco',
+          action: 'index'
         },
+        {
+         item: "Costo Aranceles",
+         icon:'attach_money',
+         link:'/costo_aranceles',
+         action: 'index'
+       },
+       {
+         item: "Aranceles",
+         icon:'request_quote',
+         link:'/m/pagos_aranceles',
+         action: 'index'
+       },
+       {
+         item: "Promociones",
+         icon:'savings',
+         link:'/m/promocion',
+         action: 'index'
+       },
      ]
   },
   {
@@ -126,20 +164,29 @@ export const menu = [
     icon:'pie_chart',
     menu: [
       {
-        item: "Adiós1",
-        icon:'face',
-        link:'/demo'
+        item: "Eventos",
+        icon:'event',
+        link:'/eventos',
+        action: 'index'
       },
       {
-        item: "Adiós2",
-        icon:'face',
-        link:'/demo'
+        item: "Banners",
+        icon:'ad_units',
+        link:'/m/banners',
+        action: 'index'
       },
       {
-        item: "Adiós3",
-        icon:'face',
-        link:'/demo'
+        item: "Vida estudiantil",
+        icon:'travel_explore',
+        link:'/m/comunidad',
+        action: 'index'
       },
+      {
+         item: "Promociones",
+         icon:'sell',
+         link:'/promociones',
+         action: 'index'
+       },
    ]
 }
  ];

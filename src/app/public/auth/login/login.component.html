@@ -1,4 +1,4 @@
-<div class="bg-gradient-orange h-full" id="parallax">
+<div class="bg-gradient-fuchsia w-full h-full" id="parallax">
   <div class="">
     <div class="container max-w-full mx-auto py-24 px-6">
       <div class="font-sans">
@@ -14,7 +14,7 @@
                 <div class="text-center font-semibold text-white">
                   <img
                     class="h-auto w-auto "
-                    src="assets/img/netscool2.png"
+                    src="assets/img/netscool.png"
   
                   />
     
@@ -45,8 +45,8 @@
                           formControlName="password"
                           class="focus:ring-white focus:ring-0"
                           />
-                          <button
-                           
+                          <div
+                          class="cursor-pointer"
                             matSuffix
                             (click)="hide = !hide"
                             [attr.aria-label]="'Hide password'"
@@ -55,7 +55,7 @@
                             <mat-icon>{{
                               hide ? "visibility_off" : "visibility"
                             }}</mat-icon>
-                          </button>
+                          </div>
                         </mat-form-field>
                         <div
                           class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
@@ -81,14 +81,18 @@
                       >
                     </div>
                     <button
-                   
-                    (click)="signin()"
-                      class="mt-3 text-lg font-bold bg-gradient-orange w-full text-gray-100 rounded-lg px-6 py-3 block shadow-xl hover:text-gray-100 hover:bg-idea-flesh-pink-light"
+                      class="mt-3 text-lg font-semibold bg-gradient-orange w-full text-gray-100 rounded-lg px-6 py-3 block shadow-xl hover:text-gray-100 hover:bg-idea-flesh-pink-light"
                     >
                       Iniciar sesión
-                    </button>
+                    </button> 
                   </div>
                 </form>
+                <button
+                      (click)="configDialog()"
+                      class="mt-3 text-lg font-semibold bg-gradient-cyan w-full text-gray-100 rounded-lg px-6 py-3 block shadow-xl hover:text-gray-100 hover:bg-idea-flesh-pink-light"
+                    >
+                      Configura tu institución
+                    </button>
               </div>
             </div>
           </div>

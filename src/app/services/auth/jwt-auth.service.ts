@@ -46,7 +46,32 @@ export class JwtAuthService {
 
     this.route.queryParams
       .subscribe(params => this.return = params['return'] || '/');
-     
+
+  }
+
+  public get userId(){
+    return this.ls.getItem(this.APP_USER)._id
+  }
+
+  public signinBack(username: any, password: any) {
+
+    this.signingIn = true;
+    console.log(`${environment.apiURL}auth/_api.php?opcion=auth`, { username, password });
+     return this.http.post(`${environment.apiURL}/auth/_api.php?opcion=auth`, { username, password })
+       .pipe(
+         map((res: any) => {
+          console.log(res);
+           this.setUserAndToken(res.token, res.user, !!res);
+           this.setUserPhoto(res.photo);
+           this.setColor(res.colortheme);
+           this.signingIn = false;
+           return res;
+        }),
+         catchError((error) => {
+           console.log(error);
+           return throwError(error);
+         })
+      );
   }
 
   public signin(username: any, password: any) {
@@ -65,11 +90,11 @@ export class JwtAuthService {
 
     // FOLLOWING CODE SENDS SIGNIN REQUEST TO SERVER
     this.signingIn = true;
-    //console.log(`${environment.apiURL}auth/_api.php?opcion=authPortal`);
-     return this.http.post(`${environment.apiURL}/auth/_api.php?opcion=authPortal`, { username, password })
+    console.log(`${environment.apiURL}auth/_api.php?opcion=auth`, { email: username, password: password });
+     return this.http.post(`${environment.apiURL}/auth/_api.php?opcion=auth`, { email: username, password: password })
        .pipe(
          map((res: any) => {
-          // console.log(res);
+          console.log(res);
            this.setUserAndToken(res.token, res.user, !!res);
            this.setUserPhoto(res.photo);
            this.setColor(res.colortheme);
@@ -83,7 +108,21 @@ export class JwtAuthService {
       );
   }
 
-  
+  signUp(username: any, auth_key: any) {
+    console.log(`${environment.apiURL}/users/_api.php?opcion=create`, {username: username, auth_key: auth_key});
+    return this.http.post(`${environment.apiURL}/users/_api.php?opcion=create`, {username: username, auth_key: auth_key}).pipe(
+      map((data: any) => {
+        console.log(data);
+        return data
+      }),
+      catchError((error: any) => {
+        console.log(error);
+        return error
+      })
+    )
+  }
+
+
 
   /*
     checkTokenIsValid is called inside constructor of
@@ -101,7 +140,7 @@ export class JwtAuthService {
     //       return of(error);
     //     })
     //   );
-    
+
     /*
       The following code get user data and jwt token is assigned to
       Request header using token.interceptor
@@ -123,11 +162,11 @@ export class JwtAuthService {
 
   public signout() {
     this.setUserAndToken("null", {}, false);
-    localStorage.clear();
+    this.ls.clear();
 
     this.router.navigate(["/login"], {
       queryParams: {
-        
+
       }
     });
     // this.router.navigate(["/login"], {
@@ -169,18 +208,18 @@ export class JwtAuthService {
   }
 
   setUserPhoto(photo: String) {
-    this.ls.setItem(this.APP_USER_PHOTO,photo);
+    this.ls.setItem(this.APP_USER_PHOTO,photo ? photo : null);
   }
 
   changeUserPhoto(photo: String) {
-    this.ls.setItem(this.APP_USER_PHOTO,photo);
+    this.ls.setItem(this.APP_USER_PHOTO,photo ? photo : null);
   }
   setColor(color: String) {
-    this.ls.setItem(this.APP_COLOR,color);
+    this.ls.setItem(this.APP_COLOR,color ? color : null);
   }
 
   changeColor(color: String) {
-    this.ls.setItem(this.APP_COLOR,color);
+    this.ls.setItem(this.APP_COLOR,color ? color : null);
   }
 
   getColor() {

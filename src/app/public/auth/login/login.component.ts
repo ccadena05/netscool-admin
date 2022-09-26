@@ -8,6 +8,10 @@ import {
 import { Router } from '@angular/router';
 import { JwtAuthService } from 'src/app/services/auth/jwt-auth.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfigDialogComponent } from '../../config-dialog/config-dialog.component';
+import { LocalStoreService } from 'src/app/services/local-store.service';
+
 
 @Component({
   selector: 'app-login',
@@ -21,11 +25,13 @@ export class LoginComponent implements OnInit {
   constructor(
     public jwtAuth: JwtAuthService,
     private router: Router,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    private dialog: MatDialog,
+    private ls: LocalStoreService
   ) {
     this.signinForm = new FormGroup({
       // email: new FormControl('', [Validators.required, Validators.email]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required]),
       password: new FormControl('', Validators.required),
       //password: new FormControl(true)
     });
@@ -33,16 +39,16 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   
+
   }
 
   ngAfterContentInit(){
-   
+
       // // Add event listener
       document.addEventListener("mousemove", parallax);
 
       const scene = document.getElementById("parallax");
-    
+
       // Magic happens here
       function parallax(e:any) {
           let _w = window.innerWidth/2;
@@ -54,7 +60,11 @@ export class LoginComponent implements OnInit {
           let _depth3 = `${50 - (_mouseX - _w) * 0.06}% ${50 - (_mouseY - _h) * 0.06}%`;
           let x = `${_depth3}, ${_depth2}, ${_depth1}`;
           // console.log(x);
-          scene!.style.backgroundPosition= x;
+          scene!.style!.backgroundPosition= x;
+      }
+
+      if(this.ls.getItem('openDialog') == false && this.ls.getItem('openDialog') != true) {
+         this.configDialog();
       }
   }
 
@@ -68,6 +78,14 @@ export class LoginComponent implements OnInit {
       : '';
   }
 
+  configDialog(){
+    this.dialog.open(ConfigDialogComponent, {
+      autoFocus: false,
+      maxHeight: '90vh',
+      maxWidth: '90vw'
+   })
+  }
+
   signin() {
     const signinData = this.signinForm.value;
     // this.submitButton.disabled = true;
@@ -77,7 +95,7 @@ export class LoginComponent implements OnInit {
     this.jwtAuth.signin(signinData.email, signinData.password).subscribe(
       {
       next: (response) => {
-        // console.log(response);
+        console.log(response);
         if (response['auth'] === '0') {
           this._snackBar.open('Revise su contraseña e intentelo de nuevo.', '', {
             duration: 5000
@@ -91,7 +109,7 @@ export class LoginComponent implements OnInit {
         this._snackBar.open('Error de comunicación.', 'Cerrar', {
           duration: 5000
         });
-        console.log(err.message);
+        console.log(err);
       },
     }
     );

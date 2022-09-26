@@ -26,14 +26,24 @@ const routes: Routes = [
         path: 'dashboard',
         loadChildren: () =>
           import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
-          data: { title: 'Dashboard', breadcrumb: 'DASHBOARD' },
+         //  data: { title: 'Dashboard', breadcrumb: 'DASHBOARD' },
       },
       {
         path: 'alumnos',
         loadChildren: () =>
           import('./alumnos/alumnos.module').then((m) => m.AlumnosModule),
-          data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
+         //  data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
       },
+      {
+         path: 'm/:modulo',
+         loadChildren: () =>
+           import('./egresados/egresados.module').then((m) => m.EgresadosModule),
+         //   data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
+       },
+       {
+         path: 'not-found',
+         loadChildren:() => import('./../public/not-found/not-found.module').then((m)=> m.NotFoundModule),
+       },
       {
         path: 'eventos',
         loadChildren: () =>

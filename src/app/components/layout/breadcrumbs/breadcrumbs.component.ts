@@ -4,6 +4,7 @@ import { Router, NavigationEnd, ActivatedRoute, ActivatedRouteSnapshot } from '@
 
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { OutputService } from 'src/app/services/output.service';
 import { RoutePartsService } from 'src/app/services/route-parts.service';
 
 @Component({
@@ -18,12 +19,15 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   routeParts: any[];
   routerEventSub: Subscription;
   title: String;
+
+  dataData: any;
   // public isEnabled: boolean = true;
   constructor(
     private router: Router,
     private routePartsService: RoutePartsService,
     private activeRoute: ActivatedRoute,
-  
+    private output: OutputService
+
   ) {
     this.title= this.activeRoute.snapshot.data['title'];
     this.routeParts = this.routePartsService.generateRouteParts(this.activeRoute.snapshot);
@@ -53,6 +57,9 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
           return item;
         });
       });
+      this.dataData = this.output.dataData.subscribe($event => {
+
+      })
   }
 
   ngOnInit() {}
@@ -72,5 +79,12 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     });
     return part.breadcrumb;
   }
+
+  applyFilter(event: Event) {
+   const filterValue = (event.target as HTMLInputElement).value;
+   this.dataData.filter = filterValue.trim().toLowerCase();
+   console.log(this.dataData);
+
+ }
 
 }

@@ -8,6 +8,10 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ErrorCatchingInterceptor } from './services/auth/error-interceptor.service';
 import { NgwWowModule } from 'ngx-wow';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MaterialModule } from './components/material/material.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ConfigDialogModule } from './public/config-dialog/config-dialog.module';
+import { LowerDashPipe } from './pipes/lower-dash.pipe';
 
 export function getPaginatorIntl() {
  const paginatorIntl = new MatPaginatorIntl();
@@ -21,23 +25,28 @@ export function getPaginatorIntl() {
 @NgModule({
   declarations: [
     AppComponent,
+    LowerDashPipe,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NgwWowModule
+    NgwWowModule,
+    MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    ConfigDialogModule
   ],
   providers: [AuthGuard, {
     provide: HTTP_INTERCEPTORS,
     useClass: ErrorCatchingInterceptor,
     multi: true
 },
-{ provide: MatPaginatorIntl, useValue: getPaginatorIntl() }
-
+{ provide: MatPaginatorIntl, useValue: getPaginatorIntl() },
+  LowerDashPipe
 ],
- 
+
   bootstrap: [AppComponent]
 })
 

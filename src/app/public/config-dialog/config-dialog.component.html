@@ -1,0 +1,227 @@
+<div style="background-image: url(../../../assets/img/wave.svg);"
+   class="bg-cover bg-no-repeat bg-right w-[90vw] h-[90vh] overflow-hidden bg-slate-100">
+   <mat-stepper #stepper class="!bg-transparent">
+      <!-- [linear]="true" -->
+      <mat-step>
+         <ng-template matStepLabel>Bienvenido a <img src="assets/img/netscool2.png" alt=""
+               class="max-w-[5rem] inline pb-1"> </ng-template>
+         <div class="flex flex-col items-center justify-center place-self-center my-auto h-[calc(100%-72px)] relative">
+            <div class="flex flex-col justify-center">
+               <div class="text-3xl font-semibold text-center">
+                  Bienvenido a
+               </div>
+               <img src="assets/img/netscool2.png" alt="" class="max-w-[20rem] py-8 flex justify-center mx-auto">
+               <div class="text-xl font-semibold text-center pb-8">
+                  ¿Estás listo?
+               </div>
+            </div>
+            <button
+               class="self-end text-lg w-64 h-11 shadow-xl flex justify-center items-center !mx-auto text-white tracking-wide bg-gradient-fuchsia rounded-xl"
+               matStepperNext>Comenzar
+            </button>
+            <div class="absolute inset-x-0 bottom-4 px-4">
+               <mat-checkbox (change)="blockDialog($event.checked)" [(ngModel)]="checked">No volver a abrir esta ventana</mat-checkbox>
+            </div>
+         </div>
+
+      </mat-step>
+      <mat-step label="Autenticación">
+         <div class="h-[calc(100%-72px)] flex flex-col items-center justify-center gap-y-4">
+            <div class="text-nets-blue text-lg font-bold">
+               Inicia sesión o regístrate
+            </div>
+            <app-signup></app-signup>
+         </div>
+      </mat-step>
+      <mat-step [stepControl]="Formulario" label="Datos generales de la institución">
+         <div class="flex w-full h-[calc(100%-72px)] justify-between gap-x-4">
+
+            <div class="self-end pb-4 pl-4">
+               <button matStepperPrevious
+                  class="text-sm tracking-wide bg-gradient-fuchsia bg-clip-text text-transparent border-2 border-fuchsia-600 rounded-xl py-3 px-6">
+                  <mat-icon class="block md:!hidden">arrow_back</mat-icon>
+                  <div class="hidden md:block">
+                     Anterior
+                  </div>
+               </button>
+            </div>
+
+            <div class="w-auto overflow-scroll h-auto pb-4">
+               <form [formGroup]="Formulario">
+                  <div formArrayName="carreras">
+                     <div *ngFor="let carrera of c.controls; let i = index" [formGroupName]="i" class="flex flex-wrap gap-4 rounded-xl bg-neutral-50 shadow-lg p-4 m-4">
+                        <div>
+                           <!-- <div class="font-semibold">Nivel acádemico</div> -->
+                           <div class="h-14 pb-5 my-1">
+                              <div class="text-gray-500 h-6">Nivel acádemico</div>
+                                 <mat-radio-group class="flex flex-wrap items-center h-8" aria-label="Selecciona una opción" formControlName="nivel">
+                                    <mat-radio-button class="mr-4" *ngFor="let nivel of nAcademicos" [value]="nivel.id">{{nivel.descripcion}}</mat-radio-button>
+                                 </mat-radio-group>
+                                 <mat-error *ngIf="c.controls[i].get('nivel')?.hasError('required') && c.controls[i].get('nivel')?.touched == true">Campo requerido</mat-error>
+                           </div>
+                        </div>
+                        <div>
+                           <!-- <div class="font-semibold">Nombre de la carrera</div> -->
+                           <mat-form-field appearance="outline" class="min-w-[15rem]">
+                              <mat-label>Nombre de la carrera</mat-label>
+                              <input matInput type="text" formControlName="descripcion_carrera">
+                              <mat-hint>P.ej., Primaria Matutino, Licenciatura en Administración</mat-hint>
+                              <mat-error *ngIf="c.controls[i].get('descripcion_carrera')?.hasError('required')">Campo requerido</mat-error>
+                           </mat-form-field>
+                        </div>
+
+                        <div>
+                           <!-- <div class="font-semibold">Nombre del programa académico</div> -->
+                           <mat-form-field appearance="outline" class="min-w-[15rem]">
+                              <mat-label>Nombre del programa</mat-label>
+                              <input matInput type="text" formControlName="descripcion_programa">
+                              <mat-hint>P.ej., PM01, LA01</mat-hint>
+                              <mat-error *ngIf="c.controls[i].get('descripcion_programa')?.hasError('required')">Campo requerido</mat-error>
+                           </mat-form-field>
+                        </div>
+                        <div>
+                           <!-- <div class="font-semibold">Tipo de periodo</div> -->
+                           <mat-form-field appearance="outline" class="min-w-[15rem]">
+                              <mat-label>Tipo de periodo</mat-label>
+                              <mat-select formControlName="tipo_periodo">
+                              <mat-option *ngFor="let periodo of periodos" [value]="periodo.id">
+                                 {{periodo.descripcion}}
+                              </mat-option>
+                           </mat-select>
+                           <mat-error *ngIf="c.controls[i].get('tipo_periodo')?.hasError('required')">Campo requerido</mat-error>
+                           </mat-form-field>
+                        </div>
+                        <button matTooltip="Eliminar" (click)="EliminarCarrera(i)" class="bg-gradient-slate bg-clip-text text-transparent border-2 border-slate-400 rounded-xl py-2 px-4 duration-300 my-auto">
+                           <mat-icon>delete</mat-icon>
+                        </button>
+                     </div>
+                  </div>
+               </form>
+               <button matTooltip="Agregar" (click)="AgregarCarrera()" class="bg-gradient-orange rounded-xl py-2 px-4 mx-4 text-white duration-300">
+                  <mat-icon>add</mat-icon>
+               </button>
+            </div>
+
+            <div class="self-end pb-4 pr-4">
+               <button matStepperNext (click)="holi()"
+                  class="text-white text-sm tracking-wide bg-gradient-fuchsia rounded-xl py-3 px-6 duration-300">
+                  <mat-icon class="block md:!hidden">arrow_forward</mat-icon>
+                  <div class="hidden md:block">
+                     Siguiente
+                  </div>
+               </button>
+            </div>
+         </div>
+
+         <!-- </div> -->
+
+      </mat-step>
+      <mat-step>
+         <ng-template matStepLabel>Resumen</ng-template>
+         <div class="flex w-full h-[calc(100%-72px)] justify-between gap-x-4">
+            <div class="self-end pb-4 pl-4">
+               <button matStepperPrevious
+                  class="text-sm tracking-wide bg-gradient-fuchsia bg-clip-text text-transparent border-2 border-fuchsia-600 rounded-xl py-3 px-6 duration-300">
+                  <mat-icon class="block md:!hidden">arrow_back</mat-icon>
+                  <div class="hidden md:block">
+                     Anterior
+                  </div>
+               </button>
+            </div>
+
+            <div class="w-auto overflow-scroll h-auto">
+               <div class="font-semibold text-justify text-lg">
+                  Esta es la información que has proporcionado. Si estás seguro de su validez, da click en el botón de Siguiente, en caso contrario, sé libre de regresar y editarla.
+               </div>
+               <div *ngIf="Formulario.valid">
+                  <div *ngFor="let item of Formulario.value.carreras; let i = index" class="m-4 bg-neutral-50 shadow-lg rounded-xl p-4 flex flex-col gap-y-4">
+                     <div class="flex gap-x-4">
+                        <div class="font-semibold">
+                           Nivel Académico
+                        </div>
+                           <!-- {{
+                              item.nivel == 1 ? 'Básico' :
+                              item.nivel == 2 ? 'Media - Superior' :
+                              item.nivel == 3 ? 'Superior' : ''
+                           }} -->
+                           <div *ngFor="let nivel of nAcademicos">
+                              {{nivel.id == item.nivel ? nivel.descripcion : ''}}
+                           </div>
+                     </div>
+
+                     <div class="flex gap-x-4">
+                        <div class="font-semibold">
+                           Nombre de la Carrera
+                        </div>
+                           {{item.descripcion_carrera}}
+                     </div>
+
+                     <div class="flex gap-x-4">
+                        <div class="font-semibold">
+                           Nombre del Programa Académico
+                        </div>
+                           {{item.descripcion_programa}}
+                     </div>
+
+                     <div class="flex gap-x-4">
+                        <div class="font-semibold">
+                           Tipo de Periodo del Programa
+                        </div>
+                        <div *ngFor="let periodo of periodos">
+                           {{periodo.id == item.tipo_periodo ? periodo.descripcion : ''}}
+                        </div>
+                           <!-- {{ item.tipo_periodo == 1 ? 'Bimestral' :
+                              item.tipo_periodo == 2 ? 'Trimestral' :
+                              item.tipo_periodo == 3 ? 'Cuatrimestral' :
+                              item.tipo_periodo == 4 ? 'Semestral' :
+                              item.tipo_periodo == 5 ? 'Anual' : ''
+                           }}  -->
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="self-end pb-4 pr-4">
+               <button matStepperNext (click)="send()"
+                  class="text-white text-sm tracking-wide bg-gradient-fuchsia rounded-xl py-3 px-6">
+                  <mat-icon class="block md:!hidden">arrow_forward</mat-icon>
+                  <div class="hidden md:block">
+                     Siguiente
+                  </div>
+               </button>
+            </div>
+         </div>
+      </mat-step>
+      <mat-step>
+         <ng-template matStepLabel>Listo</ng-template>
+
+         <div class="flex w-full h-[calc(100%-72px)] items-center justify-between">
+            <div class="self-end pb-4 pl-4">
+               <button mat-dialog-close
+                  class="text-sm tracking-wide bg-gradient-fuchsia bg-clip-text text-transparent border-2 border-fuchsia-600 rounded-xl py-3 px-6 duration-300">
+                  <mat-icon class="block md:!hidden">arrow_back</mat-icon>
+                  <div class="hidden md:block">
+                     Cerrar
+                  </div>
+               </button>
+            </div>
+
+            <div class="max-w-md font-medium text-center">
+               <div class="text-2xl pb-4">
+                  ¡Listo!
+               </div>
+               Hemos terminado con la configuración básica. Da clic en el botón de <span class="bg-gradient-fuchsia bg-clip-text text-transparent">«Cerrar»</span> para cerrar esta ventana o en el botón <span class="bg-gradient-fuchsia bg-clip-text text-transparent">«Continuar»</span> para ir al Dashboard.</div>
+
+            <div class="self-end pb-4 pr-4">
+               <a routerLink="/dashboard" mat-dialog-close
+                  class="text-white text-sm tracking-wide bg-gradient-fuchsia rounded-xl py-3 px-6">
+                  <mat-icon class="block md:!hidden">dashboard</mat-icon>
+                  <div class="hidden md:block">
+                     Continuar
+                  </div>
+               </a>
+            </div>
+         </div>
+      </mat-step>
+   </mat-stepper>
+</div>

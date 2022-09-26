@@ -17,8 +17,10 @@ module.exports = {
         'gray-tim-100': '#F8F9FA',
         'gray-tim-200': '#6B748C',
         'dark-blue-100':'#212C3F',
-        'dark-blue-50':'#232E43'
-       
+        'dark-blue-50':'#232E43',
+        'nets-yellow':'#F6AC3F',
+        'nets-blue':'#002246',
+
       },
       boxShadow: {
         "soft-xxs": "0 1px 5px 1px #ddd",
@@ -45,6 +47,43 @@ module.exports = {
         2.7: "0.675rem",
         "2.7-em": "0.675em",
       },
+      keyframes: {
+         waiter: {
+           '0%': {
+              width: '0rem',
+              height: '0rem',
+               opacity: 0
+            },
+           '4.9%': {
+              width: '0rem',
+              height: '0rem',
+               opacity: 0
+            },
+           '5%': {
+              width: '0rem',
+              height: '0rem',
+               opacity: 1
+            },
+           '100%': {
+              width: '4.5rem',
+              height: '4.5rem',
+              opacity: 0
+            },
+         },
+         loader: {
+            '0%, 100%': {
+               background: '#e2e8f0'
+             },
+             '50%': {
+               background: '#f1f5f9'
+             }
+         }
+       },
+      animation:{
+         waiter: 'waiter 0.6s cubic-bezier(0, 0.2, 0.8, 1) 0s infinite',
+         waiter2: 'waiter 0.6s cubic-bezier(0, 0.2, 0.8, 1) 0.3s infinite',
+         loader: 'loader 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+      },
       backgroundImage: ({ theme }) => ({
         none: "none",
         "gradient-fuchsia": "linear-gradient(310deg," + theme("colors.purple.700") + "," + theme("colors.pink.500") + ")",
@@ -55,14 +94,16 @@ module.exports = {
         "gradient-slate": "linear-gradient(310deg," + theme("colors.slate.600") + "," + theme("colors.slate.300") + ")",
         "gradient-dark-gray": "linear-gradient(310deg," + theme("colors.gray.900") + "," + theme("colors.slate.800") + ")",
         "gradient-gray": "linear-gradient(310deg," + theme("colors.gray.400") + "," + theme("colors.gray.100") + ")",
-  
+        "gradient-celestial": "linear-gradient(310deg," + theme("colors.sky.500") + "," + theme("colors.violet.600") + ")",
+        "gradient-purplelake": "linear-gradient(40deg," + theme("colors.fuchsia.500") + "," + theme("colors.red.500") + ")",
+
         "gradient-horizontal-dark": "linear-gradient(90deg,transparent,rgba(0,0,0,.4),transparent)",
         "gradient-horizontal-light": "linear-gradient(90deg,transparent,rgba(0,0,0,.1),transparent)",
       }),
-    
-     
-     
-      
+
+
+
+
     },
   },
   plugins: [

@@ -1,13 +1,11 @@
 mat-sidenav {
     margin: 0px;
-    width: 245px;
+    width: 16rem;
     border-right: none;
     padding: 0px;
     padding-top: 0px;
     text-align: center;
     padding-left: 0;
-    padding-right: 10;
-    top:18
   }
   
   .content {
@@ -112,7 +110,7 @@ mat-sidenav {
 // }
 
 ::ng-deep .mat-drawer-backdrop.mat-drawer-shown {
-  top: 12px;
+  top: 0;
 }
 
 .mat-button, .mat-icon-button, .mat-stroked-button, .mat-flat-button {

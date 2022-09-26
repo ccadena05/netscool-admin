@@ -20,7 +20,7 @@ import { SidebarModule } from '../components/layout/sidebar/sidebar.module';
 @NgModule({
   declarations: [
     PrivateComponent,
-   
+
   ],
   imports: [
     ComponentsModule,
@@ -41,7 +41,7 @@ import { SidebarModule } from '../components/layout/sidebar/sidebar.module';
         multi: true,
     },
     RoutePartsService,
-   
+
 ],
 })
 export class PrivateModule { }
