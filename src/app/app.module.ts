@@ -12,6 +12,7 @@ import { MaterialModule } from './components/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfigDialogModule } from './public/config-dialog/config-dialog.module';
 import { LowerDashPipe } from './pipes/lower-dash.pipe';
+import { AsignarMateriaComponent } from './create/asignar-materia/asignar-materia.component';
 
 export function getPaginatorIntl() {
  const paginatorIntl = new MatPaginatorIntl();
@@ -26,6 +27,7 @@ export function getPaginatorIntl() {
   declarations: [
     AppComponent,
     LowerDashPipe,
+    AsignarMateriaComponent,
   ],
   imports: [
     BrowserModule,

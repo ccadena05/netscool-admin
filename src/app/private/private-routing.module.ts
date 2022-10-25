@@ -41,6 +41,12 @@ const routes: Routes = [
          //   data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
        },
        {
+         path: 'm/:modulo/detail/:id',
+         loadChildren: () =>
+           import('./egresados/detail/detail.module').then((m) => m.DetailModule),
+         //   data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
+       },
+       {
          path: 'not-found',
          loadChildren:() => import('./../public/not-found/not-found.module').then((m)=> m.NotFoundModule),
        },

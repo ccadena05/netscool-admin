@@ -18,7 +18,8 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
   routeParts: any[];
   routerEventSub: Subscription;
-  title: String;
+  title: any;
+  titleAction: any;
 
   dataData: any;
   // public isEnabled: boolean = true;
@@ -28,8 +29,15 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     private activeRoute: ActivatedRoute,
     private output: OutputService
 
-  ) {
-    this.title= this.activeRoute.snapshot.data['title'];
+    ) {
+      router.events.subscribe((event: any) => {
+         if (event instanceof NavigationEnd) {
+            this.title = this.activeRoute.snapshot.paramMap.get('modulo');
+            console.log(this.router.url.split('/')[3]);
+
+         }
+      })
+
     this.routeParts = this.routePartsService.generateRouteParts(this.activeRoute.snapshot);
     // console.log("Snaaapppp");
     // console.log(this.activeRoute.snapshot);

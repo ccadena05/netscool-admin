@@ -42,6 +42,9 @@ module.exports = {
         "2xl": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
         none: "none",
       },
+      borderWidth: {
+         '3': '3px'
+      },
       spacing: {
         px: "1px",
         2.7: "0.675rem",
@@ -107,6 +110,7 @@ module.exports = {
     },
   },
   plugins: [
-    require('flowbite/plugin')
-  ],
+   require('postcss-import'), // postcss-import needs to be first
+   require('flowbite/plugin')
+ ],
 }

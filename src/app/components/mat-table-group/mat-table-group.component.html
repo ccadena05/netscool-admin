@@ -5,18 +5,22 @@
 </mat-form-field>
 <mat-table #table [dataSource]="dataSource" matSort class="bg-white dark:!bg-dark-blue-50">
    <div *ngFor="let column of columns" [matColumnDef]="column?.columnDef">
-      <mat-header-cell
+      <mat-header-cell [hidden]="column?.header.match(matchStrings)"
          class="text-slate-700 dark:!text-slate-300 !flex uppercase {{column?.header.match(matchStrings) ? '!hidden' : ''}}"
          mat-sort-header *matHeaderCellDef>{{ column?.header}}</mat-header-cell>
-      <mat-cell
+      <mat-cell [hidden]="column?.header.match(matchStrings)"
          class="text-slate-500 dark:!text-slate-100 text-[80%] !flex {{column?.header.match(matchStrings) ? '!hidden' : ''}}"
          *matCellDef="let row">
          {{ column?.cell(row) }}
       </mat-cell>
    </div>
+   <ng-container matColumnDef="groupHeader">
+      <td colspan="999" mat-cell *matCellDef="let groupBy" class="w-full flex items-center h-12 bg-slate-100 dark:bg-[#1e293b] dark:text-white font-semibold">{{groupBy.groupedBy}}</td>
+    </ng-container>
    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
    <mat-row [routerLink]="'detail/' + row.ID" class="hover:!bg-slate-100 dark:hover:!bg-slate-100/10 cursor-pointer duration-300"
       *matRowDef="let row; columns: displayedColumns;">{{row}}</mat-row>
+      <tr mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup" class="w-full block"> </tr>
    <tr class="mat-row block text-center justify-center !w-full" *matNoDataRow>
       <td class="mat-cell block !py-4 text-center !w-full dark:text-slate-300">No hay registros que coincidan con "{{input.value}}"
       </td>

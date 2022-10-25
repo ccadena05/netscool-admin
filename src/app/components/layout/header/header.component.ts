@@ -8,15 +8,15 @@ import { ProviderService } from 'src/app/services/provider/provider.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  
+
   @Input() sidenav!: any;
   avatar: string;
 
   constructor(
     private jwtAuth: JwtAuthService,
     private provider: ProviderService,
-  ) { 
-  
+  ) {
+
     this.avatar = this.jwtAuth.getUserPhoto()
       ? this.jwtAuth.getUserPhoto()
       : 'assets/img/avatardefault.png';
@@ -37,8 +37,8 @@ export class HeaderComponent implements OnInit {
    } else {
      themeToggleDarkIcon?.classList.remove('hidden');
    }
-   console.log(this.jwtAuth.getColor());
-      
+   // console.log(this.jwtAuth.getColor());
+
   }
 
   checkColor() {
@@ -98,7 +98,7 @@ export class HeaderComponent implements OnInit {
           //this.jwtAuth.signout();
         },
       });
-  }  
+  }
 
   logout() {
     return this.jwtAuth.signout();

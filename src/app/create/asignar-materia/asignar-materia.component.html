@@ -1,0 +1,43 @@
+<div class="dark:text-white text-center">
+   {{materia.nombreAlumno}}
+</div>
+<div class="dark:text-white text-center pb-4">
+   {{materia.nombre}}
+</div>
+<form class="grid grid-cols-4 gap-x-6">
+   <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Calificación</mat-label>
+      <input matInput autocomplete="off">
+   </mat-form-field>
+   <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Fecha de nacimiento</mat-label>
+      <input matInput [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker class="rounded-xl overflow-hidden"></mat-datepicker>
+   </mat-form-field>
+   <div class="w-full flex items-center pb-5">
+      <mat-slide-toggle class="w-full dark:text-[#cbd5e1]">Convalidada</mat-slide-toggle>
+   </div>
+   <div class="w-full flex items-center pb-5">
+      <mat-slide-toggle class="w-full dark:text-[#cbd5e1]">Extra</mat-slide-toggle>
+   </div>
+   <mat-form-field class="w-full col-span-4" appearance="outline">
+      <mat-label>Observaciones</mat-label>
+      <textarea matInput></textarea>
+   </mat-form-field>
+   <mat-form-field class="w-full col-span-2" appearance="outline">
+      <mat-label>Maestro</mat-label>
+      <mat-select>
+         <mat-option></mat-option>
+      </mat-select>
+   </mat-form-field>
+   <mat-form-field class="w-full col-span-2" appearance="outline">
+      <mat-label>Grupo</mat-label>
+      <mat-select>
+         <mat-option></mat-option>
+      </mat-select>
+   </mat-form-field>
+   <button class="t-btn-primary mx-auto">
+      Guardar
+   </button>
+</form>

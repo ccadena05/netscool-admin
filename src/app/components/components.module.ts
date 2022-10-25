@@ -10,21 +10,30 @@ import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 import { ColumnChartComponent } from './charts/column-chart/column-chart.component';
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { LineChartComponent } from './charts/line-chart/line-chart.component';
-import { MatTableComponent } from './mat-table/mat-table.component';
+import { ReticulaComponent } from './reticula/reticula.component';
+import { NumberToRomanSymbolPipe } from '../pipes/number-to-roman.pipe';
+import { KardexComponent } from './kardex/kardex.component';
+import { MatTableModule } from './mat-table/mat-table.module';
+import { PagosComponent } from './pagos/pagos.component';
+import { MatTableGroupComponent } from './mat-table-group/mat-table-group.component';
 
 
 let components = [
    FooterComponent,
    BreadcrumbsComponent,
-   WaiterComponent
+   WaiterComponent,
+   ReticulaComponent,
+   KardexComponent,
+   PagosComponent
 ]
 
 @NgModule({
-  declarations: [components, FunnelChartComponent, BarChartComponent, ColumnChartComponent, PieChartComponent, LineChartComponent, MatTableComponent],
+  declarations: [components, FunnelChartComponent, BarChartComponent, ColumnChartComponent, PieChartComponent, LineChartComponent, ReticulaComponent, NumberToRomanSymbolPipe, MatTableGroupComponent],
   imports: [
     CommonModule,
     RouterModule,
-    MaterialModule
+    MaterialModule,
+    MatTableModule
   ],
   exports:[components]
 })
