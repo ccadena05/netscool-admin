@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { NavigationEnd, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { delay, filter } from 'rxjs/operators';
 import { JwtAuthService } from '../services/auth/jwt-auth.service';
 import { LocalStoreService } from '../services/local-store.service';
@@ -13,7 +13,8 @@ import { environment } from 'src/environments/environment';
 import { NgwWowService } from 'ngx-wow';
 import { slideInAnimation } from 'src/app/components/animations';
 import { menu } from "src/app/private/menu";
-import { Q } from '@angular/cdk/keycodes';
+
+
 export interface Menu {
    link: string;
    icon: string;
@@ -40,8 +41,7 @@ export class PrivateComponent implements OnInit {
    menu: Menu[];
    logoChange: string;
    ready: boolean = false;
-   location: any;
-   currentRoute: any;
+   // location: any;
 
    constructor(
       private jwtAuth: JwtAuthService,
@@ -51,12 +51,36 @@ export class PrivateComponent implements OnInit {
       private provider: ProviderService,
       private _snackBar: MatSnackBar,
       private wowService: NgwWowService,
+      private activatedRoute: ActivatedRoute,
+
    ) {
 
 
 
       this.wowService.init();
-      this.getRuta();
+      
+      /* this.router.events.subscribe((event: any) => {
+            if (event instanceof NavigationEnd) {
+            console.log(this.activatedRoute.snapshot.paramMap.get('modulo'));
+            
+
+               this.sideMenu.forEach((element: any) => {
+                  element.menu.forEach((elem: any) => {
+                     if(event.url == elem.link){
+                        this.location.item = elem?.item;
+                        this.location.route = elem?.url;
+                        // console.log('Breadcrumb', elem.item);
+                     } else if(event.url == '/dashboard') {
+                        this.location.url = 'Dashboard';
+                        this.location.route = '/dashboard';
+
+                     }
+                  });
+               });
+               // console.log(this.location);
+
+            }
+         }); */
       this.getBreadCrumb();
       this.menu = [
          {
@@ -123,7 +147,7 @@ export class PrivateComponent implements OnInit {
 
    } */
 
-   getRuta() {
+   /* getRuta() {
       this.router.events.subscribe({
          next: (event: any) => {
             if (event instanceof NavigationEnd) {
@@ -144,7 +168,7 @@ export class PrivateComponent implements OnInit {
             }
          }
       });
-   }
+   } */
 
    getBreadCrumb() {
 

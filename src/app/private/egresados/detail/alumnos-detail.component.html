@@ -10,7 +10,7 @@
          <div *ngIf="profileImg" class="h-12 w-12 bg-gradient-fuchsia rounded-xl flex shrink-0 p-1 shadow-lg shadow-fuchsia-600/40">
             <mat-icon class="m-auto !text-white">account_circle</mat-icon>
          </div>
-         <img (error)="profileImg = true" [src]="'https://itses.edu.mx/ws-sii-v2/assets/profiles/students/' + data?.DETAIL?.rfc + '.JPG'" alt="" class="rounded-xl object-cover h-16 w-16 ml-3 scale-125 overflow-hidden">
+         <img (error)="profileImg = true" [src]="'https://itses.edu.mx/ws-sii-v2/assets/profiles/students/' + data?.DETAIL?.rfc + '.JPG'" alt="" class="rounded-xl object-cover h-16 w-16 shrink-0 ml-3 scale-125 overflow-hidden">
          <div class="p-3">
             <div class="text-lg font-bold">{{data?.DETAIL?.NOMBRE_COMPLETO}}</div>
             <div class="text-sm font-semibold">{{data?.DETAIL?.CARRERA}}</div>

@@ -1,24 +1,28 @@
-import { Component, DoCheck, ElementRef, OnInit } from '@angular/core';
+import { Component, DoCheck, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { DialogoConfirmacionComponent } from 'src/app/components/dialogo-confirmacion/dialogo-confirmacion.component';
+import { LocalStoreService } from 'src/app/services/local-store.service';
+import { OutputService } from 'src/app/services/output.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
-import { JwtAuthService } from './../../../services/auth/jwt-auth.service';
+import { JwtAuthService } from '../../../services/auth/jwt-auth.service';
+import { menu } from '../../menu';
 
 @Component({
-   selector: 'app-detail',
-   templateUrl: './detail.component.html',
-   styleUrls: ['./detail.component.scss']
+   selector: 'app-alumnos-detail',
+   templateUrl: './alumnos-detail.component.html',
+   styleUrls: ['./alumnos-detail.component.scss']
 })
-export class DetailComponent implements OnInit, DoCheck {
+export class AlumnosDetailComponent implements OnInit, OnDestroy, DoCheck {
    _id: any;
    _paid: any;
    profileImg: boolean = false;
    data: any;
    usuario_a = this.jwtAuth.getUser();
    alumno: any;
+   detailObject: string = '';
    UpdateAlumno!: FormGroup;
    tbl_estado_alumno_id: any = [];
    tbl_estado_id: any = [];
@@ -39,10 +43,12 @@ export class DetailComponent implements OnInit, DoCheck {
       private formBuilder: FormBuilder,
       private router: Router,
       private dialog: MatDialog,
-      private snackbar: MatSnackBar
+      private snackbar: MatSnackBar,
+      private output: OutputService
    ) {
       router.events.subscribe((val) => {
          if(val instanceof NavigationEnd){
+
             this._id = this.activatedRoute.snapshot.paramMap.get('id');
             this.getAll();
          }
@@ -57,6 +63,11 @@ export class DetailComponent implements OnInit, DoCheck {
       document.querySelector('[vertical] .mat-tab-label-active')?.classList.add("border-r-3","[border-image:linear-gradient(0deg,#6C2BD9,#E74694)1]");
    }
 
+   ngOnDestroy(){
+      // this.output.detailObject.next(null);
+      // this.output.detailObject.unsubscribe()
+   }
+
    getAll(){
       this.getData();
       this.getContactos();
@@ -67,10 +78,11 @@ export class DetailComponent implements OnInit, DoCheck {
    getData() {
       this.provider.BD_ActionPost('alumnos', 'alumnosDetail', { id: this._id }).subscribe({
          next: (data: any) => {
-            console.log(data);
+            //console.log(data);
             this._paid = data['DETAIL'].PROGRAMA_ACADEMICO_ID;
             this.data = data;
             this.alumno = data['DETAIL'];
+            this.output.detailObject.next(this.alumno.rfc);
             this.patchForm(data['DETAIL']);
          }, error: (error: any) => {
             console.log(error);
@@ -90,7 +102,7 @@ export class DetailComponent implements OnInit, DoCheck {
    getListas() {
       this.provider.BD_ActionPost('alumnos', 'getListas', {}).subscribe({
          next: (data: any) => {
-            console.log(data);
+            // console.log(data);
             if (data['Mensaje'] === '1') {
                // this.periodoSelect = [];
             } else {
@@ -171,7 +183,7 @@ export class DetailComponent implements OnInit, DoCheck {
          tbl_municipio_id:/*  { id: */ data?.tbl_municipio_id/* , name: data.MUNICIPIO } */,
          tbl_sexo_id:/*  { id: */ data?.tbl_sexo_id/* , name: data.SEXO } */,
          tbl_sangre_id:/*  { id: */ data?.tbl_sangre_id/* , name: data.SANGRE } */,
-      });      
+      });
    }
 
    verifyCheck($data: any) {

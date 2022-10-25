@@ -18,7 +18,7 @@
       <td colspan="999" mat-cell *matCellDef="let groupBy" class="w-full flex items-center h-12 bg-slate-100 dark:bg-[#1e293b] dark:text-white font-semibold">{{groupBy.groupedBy}}</td>
     </ng-container>
    <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-   <mat-row [routerLink]="'detail/' + row.ID" class="hover:!bg-slate-100 dark:hover:!bg-slate-100/10 cursor-pointer duration-300"
+   <mat-row routerLink="'detail/', {{row.ID}}" class="hover:!bg-slate-100 dark:hover:!bg-slate-100/10 cursor-pointer duration-300"
       *matRowDef="let row; columns: displayedColumns;">{{row}}</mat-row>
       <tr mat-row *matRowDef="let row; columns: ['groupHeader']; when: isGroup" class="w-full block"> </tr>
    <tr class="mat-row block text-center justify-center !w-full" *matNoDataRow>

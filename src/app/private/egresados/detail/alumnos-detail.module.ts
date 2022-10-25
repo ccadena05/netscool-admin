@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DetailRoutingModule } from './detail-routing.module';
-import { DetailComponent } from './detail.component';
+import { DetailRoutingModule } from './alumnos-detail-routing.module';
+import { AlumnosDetailComponent } from './alumnos-detail.component';
 import { MaterialModule } from 'src/app/components/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
@@ -12,7 +12,7 @@ import { ComponentsModule } from 'src/app/components/components.module';
 
 @NgModule({
   declarations: [
-    DetailComponent
+    AlumnosDetailComponent
   ],
   imports: [
     CommonModule,

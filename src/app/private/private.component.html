@@ -10,8 +10,8 @@
       </mat-sidenav>
 
       <mat-sidenav-content class="!flex !flex-col h-[calc(100%-92px)] relative">
-      <app-breadcrumbs [breadcrumb]="location"></app-breadcrumbs>
-      <div>
+      <app-breadcrumbs ></app-breadcrumbs>
+      <div><!-- [breadcrumb]="location" -->
          <router-outlet></router-outlet>
       </div>
       <app-footer></app-footer>

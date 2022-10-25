@@ -22,6 +22,7 @@ export class EgresadosComponent implements OnInit {
    ) {
       router.events.subscribe((event: any) => {
          if (event instanceof NavigationEnd) {
+
             this.modulo = this.activatedRoute.snapshot.paramMap.get('modulo');
             menu.forEach(element => {
                element.menu.forEach(el => {

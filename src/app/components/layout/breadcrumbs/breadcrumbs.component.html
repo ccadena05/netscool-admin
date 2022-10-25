@@ -1,29 +1,15 @@
-<!--
-<nav class="relative flex flex-wrap items-center justify-between px-0 py-2 mx-6 transition-all shadow-none duration-250 ease-soft-in rounded-2xl lg:flex-nowrap lg:justify-start" navbar-main navbar-scroll="true">
-    <div class="flex items-center justify-between w-full px-4 py-1 mx-auto flex-wrap-inherit">
-      <nav>
-        <h6 class="mb-0 font-bold capitalize dark:text-white">{{title  }}</h6>
-      </nav>
-
-      <div class="flex items-center mt-2 grow sm:mt-0 sm:mr-6 md:mr-0 lg:flex lg:basis-auto">
-
-        <div class="flex items-center md:ml-auto">
-          <div class="relative flex flex-wrap items-stretch w-full transition-all  rounded-lg ease-soft"> -->
-            <!-- <span class="text-size-sm ease-soft leading-5.6 absolute  -ml-px pr-4 flex h-full items-center whitespace-nowrap rounded-lg rounded-tr-none rounded-br-none border border-r-0 border-transparent bg-transparent py-2 px-2.5 text-center font-normal text-slate-500 transition-all">
-              <mat-icon>pie_chart</mat-icon>
-            </span> -->
-<!--             <input type="text" class="pl-8.75 text-size-sm focus:shadow-soft-primary-outline ease-soft w-1/100 leading-5.6 relative -ml-px block min-w-0 flex-auto rounded-lg border border-solid border-gray-300 bg-white bg-clip-padding py-2 pr-3 text-gray-700 transition-all placeholder:text-gray-500 focus:border-orange-300 focus:outline-none focus:transition-shadow dark:bg-dark-blue-50 dark:border-dark-blue-100 dark:focus:border-orange-300 " placeholder="Buscar..." />
-          </div>
-        </div>
-
-      </div>
-    </div>
-</nav> -->
-
 <div class="w-full flex justify-between items-center p-6">
-  <div class="font-bold capitalize dark:text-white">
-     <a routerLink="/dashboard" class="text-black dark:text-white hover:text-orange-400 duration-300">Dashboard</a>
-    {{breadcrumb != 'Dashboard' && breadcrumb != undefined ? ' / ' + breadcrumb : ''}}
-  </div>
-  <input (keyup)="applyFilter($event)" #input type="text" class="w-48 text-size-sm ease-soft border-2 border-transparent rounded-xl bg-white dark:bg-dark-blue-50 transition-all focus:border-orange-300 text-gray-700 placeholder:text-gray-500 dark:border-dark-blue-100 dark:focus:border-orange-300 duration-300" placeholder="Buscar...">
+   <div class="font-bold capitalize dark:text-white">
+      <a routerLink="/dashboard" class="text-black dark:text-white hover:text-orange-400 duration-300">Dashboard</a>
+      <span [ngClass]="modulo && this.router.url != '/dashboard' ? 'w-0' : 'w-auto'" class="cursor-default transition-[width] duration-300">&nbsp; / &nbsp;</span>
+      <a [routerLink]="objeto ? modulo?.link : undefined"
+         [ngClass]="objeto ? 'text-black dark:text-white hover:text-orange-400 duration-300' : 'cursor-default'"
+         *ngIf="modulo">{{modulo?.item}}</a>
+      <span [ngClass]="objeto && this.router.url.split('/')[3] != undefined ? 'w-0' : 'w-auto'" class="cursor-default transition-[width] duration-300">&nbsp; / &nbsp;</span>
+      <a *ngIf="objeto && this.router.url.split('/')[3] != undefined" class="cursor-default">{{objeto}}</a>
+      <!-- {{'c'+modulo.item+'c'}}{{'b'+objeto+'b'}}{{'a'+title+'a'}} -->
+   </div>
+   <!--   
+   <input (keyup)="applyFilter($event)" #input type="text" class="w-48 text-size-sm ease-soft border-2 border-transparent rounded-xl bg-white dark:bg-dark-blue-50 transition-all focus:border-orange-300 text-gray-700 placeholder:text-gray-500 dark:border-dark-blue-100 dark:focus:border-orange-300 duration-300" placeholder="Buscar...">
+   -->
 </div>

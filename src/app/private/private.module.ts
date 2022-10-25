@@ -16,6 +16,7 @@ import { ComponentsModule } from '../components/components.module';
 import { RoutePartsService } from '../services/route-parts.service';
 import { HeaderModule } from '../components/layout/header/header.module';
 import { SidebarModule } from '../components/layout/sidebar/sidebar.module';
+import { EgresadosModule } from './egresados/egresados.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { SidebarModule } from '../components/layout/sidebar/sidebar.module';
     ReactiveFormsModule,
     HeaderModule,
     SidebarModule,
+    EgresadosModule,
     NgxCloudinaryWidgetModule.forRoot({cloudName: environment.cloudName}),
   ],
   providers: [

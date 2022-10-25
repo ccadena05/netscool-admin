@@ -15,12 +15,12 @@ export class DemoComponent implements OnInit {
   constructor(
     private router:Router,
     private provider: ProviderService,
-    private activeRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
   ) { 
     this.loading = true;
     this.identificador = "1234ASDASFDSF";
     this.loading = false;
-    this.routeParts = this.activeRoute.snapshot.data;
+    this.routeParts = this.activatedRoute.snapshot.data;
   }
 
   ngOnInit(): void {

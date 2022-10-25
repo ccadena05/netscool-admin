@@ -1,9 +1,8 @@
 import { Component, OnInit, OnDestroy,Input } from '@angular/core';
-import { Router, NavigationEnd, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
-
-
-import { Subscription } from 'rxjs';
+import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { menu } from 'src/app/private/menu';
+import { LocalStoreService } from 'src/app/services/local-store.service';
 import { OutputService } from 'src/app/services/output.service';
 import { RoutePartsService } from 'src/app/services/route-parts.service';
 
@@ -16,37 +15,37 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
   @Input() breadcrumb!: string;
 
-  routeParts: any[];
-  routerEventSub: Subscription;
-  title: any;
-  titleAction: any;
-
-  dataData: any;
+  /* routeParts: any[];
+  routerEventSub: Subscription; */
+  sideMenu = menu;
+  objeto: any = '';
+  modulo: any = '';
   // public isEnabled: boolean = true;
   constructor(
-    private router: Router,
+    public router: Router,
     private routePartsService: RoutePartsService,
-    private activeRoute: ActivatedRoute,
+    private activatedRoute: ActivatedRoute,
+    private local: LocalStoreService,
     private output: OutputService
-
     ) {
       router.events.subscribe((event: any) => {
-         if (event instanceof NavigationEnd) {
-            this.title = this.activeRoute.snapshot.paramMap.get('modulo');
-            console.log(this.router.url.split('/')[3]);
-
+         if (event instanceof NavigationEnd) {       
+            this.modulo = this.findInMenu('link', '/m/' + this.router.url.split('/')[2]);
+            this.output.detailObject.subscribe((data: any) => { this.objeto = data })
+            this.output.modulo.subscribe((data: any) => { this.modulo = data })
          }
       })
 
-    this.routeParts = this.routePartsService.generateRouteParts(this.activeRoute.snapshot);
+
+    /* this.routeParts = this.routePartsService.generateRouteParts(this.activatedRoute.snapshot);
     // console.log("Snaaapppp");
-    // console.log(this.activeRoute.snapshot);
+    // console.log(this.activatedRoute.snapshot);
     // console.log("Finn     Snaaapppp");
     this.routerEventSub = this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((routeChange) => {
-        this.routeParts = this.routePartsService.generateRouteParts(this.activeRoute.snapshot);
-        // console.log(this.activeRoute.snapshot);
+        this.routeParts = this.routePartsService.generateRouteParts(this.activatedRoute.snapshot);
+        // console.log(this.activatedRoute.snapshot);
         // generate url from parts
         this.routeParts.reverse().map((item, i) => {
           item.breadcrumb = this.parseText(item);
@@ -67,17 +66,18 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
       });
       this.dataData = this.output.dataData.subscribe($event => {
 
-      })
+      }) */
   }
 
   ngOnInit() {}
   ngOnDestroy() {
-    if (this.routerEventSub) {
+    /* if (this.routerEventSub) {
       this.routerEventSub.unsubscribe();
-    }
+    } */
+
   }
 
-  parseText(part:any) {
+  /* parseText(part:any) {
     if (!part.breadcrumb) {
       return '';
     }
@@ -93,6 +93,16 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
    this.dataData.filter = filterValue.trim().toLowerCase();
    console.log(this.dataData);
 
- }
-
+ } */
+   
+   findInMenu(propiedad: any, valor: any){
+      let turnBack = {}
+      this.sideMenu.forEach(element => {
+         element.menu.filter((el: any, index: any) =>{
+            if(el[propiedad] === valor)
+            turnBack = el;
+         })
+      });
+      return turnBack
+   }
 }
