@@ -2,7 +2,7 @@ export const menu = [
     {
         id:'SE01',
         label: "Servicios escolares",
-        icon:'pie_chart',
+        icon:'edit_note',
         menu: [
           {
              item: "Alumnos",
@@ -57,7 +57,7 @@ export const menu = [
     {
         id:'CRM01',
         label: "CRM",
-        icon:'pie_chart',
+        icon:'web',
         menu: [
           {
             item: "Prospectos",
@@ -118,7 +118,7 @@ export const menu = [
     {
       id:'FI01',
       label: "Finanzas",
-      icon:'pie_chart',
+      icon:'attach_money',
       menu: [
         {
           item: "Conciliacion",
@@ -161,7 +161,7 @@ export const menu = [
   {
     id:'ME01',
     label: "Mercadotecnia",
-    icon:'pie_chart',
+    icon:'campaign',
     menu: [
       {
         item: "Eventos",

@@ -13,6 +13,8 @@ import { environment } from 'src/environments/environment';
 import { NgwWowService } from 'ngx-wow';
 import { slideInAnimation } from 'src/app/components/animations';
 import { menu } from "src/app/private/menu";
+import { OutputService } from '../services/output.service';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 
 export interface Menu {
@@ -40,7 +42,8 @@ export class PrivateComponent implements OnInit {
    avatarPreCarga: string;
    menu: Menu[];
    logoChange: string;
-   ready: boolean = false;
+   ready = new BehaviorSubject(false)
+   hola: boolean = false;
    // location: any;
 
    constructor(
@@ -52,36 +55,15 @@ export class PrivateComponent implements OnInit {
       private _snackBar: MatSnackBar,
       private wowService: NgwWowService,
       private activatedRoute: ActivatedRoute,
-
+      private output: OutputService
    ) {
 
 
 
       this.wowService.init();
-      
-      /* this.router.events.subscribe((event: any) => {
-            if (event instanceof NavigationEnd) {
-            console.log(this.activatedRoute.snapshot.paramMap.get('modulo'));
-            
 
-               this.sideMenu.forEach((element: any) => {
-                  element.menu.forEach((elem: any) => {
-                     if(event.url == elem.link){
-                        this.location.item = elem?.item;
-                        this.location.route = elem?.url;
-                        // console.log('Breadcrumb', elem.item);
-                     } else if(event.url == '/dashboard') {
-                        this.location.url = 'Dashboard';
-                        this.location.route = '/dashboard';
 
-                     }
-                  });
-               });
-               // console.log(this.location);
 
-            }
-         }); */
-      this.getBreadCrumb();
       this.menu = [
          {
             link: '/dashboard',
@@ -95,6 +77,11 @@ export class PrivateComponent implements OnInit {
          : 'assets/img/avatardefault.png';
       this.avatarPreCarga = 'assets/img/avatardefault.png';
       this.logoChange = this.jwtAuth.getColor();
+      this.output.ready.subscribe((data: any) => {
+         this.hola = data;
+         // console.log(this.hola);
+
+      })
    }
 
    logout() {
@@ -141,38 +128,7 @@ export class PrivateComponent implements OnInit {
 
    }
 
-   /* receiveBreadcrumbs($event: any) {
-      this.location = $event;
-      console.log(this.location);
 
-   } */
-
-   /* getRuta() {
-      this.router.events.subscribe({
-         next: (event: any) => {
-            if (event instanceof NavigationEnd) {
-               this.currentRoute = event.url;
-               // console.log(this.currentRoute)
-               this.sideMenu.forEach((element: any) => {
-                  element.menu.forEach((elem: any) => {
-                     if(event.url == elem.link){
-                        this.location = elem.item;
-                        // console.log('Breadcrumb', elem.item);
-                     } else if(event.url == '/dashboard') {
-                        this.location = 'Dashboard';
-                     }
-                  });
-               });
-               // console.log(this.location);
-
-            }
-         }
-      });
-   } */
-
-   getBreadCrumb() {
-
-   }
 
    // onOpen(): void {
    //   this.manager.open({ uploadPreset: environment.presets }).subscribe({

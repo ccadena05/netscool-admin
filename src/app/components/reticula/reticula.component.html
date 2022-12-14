@@ -5,8 +5,8 @@
       </div>
    </div>
    <div class="flex"> <!-- Contenedor de todas las materias -->
-      <div *ngFor="let x of arrayBloques" class="flex flex-col text-[10px]"> <!-- Cada columna por separado (Cuatrimestre/Semestre) -->
-         <div *ngFor="let y of arrayBloquesMaterias" class="flex gap-2 {{y?.color != 'verde' ? 'cursor-pointer' : 'cursor-default'}}" (click)="y?.color != 'verde' ? asignarMateria(y) : ''"> <!-- Cada materia por separado -->
+      <div *ngFor="let x of arrayBloques" class="flex flex-col text-[11px]"> <!-- Cada columna por separado (Cuatrimestre/Semestre) -->
+         <div *ngFor="let y of arrayBloquesMaterias" class="flex gap-2 {{y?.color != 'verde' ? 'cursor-pointer' : 'cursor-default'}}" (click)="y.color === 'azul' ? asignarMateria(y) : y?.color != 'azul' && y?.color != 'morado' && y?.color != 'verde' ? asignarExtra(y) : y.color === 'morado' ? asignarCalificacion(y) : ''"> <!-- Cada materia por separado -->
             <div *ngIf="y?.bloque == x?.Bloque"
                class="h-24 w-[6.5rem] {{y?.color}} overflow-hidden rounded-md shadow-md text-center flex flex-col gap-px leading-3 m-1">
                <div class="bg-[#183054] text-white flex items-center h-1/6">

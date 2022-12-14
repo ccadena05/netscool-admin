@@ -37,7 +37,37 @@ const routes: Routes = [
       {
          path: 'm/:modulo',
          loadChildren: () =>
-           import('./egresados/egresados.module').then((m) => m.EgresadosModule),
+         import('./master/master.module').then((m) => m.MasterModule),
+         //   data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
+       },
+       {
+         path: 'm/alumnos/detail/:id',
+         loadChildren: () =>
+         import('./master/alumnos-detail/alumnos-detail.module').then((m) => m.AlumnosDetailModule),
+         //   data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
+       },
+       {
+         path: 'm/egresados/detail/:id',
+         loadChildren: () =>
+         import('./master/egresados-detail/egresados-detail.module').then((m) => m.EgresadosDetailModule),
+         //   data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
+       },
+       {
+         path: 'm/contactos/detail/:id',
+         loadChildren: () =>
+         import('./master/contactos-detail/contactos-detail.module').then((m) => m.ContactosDetailModule),
+         //   data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
+       },
+       {
+         path: 'm/programa_academico/detail/:id',
+         loadChildren: () =>
+         import('./master/programa-academico-detail/programa-academico-detail.module').then((m) => m.ProgramaAcademicoDetailModule),
+         //   data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
+       },
+       {
+         path: 'm/maestros/detail/:id',
+         loadChildren: () =>
+         import('./master/maestros-detail/maestros-detail.module').then((m) => m.MaestrosDetailModule),
          //   data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
        },
        /* {

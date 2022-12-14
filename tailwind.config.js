@@ -22,6 +22,13 @@ module.exports = {
         'nets-blue':'#002246',
 
       },
+      gridTemplateColumns: {
+         '24': 'repeat(24, minmax(0, 1fr))',
+      },
+      gridColumn: {
+         'span-24': 'span 24 / span 24',
+         'span-18': 'span 18 / span 18',
+       },
       boxShadow: {
         "soft-xxs": "0 1px 5px 1px #ddd",
         "soft-xs": "0 3px 5px -1px rgba(0,0,0,.09),0 2px 3px -1px rgba(0,0,0,.07)",
@@ -99,7 +106,8 @@ module.exports = {
         "gradient-gray": "linear-gradient(310deg," + theme("colors.gray.400") + "," + theme("colors.gray.100") + ")",
         "gradient-celestial": "linear-gradient(310deg," + theme("colors.sky.500") + "," + theme("colors.violet.600") + ")",
         "gradient-purplelake": "linear-gradient(40deg," + theme("colors.fuchsia.500") + "," + theme("colors.red.500") + ")",
-
+        "gradient-teal": "linear-gradient(310deg,#35A7E3,#40D9AA)",
+        "gradient-yellow": "linear-gradient(310deg,#ffcf1b,#ff881b)",
         "gradient-horizontal-dark": "linear-gradient(90deg,transparent,rgba(0,0,0,.4),transparent)",
         "gradient-horizontal-light": "linear-gradient(90deg,transparent,rgba(0,0,0,.1),transparent)",
       }),

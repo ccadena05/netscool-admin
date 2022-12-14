@@ -15,28 +15,7 @@
    width: 0 !important;
 } */
 
-::ng-deep mat-tab-group[vertical]{
-   flex-direction: row !important;
-   column-gap: 16px;
-   justify-items: stretch !important;
 
-   .mat-tab-body-wrapper {
-      width: 100% !important;
-   }
-
-   .mat-tab-labels {
-      flex-direction: column !important;
-      row-gap: 8px;
-   }
-
-   mat-ink-bar{
-      height: 0 !important;
-      width: 0 !important;
-   }
-   .mat-tab-header {
-      border-bottom: 0px solid rgba(0,0,0,0) !important;
-  }
-}
 ::ng-deep .mat-tab-label-active {
    background-image: linear-gradient(310deg,#6d28d9,#ec4899) !important;
    background-clip: text !important;

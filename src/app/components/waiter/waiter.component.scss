@@ -1,0 +1,34 @@
+@for $i from 1 through 40 {
+   .aspect {
+      aspect-ratio: round(random($limit: 4)) / round(random($limit: 3));
+   }
+   .colss {
+      columns: round(random($limit: 6)) + 2
+   }
+   /* .cols6{
+      $cols: random($limit: 6);
+      grid-column: span $cols / span $cols;
+   }
+   .cols3{
+      $cols: random($limit: 3);
+      grid-column: span $cols / span $cols;
+   }
+   .stars:nth-child(3n + #{$i}) {
+      $size: calc(random($limit: 500) / 1000) + random($limit: 5);
+
+      position: absolute;
+      height: $size + px;
+      width: $size + px;
+      border-radius: 9999px;
+      background-color: rgb(241, 245, 249);
+      animation: pulse 3s linear infinite;
+      animation-delay: random($limit: 5000) + ms;
+      left: random($limit: 1920) + px;
+      top: random($limit: 1080) + px;
+      @if $size > 0 and $size < 15 {
+         filter: blur(random($limit: 4) + px);
+      } @else {
+         filter: blur((random($limit: 12) + 4) + px);
+      }
+   } */
+}

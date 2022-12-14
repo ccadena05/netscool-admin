@@ -16,7 +16,7 @@ export class MatTableComponent implements OnInit, OnChanges {
    matchStrings = /ID|id|Fecha|fecha_baja_imss|fecha_baja_laboral|fecha_ingreso|fecha_nacimiento|fecha_salida|Comprobante|comprobante|constancia|credencial|curp2|rfc2|email2|visita|codigo|DATAORDER|PERIODO_ANIO|califa|estatus|observaciones|optativa|PROMEDIO/
    @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
    @ViewChild(MatSort) sort: MatSort = {} as MatSort;
-   @Input() dataToDisplay: any = [{}];
+   @Input() dataToDisplay: any = [];
    dataSource: any = [];
    datos: any = [];
 
@@ -24,26 +24,31 @@ export class MatTableComponent implements OnInit, OnChanges {
       private _liveAnnouncer: LiveAnnouncer,
       private keyvalue: KeyValuePipe,
    ) {
-
    }
 
    ngOnInit(): void {
+
    }
 
+
    ngOnChanges(changes: SimpleChanges) {
-      if (!changes['dataToDisplay']?.firstChange && changes['dataToDisplay']?.currentValue != null) {
+      this.columns = this.datos = [];
+      if(!changes['dataToDisplay'].firstChange && changes['dataToDisplay'].currentValue){
          this.datos = changes['dataToDisplay']?.currentValue != false ? changes['dataToDisplay']?.currentValue : changes['dataToDisplay']?.previousValue;
-         this.columns = [];
+
          this.dataSource = new MatTableDataSource(this.datos);
+
          this.dataSource.paginator = this.paginator;
          this.dataSource.sort = this.sort;
-         this.keyvalue.transform(this.datos[1])?.forEach((element: any, index: any) => {
+
+         this.keyvalue.transform(this.datos[0] ? this.datos[0] : this.datos[1])?.forEach((element: any, index: any) => {
             this.columns?.push({
                columnDef: element?.key,
                header: element?.key.replace(/_/g, " "),
                cell: (el: any) => `${el[element?.key]}`
             });
          });
+
          this.displayedColumns = this.columns?.map((c: any) => c?.columnDef)
       }
    }

@@ -19,7 +19,7 @@ export class HeaderComponent implements OnInit {
 
     this.avatar = this.jwtAuth.getUserPhoto()
       ? this.jwtAuth.getUserPhoto()
-      : 'assets/img/avatardefault.png';
+      : '';
   }
 
   ngOnInit(): void {

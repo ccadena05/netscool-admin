@@ -1,0 +1,10 @@
+$random: random(96);
+$random2: random(128);
+
+.width{
+   width: $random + px;
+}
+
+.width2{
+   width: $random2 + px;
+}

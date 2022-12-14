@@ -24,7 +24,7 @@ export class KardexComponent implements OnInit, OnChanges {
    getData() {
           this.provider.BD_ActionPost('alumnos', 'kardexCursadas', { id: this.alumnoId, ida: this.PROGRAMA_ACADEMICO_ID }).subscribe({
              next: (data: any) => {
-                  console.log(data);
+                  // console.log(data);
                 this.dataToDisplay = data.data;
              }, error: (error: any) => {
                 console.log(error);

@@ -1,0 +1,22 @@
+<div class="flex flex-col gap-y-3 dark:text-white text-center">
+   <mat-icon class="ml-auto" mat-dialog-close>
+      close
+   </mat-icon>
+   <div>
+      Cambiar contraseña
+      <div class="text-sm uppercase">
+         {{subject.nombre}}
+      </div>
+   </div>
+
+   <div>
+      <form [formGroup]="UpdatePassword" (ngSubmit)="confirm()" class="flex flex-col">
+         <mat-form-field appearance="outline" class="w-full">
+            <mat-label>Nueva Contraseña</mat-label>
+            <input matInput formControlName="password">
+            <mat-error>Ingresa una contraseña válida.</mat-error>
+         </mat-form-field>
+         <button [disabled]="UpdatePassword.invalid" class="t-btn-primary">GUARDAR</button>
+      </form>
+   </div>
+</div>

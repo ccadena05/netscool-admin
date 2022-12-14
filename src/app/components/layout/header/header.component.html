@@ -17,13 +17,16 @@
       <button (click)="changeModeColor()" id="theme-toggle">
          <div *ngIf="checkColor(); then iconLight; else iconDark"></div>
          <ng-template #iconLight>
-            <mat-icon id="theme-toggle-dark-icon">light_mode</mat-icon>
+            <mat-icon id="theme-toggle-dark-icon" class="scale-110">light_mode</mat-icon>
          </ng-template>
          <ng-template #iconDark>
-            <mat-icon id="theme-toggle-light-icon">dark_mode</mat-icon>
+            <mat-icon id="theme-toggle-light-icon" class="scale-110">dark_mode</mat-icon>
          </ng-template>
       </button>
-      <img class="w-8 h-8 rounded-full cursor-pointer" [src]="avatar" alt="Perfil" [matMenuTriggerFor]="menu" />
+      <img *ngIf="avatar != ''" class="w-8 h-8 rounded-full cursor-pointer scale-125" [src]="avatar" alt="Perfil" [matMenuTriggerFor]="menu" />
+      <mat-icon *ngIf="avatar == ''" class="h-8 w-8 text-transparent bg-gradient-cyan bg-clip-text cursor-pointer flex shrink-0 scale-125" [matMenuTriggerFor]="menu">
+         account_circle
+      </mat-icon>
       <mat-menu #menu="matMenu" class="w-48 !bg-white dark:!bg-dark-blue-50 !text-slate-700 dark:!text-slate-300 !rounded-lg !shadow-xl">
          <button [routerLink]="['/perfil']" mat-menu-item class="font-medium !text-slate-700 dark:!text-slate-300">
             <mat-icon class="!text-slate-700 dark:!text-slate-300">person</mat-icon>Perfil

@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy,Input } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { menu } from 'src/app/private/menu';
 import { LocalStoreService } from 'src/app/services/local-store.service';
@@ -18,9 +19,13 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   /* routeParts: any[];
   routerEventSub: Subscription; */
   sideMenu = menu;
-  objeto: any = '';
+
+  detail = new BehaviorSubject<any>('');
   modulo: any = '';
+  masterSection: any = '';
   // public isEnabled: boolean = true;
+  ready: boolean = false;
+
   constructor(
     public router: Router,
     private routePartsService: RoutePartsService,
@@ -28,12 +33,31 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     private local: LocalStoreService,
     private output: OutputService
     ) {
+      //  console.log(this.router.url.split('/')[3]);
+      this.ready = false;
       router.events.subscribe((event: any) => {
-         if (event instanceof NavigationEnd) {       
-            this.modulo = this.findInMenu('link', '/m/' + this.router.url.split('/')[2]);
-            this.output.detailObject.subscribe((data: any) => { this.objeto = data })
-            this.output.modulo.subscribe((data: any) => { this.modulo = data })
+         if (event instanceof NavigationEnd) {
+            let mod = this.activatedRoute.snapshot.paramMap.get('modulo');
+            console.log(mod);
+            
+            
+            this.output.masterSection.subscribe(data => {
+               console.log(data);
+               
+               this.masterSection = data;
+               this.modulo = this.findInMenu('item', this.masterSection);
+            })
+            this.output.detail.subscribe((data: any) => this.detail = data )
+            this.ready = true;
          }
+
+            /* this.output.detail.subscribe((data: any) => this.detail = data )
+            this.output.ready.subscribe((data: any) => {
+                     this.hola = data;
+                     // console.log(this.hola);
+
+                  }) */
+
       })
 
 
@@ -94,7 +118,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
    console.log(this.dataData);
 
  } */
-   
+
    findInMenu(propiedad: any, valor: any){
       let turnBack = {}
       this.sideMenu.forEach(element => {

@@ -21,13 +21,16 @@ export class PagosComponent implements OnInit, OnChanges {
    }
 
    getData(id: any) {
-      this.provider.BD_ActionPost('alumnos', 'historialPagos', { id: id }).subscribe({
-         next: (data: any) => {
-            this.dataToDisplay = data.data;
-         }, error: (error: any) => {
-            console.log(error);
-         }
-      })
+      if(id){
+         this.provider.BD_ActionPost('alumnos', 'historialPagos', { id: id }).subscribe(/* {
+            next:  */(data: any) => {
+               // console.log(id,data);
+               this.dataToDisplay = data.data;
+            }/* , error: (error: any) => {
+               console.log(error);
+            }
+         } */)
+      }
    }
 
 }

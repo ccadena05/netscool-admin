@@ -27,4 +27,4 @@ import { ComponentsModule } from 'src/app/components/components.module';
    {provide: MAT_DATE_LOCALE, useValue: 'es-MX'},
  ],
 })
-export class DetailModule { }
+export class AlumnosDetailModule { }

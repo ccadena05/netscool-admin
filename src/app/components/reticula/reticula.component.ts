@@ -1,6 +1,8 @@
 import { OnChanges, Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { AsignarMateriaComponent } from 'src/app/create/asignar-materia/asignar-materia.component';
+import { AsignarCalificacionComponent } from 'src/app/dialogs/asignar-calificacion/asignar-calificacion.component';
+import { AsignarExtraComponent } from 'src/app/dialogs/asignar-extra/asignar-extra.component';
+import { AsignarMateriaComponent } from 'src/app/dialogs/asignar-materia/asignar-materia.component';
 import { JwtAuthService } from 'src/app/services/auth/jwt-auth.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 
@@ -25,7 +27,7 @@ export class ReticulaComponent implements OnInit, OnChanges {
    }
 
    ngOnChanges(changes: SimpleChanges) {
-      this.getBloquesAlumno(changes['PROGRAMA_ACADEMICO_ID'].currentValue);
+      this.getBloquesAlumno(changes['PROGRAMA_ACADEMICO_ID']?.currentValue);
    }
 
    getReticulaAlumno(paid: any) {
@@ -70,10 +72,43 @@ export class ReticulaComponent implements OnInit, OnChanges {
    }
 
    asignarMateria(materia: any){
-      console.log(materia);
       materia.nombreAlumno = this.alumno?.NOMBRE_COMPLETO
+      materia.rfc = this.alumno?.rfc;
       this.dialog.open(AsignarMateriaComponent,{
-         data: materia
+         data: materia,
+         autoFocus: false,
+         /* height: '100%',
+         width: '100%',
+         maxHeight: '100vh',
+         maxWidth: ' 100vw', */
+      })
+   }
+
+   asignarExtra(materia: any){
+      console.log(this.alumno);
+      
+      materia.nombreAlumno = this.alumno?.NOMBRE_COMPLETO
+      materia.rfc = this.alumno?.rfc;
+      this.dialog.open(AsignarExtraComponent,{
+         data: materia,
+         autoFocus: false,
+         /* height: '100%',
+         width: '100%',
+         maxHeight: '100vh',
+         maxWidth: ' 100vw', */
+      })
+   }
+
+   asignarCalificacion(materia: any){
+      materia.nombreAlumno = this.alumno?.NOMBRE_COMPLETO
+      materia.rfc = this.alumno?.rfc;
+      this.dialog.open(AsignarCalificacionComponent,{
+         data: materia,
+         autoFocus: false,
+         /* height: '100%',
+         width: '100%',
+         maxHeight: '100vh',
+         maxWidth: ' 100vw', */
       })
    }
 

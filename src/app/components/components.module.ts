@@ -16,6 +16,8 @@ import { KardexComponent } from './kardex/kardex.component';
 import { MatTableModule } from './mat-table/mat-table.module';
 import { PagosComponent } from './pagos/pagos.component';
 import { MatTableGroupComponent } from './mat-table-group/mat-table-group.component';
+import { SearchSelectComponent } from './search-select/search-select.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 let components = [
@@ -24,7 +26,8 @@ let components = [
    WaiterComponent,
    ReticulaComponent,
    KardexComponent,
-   PagosComponent
+   PagosComponent,
+   SearchSelectComponent
 ]
 
 @NgModule({
@@ -33,7 +36,9 @@ let components = [
     CommonModule,
     RouterModule,
     MaterialModule,
-    MatTableModule
+    MatTableModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports:[components]
 })

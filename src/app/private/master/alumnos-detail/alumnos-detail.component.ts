@@ -1,14 +1,23 @@
-import { Component, DoCheck, ElementRef, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, DoCheck, forwardRef, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Observable, map, startWith } from 'rxjs';
 import { DialogoConfirmacionComponent } from 'src/app/components/dialogo-confirmacion/dialogo-confirmacion.component';
+import { SearchSelectComponent } from 'src/app/components/search-select/search-select.component';
+import { CambiarContrasenaComponent } from 'src/app/dialogs/cambiar-contrasena/cambiar-contrasena.component';
 import { LocalStoreService } from 'src/app/services/local-store.service';
 import { OutputService } from 'src/app/services/output.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 import { JwtAuthService } from '../../../services/auth/jwt-auth.service';
 import { menu } from '../../menu';
+
+export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
+   provide: NG_VALUE_ACCESSOR,
+   useExisting: forwardRef(() => SearchSelectComponent),
+   multi: true
+};
 
 @Component({
    selector: 'app-alumnos-detail',
@@ -23,8 +32,12 @@ export class AlumnosDetailComponent implements OnInit, OnDestroy, DoCheck {
    usuario_a = this.jwtAuth.getUser();
    alumno: any;
    detailObject: string = '';
-   UpdateAlumno!: FormGroup;
-   tbl_estado_alumno_id: any = [];
+   formulario!: FormGroup;
+   sel: any = [];
+   grup: any = [];
+   selObs: Observable<string[]> = {} as Observable<string[]>;
+   tbl_municipio_id: Observable<string[]> = {} as Observable<string[]>;
+   /* tbl_estado_alumno_id: any = [];
    tbl_estado_id: any = [];
    tbl_generacion_id: any = [];
    tbl_municipio_id: any = [];
@@ -32,7 +45,7 @@ export class AlumnosDetailComponent implements OnInit, OnDestroy, DoCheck {
    tbl_programa_academico_id: any = [];
    tbl_sangre_id: any = [];
    tbl_sexo_id: any = [];
-   tbl_grupo_id: any = [];
+   tbl_grupo_id: any = []; */
    contactos: any = [];
    tabActive: ElementRef = {} as ElementRef;
 
@@ -48,7 +61,6 @@ export class AlumnosDetailComponent implements OnInit, OnDestroy, DoCheck {
    ) {
       router.events.subscribe((val) => {
          if(val instanceof NavigationEnd){
-
             this._id = this.activatedRoute.snapshot.paramMap.get('id');
             this.getAll();
          }
@@ -64,66 +76,55 @@ export class AlumnosDetailComponent implements OnInit, OnDestroy, DoCheck {
    }
 
    ngOnDestroy(){
-      // this.output.detailObject.next(null);
-      // this.output.detailObject.unsubscribe()
+
    }
 
    getAll(){
       this.getData();
-      this.getContactos();
-      this.getListas();
+      /* this.getContactos();
+      this.getListas(); */
       this.buildForm();
    }
 
    getData() {
-      this.provider.BD_ActionPost('alumnos', 'alumnosDetail', { id: this._id }).subscribe({
-         next: (data: any) => {
-            //console.log(data);
+      this.provider.BD_ActionPost('alumnos', 'alumnosDetail', { id: this._id }).subscribe(/*{
+         next: */ (data: any) => {
+            // console.log(data);
+            this.output.ready.next(false);
             this._paid = data['DETAIL'].PROGRAMA_ACADEMICO_ID;
             this.data = data;
             this.alumno = data['DETAIL'];
-            this.output.detailObject.next(this.alumno.rfc);
+            this.output.detail.next(this.alumno.rfc);
             this.patchForm(data['DETAIL']);
-         }, error: (error: any) => {
-            console.log(error);
+            this.provider.BD_ActionPost('alumnos', 'indexC', { id: this._id }).subscribe(
+               (data: any) => {
+                  this.contactos = data.data;
+                  this.provider.BD_ActionPost('alumnos', 'getListas', {}).subscribe(
+                     (data: any) => {
+                        // console.log(data);
+                        if (data['Mensaje'] === '1') {
+                           // this.periodoSelect = [];
+                        } else {
+                           this.sel = this.grup = data;
+                           /* this.sel.tbl_estado_alumno_id = data['tbl_estado_alumno_id'];
+                           this.sel.tbl_estado_id = data['tbl_estado_id'];
+                           this.sel.tbl_generacion_id = data['tbl_generacion_id'];
+                           this.sel.tbl_municipio_id = data['tbl_municipio_id'];
+                           this.sel.tbl_pais_id = data['tbl_pais_id'];
+                           this.sel.tbl_programa_academico_id = data['tbl_programa_academico_id'];
+                           this.sel.tbl_sangre_id = data['tbl_sangre_id'];
+                           this.sel.tbl_sexo_id = data['tbl_sexo_id'];
+                           this.sel.tbl_grupo_id = data['tbl_grupo_id']; */
+                           this.output.ready.next(true);
+
+                        }
+                     });
+               })
          }
-      })
-   }
-   getContactos() {
-      this.provider.BD_ActionPost('alumnos', 'indexC&id=' + this._id, { id: this._id }).subscribe({
-         next: (data: any) => {
-            // console.log(data);
-            this.contactos = data.data;
-         }, error: (error: any) => {
-            console.log(error);
-         }
-      })
-   }
-   getListas() {
-      this.provider.BD_ActionPost('alumnos', 'getListas', {}).subscribe({
-         next: (data: any) => {
-            // console.log(data);
-            if (data['Mensaje'] === '1') {
-               // this.periodoSelect = [];
-            } else {
-               this.tbl_estado_alumno_id = data['tbl_estado_alumno_id'];
-               this.tbl_estado_id = data['tbl_estado_id'];
-               this.tbl_generacion_id = data['tbl_generacion_id'];
-               this.tbl_municipio_id = data['tbl_municipio_id'];
-               this.tbl_pais_id = data['tbl_pais_id'];
-               this.tbl_programa_academico_id = data['tbl_programa_academico_id'];
-               this.tbl_sangre_id = data['tbl_sangre_id'];
-               this.tbl_sexo_id = data['tbl_sexo_id'];
-               this.tbl_grupo_id = data['tbl_grupo_id'];
-            }
-         },
-         error: (error: any) => {
-            console.log(JSON.stringify(error));
-         }
-      });
+      )
    }
    buildForm() {
-      this.UpdateAlumno = this.formBuilder.group({
+      this.formulario = this.formBuilder.group({
          id: [''],
          apellido_materno: [''],
          apellido_paterno: ['', Validators.required],
@@ -156,7 +157,7 @@ export class AlumnosDetailComponent implements OnInit, OnDestroy, DoCheck {
    }
 
    patchForm(data: any) {
-      this.UpdateAlumno.patchValue({
+      this.formulario.patchValue({
          nombre: data?.nombre,
          apellido_paterno: data?.apellido_paterno,
          apellido_materno: data?.apellido_materno,
@@ -195,9 +196,9 @@ export class AlumnosDetailComponent implements OnInit, OnDestroy, DoCheck {
    }
 
    update() {
-      this.UpdateAlumno.value.id = this._id;
-      this.UpdateAlumno.value.user_id = this.alumno.user_id;
-      const Parametros = this.UpdateAlumno.value;
+      this.formulario.value.id = this._id;
+      this.formulario.value.user_id = this.alumno.user_id;
+      const Parametros = this.formulario.value;
       console.log(Parametros);
       let confirm = this.dialog.open(DialogoConfirmacionComponent)
 
@@ -224,5 +225,20 @@ export class AlumnosDetailComponent implements OnInit, OnDestroy, DoCheck {
       })
       /*  */
    }
+
+   cambiarContrasenaDialog(){
+      let dialog = this.dialog.open(CambiarContrasenaComponent, {
+         autoFocus: false,
+         data: {
+            id: this._id,
+            nombre: this.data?.DETAIL?.NOMBRE_COMPLETO
+         }
+      })
+   }
+
+   recibiRespuesta(respuesta: any, control: any) {
+      console.log(respuesta);
+      this.formulario.controls[control].setValue(respuesta)
+     }
 
 }

@@ -37,12 +37,14 @@ export class MatTableGroupComponent implements OnInit, OnChanges {
    }
 
    ngOnChanges(changes: SimpleChanges) {
+      // this.datos, this.displayedColumns, this.columns = {};
       if (!changes['dataToDisplay']?.firstChange && changes['dataToDisplay']?.currentValue != null) {
          this.datos = changes['dataToDisplay']?.currentValue != false ? changes['dataToDisplay']?.currentValue : changes['dataToDisplay']?.previousValue;
          this.groupData(this.datos);
 
          this.columns = [];
          this.dataSource = new MatTableDataSource(this.datos);
+         
          this.dataSource.paginator = this.paginator;
          this.dataSource.sort = this.sort;
          this.keyvalue.transform(this.datos[this.datos.length - 1])?.forEach((element: any, index: any) => {
@@ -87,7 +89,7 @@ export class MatTableGroupComponent implements OnInit, OnChanges {
       this.arrayChange = this.arrayChange.filter((element: any, index: any) => {
          return this.arrayChange.indexOf(element) === index;
      });
-           
+
       try {
          this.arrayChange.forEach((ee: any, ii: any) => {
             data.splice((ii + ee), 0, { groupedBy: data[ii + ee][this.group], isGroupBy: true })

@@ -1,20 +1,21 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, KeyValuePipe } from '@angular/common';
 
-import { EgresadosRoutingModule } from './egresados-routing.module';
-import { EgresadosComponent } from './egresados.component';
+import { MasterRoutingModule } from './master-routing.module';
+import { MasterComponent } from './master.component';
 import { ComponentsModule } from 'src/app/components/components.module';
 import { MaterialModule } from 'src/app/components/material/material.module';
 import { MatTableModule } from 'src/app/components/mat-table/mat-table.module';
+import { ProgramaAcademicoDetailComponent } from './programa-academico-detail/programa-academico-detail.component';
 
 
 @NgModule({
   declarations: [
-    EgresadosComponent,
+    MasterComponent,
   ],
   imports: [
     CommonModule,
-    EgresadosRoutingModule,
+    MasterRoutingModule,
     ComponentsModule,
     MaterialModule,
     MatTableModule
@@ -23,4 +24,4 @@ import { MatTableModule } from 'src/app/components/mat-table/mat-table.module';
    KeyValuePipe
   ]
 })
-export class EgresadosModule { }
+export class MasterModule { }

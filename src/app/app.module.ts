@@ -12,44 +12,44 @@ import { MaterialModule } from './components/material/material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConfigDialogModule } from './public/config-dialog/config-dialog.module';
 import { LowerDashPipe } from './pipes/lower-dash.pipe';
-import { AsignarMateriaComponent } from './create/asignar-materia/asignar-materia.component';
+import { DialogsModule } from './dialogs/dialogs.module';
 
 export function getPaginatorIntl() {
- const paginatorIntl = new MatPaginatorIntl();
- paginatorIntl.itemsPerPageLabel = 'Registros por página:';
- paginatorIntl.nextPageLabel = 'Página siguiente';
- paginatorIntl.previousPageLabel = 'Página anterior';
- paginatorIntl.firstPageLabel ='Primera página';
- paginatorIntl.lastPageLabel = 'Última página';
- return paginatorIntl;
+   const paginatorIntl = new MatPaginatorIntl();
+   paginatorIntl.itemsPerPageLabel = 'Registros por página:';
+   paginatorIntl.nextPageLabel = 'Página siguiente';
+   paginatorIntl.previousPageLabel = 'Página anterior';
+   paginatorIntl.firstPageLabel = 'Primera página';
+   paginatorIntl.lastPageLabel = 'Última página';
+   return paginatorIntl;
 }
 @NgModule({
-  declarations: [
-    AppComponent,
-    LowerDashPipe,
-    AsignarMateriaComponent,
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    NgwWowModule,
-    MaterialModule,
-    FormsModule,
-    ReactiveFormsModule,
-    ConfigDialogModule
-  ],
-  providers: [AuthGuard, {
-    provide: HTTP_INTERCEPTORS,
-    useClass: ErrorCatchingInterceptor,
-    multi: true
-},
-{ provide: MatPaginatorIntl, useValue: getPaginatorIntl() },
-  LowerDashPipe
-],
+   declarations: [
+      AppComponent,
+      LowerDashPipe,
+   ],
+   imports: [
+      BrowserModule,
+      AppRoutingModule,
+      BrowserAnimationsModule,
+      HttpClientModule,
+      NgwWowModule,
+      MaterialModule,
+      FormsModule,
+      ReactiveFormsModule,
+      ConfigDialogModule,
+      DialogsModule
+   ],
+   providers: [AuthGuard, {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorCatchingInterceptor,
+      multi: true
+   },
+      { provide: MatPaginatorIntl, useValue: getPaginatorIntl() },
+      LowerDashPipe
+   ],
 
-  bootstrap: [AppComponent]
+   bootstrap: [AppComponent]
 })
 
 export class AppModule { }

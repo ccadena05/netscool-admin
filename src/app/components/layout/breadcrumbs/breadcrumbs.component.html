@@ -1,15 +1,18 @@
-<div class="w-full flex justify-between items-center p-6">
-   <div class="font-bold capitalize dark:text-white">
-      <a routerLink="/dashboard" class="text-black dark:text-white hover:text-orange-400 duration-300">Dashboard</a>
-      <span [ngClass]="modulo && this.router.url != '/dashboard' ? 'w-0' : 'w-auto'" class="cursor-default transition-[width] duration-300">&nbsp; / &nbsp;</span>
-      <a [routerLink]="objeto ? modulo?.link : undefined"
-         [ngClass]="objeto ? 'text-black dark:text-white hover:text-orange-400 duration-300' : 'cursor-default'"
-         *ngIf="modulo">{{modulo?.item}}</a>
-      <span [ngClass]="objeto && this.router.url.split('/')[3] != undefined ? 'w-0' : 'w-auto'" class="cursor-default transition-[width] duration-300">&nbsp; / &nbsp;</span>
-      <a *ngIf="objeto && this.router.url.split('/')[3] != undefined" class="cursor-default">{{objeto}}</a>
-      <!-- {{'c'+modulo.item+'c'}}{{'b'+objeto+'b'}}{{'a'+title+'a'}} -->
+<div class="w-full flex justify-between items-center">
+   <div class="font-bold capitalize dark:text-slate-100 flex gap-x-2">
+      <div *ngIf="ready === false" class="rounded-full animate-loader h-5 w-24 my-1"></div>
+      <a routerLink="/dashboard" [ngClass]="masterSection ? ' hover:!text-orange-400 cursor-pointer duration-300' : 'cursor-default'" class="text-slate-900 dark:text-slate-100">Dashboard</a>
+      <span *ngIf="masterSection && ready === true" class="cursor-default">/</span>
+      <div *ngIf="ready === false" class="rounded-full animate-loader h-5 w-24 my-1"></div>
+      <a [routerLink]="modulo.link" [ngClass]="detail ? 'hover:!text-orange-400 cursor-pointer duration-300' : 'cursor-default'" class="text-slate-900 dark:text-slate-100"> {{masterSection}}</a>
+      <span *ngIf="detail && ready === true" class="cursor-default">/</span>
+      <a *ngIf="(detail)" class="capitalize cursor-default">{{detail}}</a>
    </div>
-   <!--   
-   <input (keyup)="applyFilter($event)" #input type="text" class="w-48 text-size-sm ease-soft border-2 border-transparent rounded-xl bg-white dark:bg-dark-blue-50 transition-all focus:border-orange-300 text-gray-700 placeholder:text-gray-500 dark:border-dark-blue-100 dark:focus:border-orange-300 duration-300" placeholder="Buscar...">
-   -->
 </div>
+
+<!-- <div *ngIf="hola == false" class="h-full !overflow-hidden">
+   <app-waiter></app-waiter>
+</div>
+<div [class]="hola == true ? 'relative' : 'hidden'">
+   <router-outlet></router-outlet>
+</div> -->

@@ -119,6 +119,10 @@ textarea:focus {
    outline: none !important;
 }
 
+/* julieta perez
+empresa en irapuato
+quieren un proyecto */
+
 @font-face {
    font-family: poppins;
    src: url("assets/fonts/Poppins/Poppins-Light.ttf");
@@ -131,6 +135,64 @@ mat-label,
 .mat-select-value {
    color: rgb(0 0 0);
 }
+mat-dialog-container, .mat-select-panel {
+   border-radius: 0.75rem !important;
+}
+
+mat-tab-group[vertical]{
+   flex-direction: row !important;
+   column-gap: 16px;
+   justify-items: stretch !important;
+
+   .mat-tab-body-wrapper {
+      width: 100% !important;
+   }
+
+   .mat-tab-labels {
+      flex-direction: column !important;
+      row-gap: 8px;
+   }
+
+   mat-ink-bar{
+      height: 0 !important;
+      width: 0 !important;
+   }
+   .mat-tab-header {
+      border-bottom: 0px solid rgba(0,0,0,0) !important;
+  }
+}
+
+.mat-ink-bar {
+   height: 2px !important;
+   background: linear-gradient(310deg,#6d28d9,#ec4899) !important;
+}
+.mat-tab-label-active {
+   background-image: linear-gradient(310deg,#6d28d9,#ec4899) !important;
+   background-clip: text !important;
+   color: transparent !important;
+   // border-width: 2px;
+   // border-color: rgb(192 38 211 / 1);
+   opacity: 1 !important;
+   transition-duration: 300ms !important;
+   font-weight: 600;
+   height: 48px !important;
+   transition-duration: 300ms;
+   // z-index: -1;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+  box-shadow: 0 0 #0000 !important;
+//   outline-width: 0 !important;
+}
 
 .dark {
    mat-label,
@@ -138,14 +200,22 @@ mat-label,
    .mat-tab-label-content:not(.mat-tab-label-active .mat-tab-label-content),
    .mat-datepicker-toggle-default-icon,
    .mat-select-arrow,
-   .mat-snack-bar-container {
+   .mat-snack-bar-container, input, textarea, .mat-placeholder-required {
       color: rgb(203 213 225) !important;
+   }
+   .mat-radio-outer-circle{
+      border-color: rgba(203, 213, 225, 0.3) !important;
+   }
+   mat-radio-button:hover{
+      .mat-radio-outer-circle{
+         border-color: rgba(203, 213, 225, 0.7) !important;
+      }
    }
    .mat-calendar-arrow {
       fill: rgb(203 213 225);
    }
    .mat-form-field-outline {
-      color: rgb(203 213 225 / 0.1);
+      color: rgba(203, 213, 225, 0.1);
       transition-duration: 300ms;
    }
    .mat-form-field-flex:hover .mat-form-field-outline {
@@ -156,19 +226,22 @@ mat-label,
       color: #f6ac3f;
    }
    .mat-button-disabled .mat-paginator-icon {
-      fill: rgb(203 213 225 / 0.1);
+      fill: rgba(203, 213, 225, 0.1);
    }
    .mat-form-field-underline {
-      background: rgb(203 213 225 / 0.3);
+      background: rgba(203, 213, 225, 0.3);
    }
    .mat-focused .mat-form-field-ripple {
       background: #f6ac3f;
    }
    .mat-select-panel,
    .mat-calendar,
+   .mat-datepicker-content,
    .mat-snack-bar-container,
    .mat-dialog-container {
       background: rgb(33 44 63) !important;
+      border-radius: 0.75rem !important;
+      overflow: hidden;
       .mat-option-text,
       .mat-calendar-body-cell-content,
       .mat-calendar-table-header,
@@ -178,10 +251,10 @@ mat-label,
          color: rgb(203 213 225);
       }
       .mat-option.mat-selected:not(.mat-option-multiple) {
-         background: rgb(255 255 255 / 0.12);
+         background: rgba(255, 255, 255, 0.12);
       }
       .mat-option:not(.mat-selected):hover {
-         background: rgb(255 255 255 / 0.05);
+         background: rgba(255, 255, 255, 0.05);
       }
    }
    input[type="text"]:focus,
@@ -203,10 +276,10 @@ mat-label,
 }
 @layer components {
    .t-btn-primary {
-      @apply text-white text-sm tracking-wide bg-gradient-fuchsia rounded-xl py-3 px-6 duration-300 shadow-lg shadow-fuchsia-600/40;
+      @apply text-white text-sm tracking-wide bg-gradient-fuchsia rounded-xl py-3 px-6 duration-300 shadow-lg shadow-fuchsia-600/40 disabled:opacity-60;
    }
    .btn-circ-primary {
-      @apply bg-idea-flesh-pink hover:bg-idea-flesh-pink-light text-center text-white hover:text-white p-3 rounded-full font-semibold h-12 w-12 duration-300 shadow-lg shadow-fuchsia-600/40;
+      @apply bg-idea-flesh-pink hover:bg-idea-flesh-pink-light text-center text-white hover:text-white p-3 rounded-full font-semibold h-12 w-12 duration-300 shadow-lg shadow-fuchsia-600/40 disabled:opacity-60;
    }
    /* .t-btn-blue-primary {
       @apply  bg-blue-800 hover:bg-[#3555a8] text-center text-white hover:text-white p-3 rounded-md font-semibold mx-auto duration-300;
@@ -215,10 +288,10 @@ mat-label,
       @apply  bg-blue-800 hover:bg-[#3555a8] text-center text-white hover:text-blue-800 p-3 rounded-full font-semibold h-12 w-12 duration-300;
    } */
    .t-btn-secondary {
-      @apply text-sm tracking-wide bg-gradient-fuchsia bg-clip-text text-transparent border-2 border-fuchsia-600 rounded-xl py-3 px-6 shadow-lg shadow-fuchsia-600/40;
+      @apply text-sm tracking-wide bg-gradient-fuchsia bg-clip-text text-transparent border-2 border-fuchsia-600 rounded-xl py-3 px-6 shadow-lg shadow-fuchsia-600/40 disabled:opacity-60;
    }
    .btn-circ-secondary {
-      @apply bg-idea-flesh-pink-extra-light p-3 rounded-full text-center text-idea-flesh-pink border-2 border-transparent hover:border-idea-flesh-pink font-semibold h-12 w-12 duration-300 shadow-lg shadow-fuchsia-600/40;
+      @apply bg-idea-flesh-pink-extra-light p-3 rounded-full text-center text-idea-flesh-pink border-2 border-transparent hover:border-idea-flesh-pink font-semibold h-12 w-12 duration-300 shadow-lg shadow-fuchsia-600/40 disabled:opacity-60;
    }
    /* .t-btn-blue-secondary {
       @apply  bg-[#bcc7e2] p-3 rounded-md text-center text-blue-800 border-2 border-transparent hover:border-blue-800 font-semibold mx-auto duration-300
