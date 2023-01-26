@@ -50,30 +50,37 @@
                   <mat-form-field appearance="outline" class="col-span-3">
                      <mat-label>Nombre(s)</mat-label>
                      <input matInput type="text" formControlName="nombre">
+                     <mat-error>Ingresa un valor válido</mat-error>
                   </mat-form-field>
                   <mat-form-field appearance="outline" class="col-span-3">
                      <mat-label>Apellido paterno</mat-label>
                      <input matInput type="text" formControlName="apellido_paterno">
+                     <mat-error>Ingresa un valor válido</mat-error>
                   </mat-form-field>
                   <mat-form-field appearance="outline" class="col-span-3">
                      <mat-label>Apellido materno</mat-label>
                      <input matInput type="text" formControlName="apellido_materno">
+                     <mat-error>Ingresa un valor válido</mat-error>
                   </mat-form-field>
                   <mat-form-field appearance="outline" class="col-span-3">
                      <mat-label>Teléfono</mat-label>
                      <input matInput type="text" formControlName="telefono">
+                     <mat-error>Ingresa un valor válido</mat-error>
                   </mat-form-field>
                   <mat-form-field appearance="outline" class="col-span-3">
                      <mat-label>Celular</mat-label>
                      <input matInput type="text" formControlName="celular">
+                     <mat-error>Ingresa un valor válido</mat-error>
                   </mat-form-field>
                   <mat-form-field appearance="outline" class="col-span-3">
                      <mat-label>Ocupación</mat-label>
                      <input matInput type="text" formControlName="ocupacion">
+                     <mat-error>Ingresa un valor válido</mat-error>
                   </mat-form-field>
                   <mat-form-field appearance="outline" class="col-span-3">
                      <mat-label>Correo electrónico</mat-label>
                      <input matInput type="text" formControlName="email">
+                     <mat-error>Ingresa un valor válido</mat-error>
                   </mat-form-field>
                   <search-select class="w-full col-span-3" [rq]="true" [select]="sel['tbl_sexo_id']" [group]="grup['tbl_sexo_id']" [formCN]="'tbl_sexo_id'" [label]="'Sexo'" (response)="recibiRespuesta($event, 'tbl_sexo_id')"></search-select>
                </form>

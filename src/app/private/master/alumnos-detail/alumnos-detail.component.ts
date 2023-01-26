@@ -3,10 +3,12 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor, FormBuilder, FormGroup, Valida
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable, map, startWith, Subscription } from 'rxjs';
 import { DialogoConfirmacionComponent } from 'src/app/components/dialogo-confirmacion/dialogo-confirmacion.component';
 import { SearchSelectComponent } from 'src/app/components/search-select/search-select.component';
+import { SnackbarComponent } from 'src/app/components/snackbar/snackbar.component';
 import { CambiarContrasenaComponent } from 'src/app/dialogs/cambiar-contrasena/cambiar-contrasena.component';
+import { FormService } from 'src/app/services/form.service';
 import { LocalStoreService } from 'src/app/services/local-store.service';
 import { OutputService } from 'src/app/services/output.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
@@ -19,12 +21,22 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
    multi: true
 };
 
+export const status = {
+   'ACTIVO': 'bg-gradient-lime',
+   'BAJA': 'bg-gradient-red',
+   'BAJA POR FALTA DE PAGO': 'bg-gradient-orange',
+   'EGRESADO =)': 'bg-gradient-celestial',
+   'TITULADO': 'bg-gradient-teal',
+   'BAJA TEMPORAL': 'bg-gradient-yellow',
+   'EGRESADO SIN TERMINAR': 'bg-gradient-purplelake'
+}
+
 @Component({
    selector: 'app-alumnos-detail',
    templateUrl: './alumnos-detail.component.html',
    styleUrls: ['./alumnos-detail.component.scss']
 })
-export class AlumnosDetailComponent implements OnInit, OnDestroy, DoCheck {
+export class AlumnosDetailComponent implements OnInit, DoCheck, OnDestroy {
    _id: any;
    _paid: any;
    profileImg: boolean = false;
@@ -37,17 +49,10 @@ export class AlumnosDetailComponent implements OnInit, OnDestroy, DoCheck {
    grup: any = [];
    selObs: Observable<string[]> = {} as Observable<string[]>;
    tbl_municipio_id: Observable<string[]> = {} as Observable<string[]>;
-   /* tbl_estado_alumno_id: any = [];
-   tbl_estado_id: any = [];
-   tbl_generacion_id: any = [];
-   tbl_municipio_id: any = [];
-   tbl_pais_id: any = [];
-   tbl_programa_academico_id: any = [];
-   tbl_sangre_id: any = [];
-   tbl_sexo_id: any = [];
-   tbl_grupo_id: any = []; */
    contactos: any = [];
    tabActive: ElementRef = {} as ElementRef;
+   statusColor: any = '';
+   checkbox = ['documento_acta_nacimiento', 'documento_certificado', 'documento_curp']
 
    constructor(
       private provider: ProviderService,
@@ -57,48 +62,43 @@ export class AlumnosDetailComponent implements OnInit, OnDestroy, DoCheck {
       private router: Router,
       private dialog: MatDialog,
       private snackbar: MatSnackBar,
-      private output: OutputService
+      private output: OutputService,
+      private _form: FormService,
+      private ls: LocalStoreService
    ) {
       router.events.subscribe((val) => {
          if(val instanceof NavigationEnd){
             this._id = this.activatedRoute.snapshot.paramMap.get('id');
-            this.getAll();
          }
      });
    }
 
    ngOnInit(): void {
+      this.getData();
    }
 
    ngDoCheck(){
       document.querySelector('[vertical] .border-r-3')?.classList.remove("border-r-3","[border-image:linear-gradient(0deg,#6C2BD9,#E74694)1]");
       document.querySelector('[vertical] .mat-tab-label-active')?.classList.add("border-r-3","[border-image:linear-gradient(0deg,#6C2BD9,#E74694)1]");
    }
-
-   ngOnDestroy(){
-
-   }
-
-   getAll(){
-      this.getData();
-      /* this.getContactos();
-      this.getListas(); */
-      this.buildForm();
+   ngOnDestroy(): void {
+       this.ls.remove('bc')
+       this.ls.setItem('bc', null)
    }
 
    getData() {
       this.provider.BD_ActionPost('alumnos', 'alumnosDetail', { id: this._id }).subscribe(/*{
          next: */ (data: any) => {
-            // console.log(data);
+             console.log(data);
             this.output.ready.next(false);
+            this.buildForm();
             this._paid = data['DETAIL'].PROGRAMA_ACADEMICO_ID;
             this.data = data;
             this.alumno = data['DETAIL'];
-            this.output.detail.next(this.alumno.rfc);
             this.patchForm(data['DETAIL']);
             this.provider.BD_ActionPost('alumnos', 'indexC', { id: this._id }).subscribe(
                (data: any) => {
-                  this.contactos = data.data;
+                  this.contactos = data;
                   this.provider.BD_ActionPost('alumnos', 'getListas', {}).subscribe(
                      (data: any) => {
                         // console.log(data);
@@ -106,15 +106,25 @@ export class AlumnosDetailComponent implements OnInit, OnDestroy, DoCheck {
                            // this.periodoSelect = [];
                         } else {
                            this.sel = this.grup = data;
-                           /* this.sel.tbl_estado_alumno_id = data['tbl_estado_alumno_id'];
-                           this.sel.tbl_estado_id = data['tbl_estado_id'];
-                           this.sel.tbl_generacion_id = data['tbl_generacion_id'];
-                           this.sel.tbl_municipio_id = data['tbl_municipio_id'];
-                           this.sel.tbl_pais_id = data['tbl_pais_id'];
-                           this.sel.tbl_programa_academico_id = data['tbl_programa_academico_id'];
-                           this.sel.tbl_sangre_id = data['tbl_sangre_id'];
-                           this.sel.tbl_sexo_id = data['tbl_sexo_id'];
-                           this.sel.tbl_grupo_id = data['tbl_grupo_id']; */
+
+                           this.statusColor = status[this.data['DETAIL']['ESTADO_ALUMNO'] as keyof typeof status]
+                           this.ls.update('bc', {
+                              m1: {
+                                 item: 'Alumnos',
+                                 link: '/m/alumnos'
+                              },
+                              d1: {
+                                 item: this.alumno.rfc,
+                                 link: null
+                              },
+                              m2: {
+                                 item: null,
+                                 link: null
+                              },
+                              d2: {
+                                 item: null,
+                                 link: null
+                           }})
                            this.output.ready.next(true);
 
                         }
@@ -157,42 +167,14 @@ export class AlumnosDetailComponent implements OnInit, OnDestroy, DoCheck {
    }
 
    patchForm(data: any) {
-      this.formulario.patchValue({
-         nombre: data?.nombre,
-         apellido_paterno: data?.apellido_paterno,
-         apellido_materno: data?.apellido_materno,
-         beca: data?.beca,
-         inscripcion: data?.inscripcion,
-         email: data?.email,
-         rfc: data?.rfc,
-         codigo_postal: data?.codigo_postal,
-         direccion: data?.direccion,
-         telefono: data?.telefono,
-         celular: data?.celular,
-         fecha_nacimiento: data?.fecha_nacimiento,
-         indicaciones_medicas: data?.indicaciones_medicas,
-         documento_acta_nacimiento: this.verifyCheck(data?.documento_acta_nacimiento),
-         documento_certificado: this.verifyCheck(data?.documento_certificado),
-         documento_curp: this.verifyCheck(data?.documento_curp),
-         tbl_programa_academico_id:/*  { id: */ data?.tbl_programa_academico_id/* , name: data.PROGRAMA_ACADEMICO } */,
-         // tbl_programa_academico_id: /* { id: data.tbl_programa_academico_id, name: */ data.tbl_programa_academico_id /* } */,
-         tbl_grupo_id:/*  { id: */ data?.tbl_grupo_id/* , name: data.GRUPO } */,
-         tbl_generacion_id:/*  { id: */ data?.tbl_generacion_id/* , name: data.GENERACION } */,
-         tbl_estado_alumno_id:/*  { id: */ data?.tbl_estado_alumno_id/* , name: data.ESATDO_ALUMNO } */,
-         tbl_pais_id:/*  { id: */ data?.tbl_pais_id/* , name: data.PAIS } */,
-         tbl_estado_id:/*  { id: */ data?.tbl_estado_id/* , name: data.ESTADO } */,
-         tbl_municipio_id:/*  { id: */ data?.tbl_municipio_id/* , name: data.MUNICIPIO } */,
-         tbl_sexo_id:/*  { id: */ data?.tbl_sexo_id/* , name: data.SEXO } */,
-         tbl_sangre_id:/*  { id: */ data?.tbl_sangre_id/* , name: data.SANGRE } */,
-      });
-   }
-
-   verifyCheck($data: any) {
-      if ($data === 0) {
-         return false;
-      } else {
-         return true;
-      }
+      this.checkbox.forEach(element => {
+         data[element] = data[element] == 1 ? true : false
+     });
+     Object.keys(this.formulario?.controls).forEach(element => {
+        this.formulario.patchValue({
+           [element]: data[element]
+        })
+     });
    }
 
    update() {
@@ -210,7 +192,7 @@ export class AlumnosDetailComponent implements OnInit, OnDestroy, DoCheck {
                   next: (data: any) => {
                      console.log(data);
                      if (data['Mensaje'] === 0) {
-                        this.getAll();
+                        this.getData();
                         this.snackbar.open('Tus cambios se han guardado exitosamente.', 'Cerrar', { duration: 3000 })
                      }
                   },

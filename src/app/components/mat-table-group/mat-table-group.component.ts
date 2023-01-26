@@ -21,7 +21,7 @@ export class MatTableGroupComponent implements OnInit, OnChanges {
    matchStrings = /ID|id|Fecha|fecha_baja_imss|fecha_baja_laboral|fecha_ingreso|fecha_nacimiento|fecha_salida|Comprobante|comprobante|constancia|credencial|curp2|rfc2|email2|visita|codigo|DATAORDER|PERIODO_ANIO|califa|estatus|observaciones|optativa|PROMEDIO/
    @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
    @ViewChild(MatSort) sort: MatSort = {} as MatSort;
-   @Input() dataToDisplay: any = [{}];
+   @Input() dataToDisplay: any = [];
    @Input() group: any = '';
    dataSource: any = [];
    datos: any = [];
@@ -37,12 +37,12 @@ export class MatTableGroupComponent implements OnInit, OnChanges {
    }
 
    ngOnChanges(changes: SimpleChanges) {
-      // this.datos, this.displayedColumns, this.columns = {};
+      this.columns = this.datos = [];
       if (!changes['dataToDisplay']?.firstChange && changes['dataToDisplay']?.currentValue != null) {
          this.datos = changes['dataToDisplay']?.currentValue != false ? changes['dataToDisplay']?.currentValue : changes['dataToDisplay']?.previousValue;
          this.groupData(this.datos);
 
-         this.columns = [];
+         // this.columns = [];
          this.dataSource = new MatTableDataSource(this.datos);
          
          this.dataSource.paginator = this.paginator;

@@ -105,7 +105,7 @@ export class PrivateComponent implements OnInit {
          .observe(['(max-width: 768px)'])
          .pipe(delay(1), untilDestroyed(this))
          .subscribe((res) => {
-            if (res.matches) {
+            if (res?.matches) {
                this.sidenav.mode = 'over';
                this.sidenav.close();
             } else {

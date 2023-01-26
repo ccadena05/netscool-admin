@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy,Input } from '@angular/core';
+import { Component, OnInit, OnDestroy,Input, HostListener, AfterContentInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { filter } from 'rxjs/operators';
@@ -22,32 +22,48 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
   detail = new BehaviorSubject<any>('');
   modulo: any = '';
-  masterSection: any = '';
+//   masterSection: any = '';
   // public isEnabled: boolean = true;
   ready: boolean = false;
+  bread: any;
+  /* @HostListener('window:storage')
+  onStorageChange() {
+         this.masterSection = this.ls.getItem('bc').masterSection + 'a'
+         this.modulo = this.findInMenu('item', this.ls.getItem('bc').masterSection);
+         this.detail = this.ls.getItem('bc').detail;
+         console.log(this.masterSection);
+
+      } */
+
 
   constructor(
     public router: Router,
     private routePartsService: RoutePartsService,
     private activatedRoute: ActivatedRoute,
-    private local: LocalStoreService,
+    private ls: LocalStoreService,
     private output: OutputService
     ) {
       //  console.log(this.router.url.split('/')[3]);
       this.ready = false;
+
       router.events.subscribe((event: any) => {
          if (event instanceof NavigationEnd) {
-            let mod = this.activatedRoute.snapshot.paramMap.get('modulo');
-            console.log(mod);
-            
-            
-            this.output.masterSection.subscribe(data => {
-               console.log(data);
-               
+            this.ls.getObs$().subscribe(data => {this.bread = data})
+            console.log(this.bread);
+
+
+            // this.bread = this.ls.getItem('bc')
+
+
+            /* this.masterSection = this.ls.getItem('bc').masterSection
+            this.modulo = this.findInMenu('item', this.ls.getItem('bc').masterSection);
+            this.detail = this.ls.getItem('bc').detail */
+
+            /* this.output.masterSection.subscribe(data => {
                this.masterSection = data;
                this.modulo = this.findInMenu('item', this.masterSection);
-            })
-            this.output.detail.subscribe((data: any) => this.detail = data )
+            }) */
+            // this.output.detail.subscribe((data: any) => this.detail = data )
             this.ready = true;
          }
 
@@ -93,7 +109,13 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
       }) */
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+/*    this.masterSection = this.ls.getItem('bc')?.masterSection
+   this.modulo = this.findInMenu('item', this.ls.getItem('bc')?.masterSection);
+   this.detail = this.ls.getItem('bc').detail; */
+
+  }
   ngOnDestroy() {
     /* if (this.routerEventSub) {
       this.routerEventSub.unsubscribe();

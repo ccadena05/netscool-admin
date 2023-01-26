@@ -57,16 +57,19 @@
             <mat-form-field appearance="outline" class="col-span-6">
                <mat-label>Código programa académico</mat-label>
                <input matInput type="text" formControlName="descripcion">
+               <mat-error>Ingresa un valor válido</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" class="col-span-6">
                <mat-label>Especialidad</mat-label>
                <input matInput type="text" formControlName="especialidad">
+               <mat-error>Ingresa un valor válido</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" class="col-span-6">
                <mat-label>Fecha</mat-label>
                <input matInput [matDatepicker]="picker" formControlName="fecha">
                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                <mat-datepicker #picker class="rounded-xl overflow-hidden"></mat-datepicker>
+               <mat-error>Ingresa un valor válido</mat-error>
             </mat-form-field>
             <search-select class="w-full col-span-6" [rq]="true" [select]="sel['tbl_tipo_periodo_id']"
                [group]="grup['tbl_tipo_periodo_id']" [formCN]="'tbl_tipo_periodo_id'" [label]="'Tipo de periodo'"

@@ -4,6 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { JwtAuthService } from 'src/app/services/auth/jwt-auth.service';
+import { FormService } from 'src/app/services/form.service';
 import { OutputService } from 'src/app/services/output.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 
@@ -31,7 +32,8 @@ export class MaestrosDetailComponent implements OnInit {
       private router: Router,
       private dialog: MatDialog,
       private snackbar: MatSnackBar,
-      private output: OutputService
+      private output: OutputService,
+      private _form: FormService
    ) {
       router.events.subscribe((val) => {
          if (val instanceof NavigationEnd) {
@@ -115,7 +117,8 @@ export class MaestrosDetailComponent implements OnInit {
                      { id: 7, name: 'M.A.' },
                      { id: 8, name: 'Arq.' }
                    ];
-                  this.patchForm(this.data);
+                  // this.patchForm(this.data);
+                  this._form.patchForm(this.data, this.formulario, this.checkbox)
             this.provider.BD_ActionPost('maestros', 'indexC', { id: this._id }).subscribe(
                data=>{
                   console.log(data)

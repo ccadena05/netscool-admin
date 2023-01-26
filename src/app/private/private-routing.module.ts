@@ -70,6 +70,24 @@ const routes: Routes = [
          import('./master/maestros-detail/maestros-detail.module').then((m) => m.MaestrosDetailModule),
          //   data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
        },
+       {
+         path: 'm/materias/detail/:id',
+         loadChildren: () =>
+         import('./master/materias-detail/materias-detail.module').then((m) => m.MateriasDetailModule),
+         //   data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
+       },
+       {
+         path: 'm/horarios/detail/:id',
+         loadChildren: () =>
+         import('./master/horarios-detail/horarios-detail.module').then((m) => m.HorariosDetailModule),
+         //   data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
+       },
+       {
+         path: 'm/fecha-inscripcion/detail/:id',
+         loadChildren: () =>
+         import('./master/fechas-inscripcion-detail/fechas-inscripcion-detail.module').then((m) => m.FechasInscripcionDetailModule),
+         //   data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
+       },
        /* {
          path: 'm/:modulo/detail/:id',
          loadChildren: () =>

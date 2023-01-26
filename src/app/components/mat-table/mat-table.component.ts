@@ -13,9 +13,9 @@ import { MatTableDataSource } from '@angular/material/table';
 export class MatTableComponent implements OnInit, OnChanges {
    columns: any = [];
    displayedColumns: any = [];
-   matchStrings = /ID|id|Fecha|fecha_baja_imss|fecha_baja_laboral|fecha_ingreso|fecha_nacimiento|fecha_salida|Comprobante|comprobante|constancia|credencial|curp2|rfc2|email2|visita|codigo|DATAORDER|PERIODO_ANIO|califa|estatus|observaciones|optativa|PROMEDIO/
-   @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
-   @ViewChild(MatSort) sort: MatSort = {} as MatSort;
+   matchStrings = /ID|id/
+   @ViewChild(MatPaginator) paginator!: MatPaginator;
+   @ViewChild(MatSort) sort!: MatSort;
    @Input() dataToDisplay: any = [];
    dataSource: any = [];
    datos: any = [];
@@ -41,7 +41,7 @@ export class MatTableComponent implements OnInit, OnChanges {
          this.dataSource.paginator = this.paginator;
          this.dataSource.sort = this.sort;
 
-         this.keyvalue.transform(this.datos[0] ? this.datos[0] : this.datos[1])?.forEach((element: any, index: any) => {
+         this.keyvalue.transform(this.datos[0] ?? this.datos[1])?.forEach((element: any, index: any) => {
             this.columns?.push({
                columnDef: element?.key,
                header: element?.key.replace(/_/g, " "),

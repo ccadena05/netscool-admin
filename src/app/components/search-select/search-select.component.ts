@@ -39,9 +39,11 @@ export class SearchSelectComponent implements OnInit, OnChanges, AfterViewInit {
       this._label = changes['label']?.currentValue != undefined ? changes['label']?.currentValue : this._label;
       this._formCN = changes['formCN']?.currentValue != undefined ? changes['formCN']?.currentValue : this._formCN;
       this._rq = changes['rq']?.currentValue != undefined ? changes['rq']?.currentValue : this.rq;
-      // console.log(this._select);
-      // console.log(this._group);
-      // console.log(this._label);
+/*       console.log('this._select', this._select);
+      console.log('this._group', this._group);
+      console.log('this._label', this._label);
+      console.log('this._formCN', this._formCN);
+      console.log('this._rq', this._rq); */
 
       // this.getBloquesAlumno(changes['PROGRAMA_ACADEMICO_ID']?.currentValue);
    }

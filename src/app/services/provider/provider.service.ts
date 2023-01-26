@@ -27,7 +27,7 @@ export class ProviderService {
    }
 
    BD_ActionPost(modelo: any, action: any, data?: any) {
-      // console.log(environment.apiURL + modelo + this._url + action, data);
+      //  console.log(environment.apiURL + modelo + this._url + action, data);
       return this.http.post(environment.apiURL + modelo + this._url + action, data
       );
    }

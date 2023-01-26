@@ -1,9 +1,9 @@
 <mat-form-field appearance="outline" class="w-full">
-   <mat-label>{{_label}}</mat-label>
+   <mat-label>{{_label!}}</mat-label>
    <mat-select [required]="_rq" [formControlName]="_formCN" (valueChange)="selected($event)" class="!rounded-xl overflow-hidden relative">
       <input (keyup)="_group = search($event, _select)" (keydown.Space)="$event.stopPropagation()" placeholder="Buscar" class="sticky top-0 left-0 right-0 z-20 h-12 w-full dark:bg-dark-blue-100 border-b-2 [border-image:linear-gradient(310deg,#6C2BD9,#E74694)1] p-3">
       <div class="sticky top-0 left-0 right-0 bg-white dark:bg-dark-blue-100 z-10"></div>
       <div *ngIf="_group?.length == 0" disabled class="dark:text-slate-200 h-12 p-3" >Sin resultados</div>
-      <mat-option *ngFor="let item of _group" [value]="item.id" class="uppercase !text-sm">{{item.name}}</mat-option>
+      <mat-option *ngFor="let item of _group" [value]="item?.id" class="uppercase !text-sm">{{item?.name}}</mat-option>
    </mat-select>
 </mat-form-field>

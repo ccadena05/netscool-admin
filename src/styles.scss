@@ -135,11 +135,12 @@ mat-label,
 .mat-select-value {
    color: rgb(0 0 0);
 }
-mat-dialog-container, .mat-select-panel {
+mat-dialog-container,
+.mat-select-panel {
    border-radius: 0.75rem !important;
 }
 
-mat-tab-group[vertical]{
+mat-tab-group[vertical] {
    flex-direction: row !important;
    column-gap: 16px;
    justify-items: stretch !important;
@@ -153,21 +154,21 @@ mat-tab-group[vertical]{
       row-gap: 8px;
    }
 
-   mat-ink-bar{
+   mat-ink-bar {
       height: 0 !important;
       width: 0 !important;
    }
    .mat-tab-header {
-      border-bottom: 0px solid rgba(0,0,0,0) !important;
-  }
+      border-bottom: 0px solid rgba(0, 0, 0, 0) !important;
+   }
 }
 
 .mat-ink-bar {
    height: 2px !important;
-   background: linear-gradient(310deg,#6d28d9,#ec4899) !important;
+   background: linear-gradient(310deg, #6d28d9, #ec4899) !important;
 }
 .mat-tab-label-active {
-   background-image: linear-gradient(310deg,#6d28d9,#ec4899) !important;
+   background-image: linear-gradient(310deg, #6d28d9, #ec4899) !important;
    background-clip: text !important;
    color: transparent !important;
    // border-width: 2px;
@@ -183,15 +184,44 @@ mat-tab-group[vertical]{
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+   -webkit-appearance: none;
+   margin: 0;
 }
 
 /* Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
-  box-shadow: 0 0 #0000 !important;
-//   outline-width: 0 !important;
+input[type="number"] {
+   -moz-appearance: textfield;
+   box-shadow: 0 0 #0000 !important;
+   //   outline-width: 0 !important;
+}
+snack-bar-container {
+   border-radius: 0.75rem !important;
+   overflow: hidden !important;
+}
+
+snack-bar-container .done {
+   // position: relative !important;
+}
+
+snack-bar-container {
+   .done::before,
+   .error::before,
+   .info::before {
+      content: "";
+      width: 0.5rem !important;
+      height: 120% !important;
+      margin: -16px !important;
+      position: absolute !important;
+   }
+   .done::before {
+      background-color: #4ade80 !important;
+   }
+   .error::before {
+      background-color: #f87171 !important;
+   }
+   .info::before {
+      background-color: #60a5fa !important;
+   }
 }
 
 .dark {
@@ -200,14 +230,19 @@ input[type=number] {
    .mat-tab-label-content:not(.mat-tab-label-active .mat-tab-label-content),
    .mat-datepicker-toggle-default-icon,
    .mat-select-arrow,
-   .mat-snack-bar-container, input, textarea, .mat-placeholder-required {
+   .mat-snack-bar-container,
+   input,
+   textarea,
+   mat-hint,
+   .mat-date-range-input-separator,
+   .mat-placeholder-required {
       color: rgb(203 213 225) !important;
    }
-   .mat-radio-outer-circle{
+   .mat-radio-outer-circle {
       border-color: rgba(203, 213, 225, 0.3) !important;
    }
-   mat-radio-button:hover{
-      .mat-radio-outer-circle{
+   mat-radio-button:hover {
+      .mat-radio-outer-circle {
          border-color: rgba(203, 213, 225, 0.7) !important;
       }
    }
@@ -299,4 +334,24 @@ input[type=number] {
    /* .btn-circ-blue-secondary {
       @apply  bg-[#bcc7e2] p-3 rounded-full text-center text-blue-800 border-2 border-transparent hover:border-blue-800 font-semibold h-12 w-12 duration-300
    } */
+}
+
+.mat-select-panel {
+   overflow: scroll !important;
+}
+
+
+::-webkit-scrollbar{
+   width: 0px;
+   height: 0px;
+}
+
+::-webkit-scrollbar-track {
+   -webkit-appearance: none;
+   display: none !important;
+   background: rgba(0,0,0,0);
+}
+
+::-webkit-scrollbar-thumb {
+   background: rgba(0,0,0,0.1);
 }

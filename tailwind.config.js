@@ -22,6 +22,9 @@ module.exports = {
         'nets-blue':'#002246',
 
       },
+      gridTemplateRows: {
+         '12': 'repeat(12, minmax(0, 1fr))',
+      },
       gridTemplateColumns: {
          '24': 'repeat(24, minmax(0, 1fr))',
       },

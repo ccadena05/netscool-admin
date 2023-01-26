@@ -1,8 +1,12 @@
-<mat-form-field class="w-full md:w-1/2">
-   <mat-label class="text-slate-500 dark:!text-slate-100">Buscar</mat-label>
-   <input matInput type="text" autocomplete="off" (keyup)="applyFilter($event)" #input
+<div class="flex items-center gap-x-2 w-full md:w-1/2">
+   <mat-form-field class="w-full">
+      <mat-error>Ingresa un valor válido</mat-error>
+      <mat-label class="text-slate-500 dark:!text-slate-100">Buscar</mat-label>
+      <input matInput type="text" autocomplete="off" (keyup)="applyFilter($event)" #input
       class="text-slate-500 dark:!text-slate-100">
-</mat-form-field>
+   </mat-form-field>
+   <mat-icon class="text-slate-500 dark:!text-slate-300 cursor-pointer">tune</mat-icon>
+</div>
 <table mat-table  #table [dataSource]="dataSource" matSort class="bg-white dark:!bg-dark-blue-50 !w-full">
    <ng-container *ngFor="let column of columns" [matColumnDef]="column?.columnDef">
       <th mat-header-cell
@@ -16,10 +20,15 @@
    </ng-container>
    <tr mat-header-row  *matHeaderRowDef="displayedColumns; sticky: true"></tr>
    <!-- <a [routerLink]=" '/m/' + row.link_id + '/detail/' + row.id" *matRowDef="let row; columns: displayedColumns;"> -->
-      <tr mat-row  [routerLink]=" '/m/' + row.link_id + '/detail/' + row.id" *matRowDef="let row; columns: displayedColumns;"
+      <tr mat-row [routerLink]=" '/m/' + row.link_id + '/detail/' + row.id" *matRowDef="let row; columns: displayedColumns;"
          class="hover:!bg-slate-100 dark:hover:!bg-slate-100/10 cursor-pointer duration-300">
          {{row}}</tr>
    <!-- </a> -->
+   <tr class="mat-row block text-center justify-center !w-full" *matNoDataRow>
+      <td class="mat-cell block !py-4 text-center !w-full dark:text-slate-300" [attr.colspan]="displayedColumns.length">
+        No hay registros disponibles.
+      </td>
+    </tr>
    <tr mat-row class="mat-row block text-center justify-center !w-full" *matNoDataRow>
       <td class="mat-cell block !py-4 text-center !w-full dark:text-slate-300">No hay registros que coincidan con
          "{{input.value}}"

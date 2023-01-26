@@ -24,8 +24,8 @@ export class PagosComponent implements OnInit, OnChanges {
       if(id){
          this.provider.BD_ActionPost('alumnos', 'historialPagos', { id: id }).subscribe(/* {
             next:  */(data: any) => {
-               // console.log(id,data);
-               this.dataToDisplay = data.data;
+               console.log(data);
+               this.dataToDisplay = data;
             }/* , error: (error: any) => {
                console.log(error);
             }

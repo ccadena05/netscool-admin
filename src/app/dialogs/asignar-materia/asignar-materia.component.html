@@ -22,7 +22,7 @@
       <mat-select formControlName="grupo">
          <mat-option *ngFor="let item of grupos" [value]="item.name">{{ item.name }}</mat-option>
       </mat-select>
-      <mat-error>Ingresa una observación válida.</mat-error>
+      <mat-error>Ingresa un valor válido</mat-error>
    </mat-form-field>
    <button [disabled]="formulario.invalid" class="t-btn-primary mx-auto">
       Guardar

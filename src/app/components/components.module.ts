@@ -18,6 +18,7 @@ import { PagosComponent } from './pagos/pagos.component';
 import { MatTableGroupComponent } from './mat-table-group/mat-table-group.component';
 import { SearchSelectComponent } from './search-select/search-select.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SnackbarComponent } from './snackbar/snackbar.component';
 
 
 let components = [
@@ -31,7 +32,7 @@ let components = [
 ]
 
 @NgModule({
-  declarations: [components, FunnelChartComponent, BarChartComponent, ColumnChartComponent, PieChartComponent, LineChartComponent, ReticulaComponent, NumberToRomanSymbolPipe, MatTableGroupComponent],
+  declarations: [components, FunnelChartComponent, BarChartComponent, ColumnChartComponent, PieChartComponent, LineChartComponent, ReticulaComponent, NumberToRomanSymbolPipe, MatTableGroupComponent, SnackbarComponent],
   imports: [
     CommonModule,
     RouterModule,

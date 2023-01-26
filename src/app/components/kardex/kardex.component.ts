@@ -8,7 +8,7 @@ import { ProviderService } from 'src/app/services/provider/provider.service';
 })
 export class KardexComponent implements OnInit, OnChanges {
    dataToDisplay: any = []
-   group = 'PERIODO_ANIO';
+   group = 'PERIODO_ANIO_ID';
    @Input() alumnoId: any;
    @Input() PROGRAMA_ACADEMICO_ID: any;
    constructor(
@@ -24,8 +24,8 @@ export class KardexComponent implements OnInit, OnChanges {
    getData() {
           this.provider.BD_ActionPost('alumnos', 'kardexCursadas', { id: this.alumnoId, ida: this.PROGRAMA_ACADEMICO_ID }).subscribe({
              next: (data: any) => {
-                  // console.log(data);
-                this.dataToDisplay = data.data;
+                  console.log(data);
+                this.dataToDisplay = data;
              }, error: (error: any) => {
                 console.log(error);
              }

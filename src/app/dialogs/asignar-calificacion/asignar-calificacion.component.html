@@ -18,16 +18,19 @@
    <mat-tab label="ASIGNAR CALIFICACIÓN FINAL">
       <form [formGroup]="formulario" class="grid grid-cols-1 gap-x-6 pt-3">
          <mat-form-field appearance="outline">
+            <mat-error>Ingresa un valor válido</mat-error>
             <mat-label>Calificación final</mat-label>
             <input matInput autocomplete="off" formControlName="calificacion">
             <mat-error>Ingresa una calificación válida.</mat-error>
          </mat-form-field>
          <mat-form-field appearance="outline">
+            <mat-error>Ingresa un valor válido</mat-error>
             <mat-label>Observaciones</mat-label>
             <textarea matInput autocomplete="off" formControlName="observaciones"></textarea>
             <mat-error>Ingresa una observación válida.</mat-error>
          </mat-form-field>
          <mat-form-field *ngIf="materia.optativa == 1" appearance="outline">
+            <mat-error>Ingresa un valor válido</mat-error>
             <mat-label>Calificación cualitativa</mat-label>
             <mat-select formControlName="estatus">
                <mat-option *ngFor="let item of items" [value]="item.name">{{ item.name }}</mat-option>
@@ -41,10 +44,12 @@
    <mat-tab label="ASIGNAR CALIFICACIÓN PARCIAL">
       <form [formGroup]="formularioParc" class="grid grid-cols-1 gap-x-6 pt-3">
          <mat-form-field appearance="outline">
+            <mat-error>Ingresa un valor válido</mat-error>
             <mat-label>Calificación parcial</mat-label>
             <input matInput autocomplete="off" formControlName="calificacion">
          </mat-form-field>
          <mat-form-field appearance="outline">
+            <mat-error>Ingresa un valor válido</mat-error>
             <mat-label>Observaciones</mat-label>
             <textarea matInput autocomplete="off" formControlName="observaciones"></textarea>
          </mat-form-field>

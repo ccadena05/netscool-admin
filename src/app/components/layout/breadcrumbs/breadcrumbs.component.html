@@ -1,4 +1,4 @@
-<div class="w-full flex justify-between items-center">
+<!-- <div class="w-full flex justify-between items-center">
    <div class="font-bold capitalize dark:text-slate-100 flex gap-x-2">
       <div *ngIf="ready === false" class="rounded-full animate-loader h-5 w-24 my-1"></div>
       <a routerLink="/dashboard" [ngClass]="masterSection ? ' hover:!text-orange-400 cursor-pointer duration-300' : 'cursor-default'" class="text-slate-900 dark:text-slate-100">Dashboard</a>
@@ -7,12 +7,30 @@
       <a [routerLink]="modulo.link" [ngClass]="detail ? 'hover:!text-orange-400 cursor-pointer duration-300' : 'cursor-default'" class="text-slate-900 dark:text-slate-100"> {{masterSection}}</a>
       <span *ngIf="detail && ready === true" class="cursor-default">/</span>
       <a *ngIf="(detail)" class="capitalize cursor-default">{{detail}}</a>
+      <span *ngIf="detail && ready === true" class="cursor-default">/</span>
+      <a *ngIf="(detail)" class="capitalize cursor-default">{{detail}}</a>
+      <span *ngIf="detail && ready === true" class="cursor-default">/</span>
+      <a *ngIf="(detail)" class="capitalize cursor-default">{{detail}}</a>
+   </div>
+</div> -->
+<div class="w-full flex justify-between items-center">
+   <div class="font-bold capitalize dark:text-slate-100 flex gap-x-2">
+      <a routerLink="/dashboard" [ngClass]="bread?.m1?.item ? ' hover:!text-nets-yellow cursor-pointer duration-300' : 'cursor-default'" class="text-slate-900 dark:text-slate-100">Dashboard</a>
+      <span *ngIf="bread?.m1?.item != null && ready === true" class="cursor-default">/</span>
+
+      <!-- m1 -->
+      <a [routerLink]="bread?.m1?.link" *ngIf="bread?.m1?.item" [ngClass]="bread?.d1?.item ? 'hover:!text-nets-yellow cursor-pointer duration-300' : 'cursor-default'" class="text-slate-900 dark:text-slate-100"> {{bread?.m1?.item}}</a>
+      <span *ngIf="bread?.d1?.item != null && ready === true" class="cursor-default">/</span>
+
+      <!-- d1 -->
+      <a [routerLink]="bread?.d1?.link" *ngIf="bread?.d1?.item" [ngClass]="bread?.m2?.item ? 'hover:!text-nets-yellow cursor-pointer duration-300' : 'cursor-default'" class="capitalize">{{bread?.d1?.item}}</a>
+      <span *ngIf="bread?.m2?.item != null && ready === true" class="cursor-default">/</span>
+
+      <!-- d1 -->
+      <a [routerLink]="bread?.m2?.link" *ngIf="bread?.m2?.item" [ngClass]="bread?.d2?.item ? 'hover:!text-nets-yellow cursor-pointer duration-300' : 'cursor-default'" class="capitalize">{{bread?.m2?.item}}</a>
+      <span *ngIf="bread?.d2?.item != null && ready === true" class="cursor-default">/</span>
+
+      <!-- d2 -->
+      <a [routerLink]="bread?.d2?.link" *ngIf="bread?.d2?.item" class="capitalize cursor-default">{{bread?.d2?.item}}</a>
    </div>
 </div>
-
-<!-- <div *ngIf="hola == false" class="h-full !overflow-hidden">
-   <app-waiter></app-waiter>
-</div>
-<div [class]="hola == true ? 'relative' : 'hidden'">
-   <router-outlet></router-outlet>
-</div> -->

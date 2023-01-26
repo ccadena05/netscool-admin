@@ -18,6 +18,7 @@ export class EgresadosDetailComponent implements OnInit, DoCheck, OnDestroy {
    formulario!: FormGroup;
    sel: any = [];
    grup: any = [];
+   checkbox: any = ['kardex', 'certificado', 'titulacion', 'foto2', 'documento_acta_nacimiento', 'documento_certificado', 'documento_curp']
 
 
    constructor(
@@ -63,13 +64,6 @@ export class EgresadosDetailComponent implements OnInit, DoCheck, OnDestroy {
          this.alumno = data['DETAIL'];
          this.output.detail.next(this.alumno.rfc);
          this.output.masterSection.next('Egresados');
-         data['DETAIL'].kardex = data['DETAIL'].kardex == 1 ? true : false;
-         data['DETAIL'].certificado = data['DETAIL'].certificado == 1 ? true : false;
-         data['DETAIL'].titulacion = data['DETAIL'].titulacion == 1 ? true : false;
-         data['DETAIL'].foto2 = data['DETAIL'].foto2 == 1 ? true : false;
-         data['DETAIL'].documento_acta_nacimiento = data['DETAIL'].documento_acta_nacimiento == 1 ? true : false;
-         data['DETAIL'].documento_certificado = data['DETAIL'].documento_certificado == 1 ? true : false;
-         data['DETAIL'].documento_curp = data['DETAIL'].documento_curp == 1 ? true : false;
          this.patchForm(data['DETAIL']);
 
          this.output.ready.next(true)
@@ -133,6 +127,9 @@ export class EgresadosDetailComponent implements OnInit, DoCheck, OnDestroy {
    }
 
    patchForm(data: any){
+      this.checkbox.forEach((element: any) => {
+         data[element] = data[element] == 1 ? true : false
+     });
       Object.keys(this.formulario.controls).forEach(element => {
          this.formulario.patchValue({
             [element]: data[element]
