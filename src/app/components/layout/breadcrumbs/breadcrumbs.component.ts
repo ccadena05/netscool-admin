@@ -50,7 +50,8 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
          if (event instanceof NavigationEnd) {
             this.ls.getObs$().subscribe(data => {this.bread = data})
             console.log(this.bread);
-
+            console.log(this.ls.getItem('bc'));
+            
 
             // this.bread = this.ls.getItem('bc')
 

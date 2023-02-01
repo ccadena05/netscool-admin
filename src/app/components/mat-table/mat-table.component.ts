@@ -19,6 +19,7 @@ export class MatTableComponent implements OnInit, OnChanges {
    @Input() dataToDisplay: any = [];
    dataSource: any = [];
    datos: any = [];
+   img: any[] = [];
 
    constructor(
       private _liveAnnouncer: LiveAnnouncer,

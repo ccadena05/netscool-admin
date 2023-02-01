@@ -2,6 +2,7 @@ import { Component, forwardRef, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { SearchSelectComponent } from 'src/app/components/search-select/search-select.component';
+import { LocalStoreService } from 'src/app/services/local-store.service';
 import { OutputService } from 'src/app/services/output.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 
@@ -29,7 +30,8 @@ export class ProgramaAcademicoDetailComponent implements OnInit {
       private formBuilder: FormBuilder,
       private provider: ProviderService,
       private router: Router,
-      private activatedRoute: ActivatedRoute
+      private activatedRoute: ActivatedRoute,
+      private ls: LocalStoreService
    ) {
       router.events.subscribe((val) => {
          if (val instanceof NavigationEnd) {
@@ -66,9 +68,16 @@ export class ProgramaAcademicoDetailComponent implements OnInit {
                data => {
                   this.sel = this.grup = data;
                   this.patchForm(this.data);
-                  this.output.masterSection.next('Programa académico')
-                  this.output.detail.next(this.data['carrera_descripcion'])
-                  console.log(this.sel)
+                  this.ls.update('bc', [
+                     {
+                        item: 'Programa académico',
+                        link: '/m/programa_academico'
+                     },
+                     {
+                        item: this.data['carrera_descripcion'],
+                        link: null
+                     }
+                  ])
                   this.output.ready.next(true)
                }
 

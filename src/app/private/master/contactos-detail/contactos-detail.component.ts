@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { LocalStoreService } from 'src/app/services/local-store.service';
 import { OutputService } from 'src/app/services/output.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 
@@ -22,7 +23,8 @@ export class ContactosDetailComponent implements OnInit {
       private formBuilder: FormBuilder,
       private provider: ProviderService,
       private router: Router,
-      private activatedRoute: ActivatedRoute
+      private activatedRoute: ActivatedRoute,
+      private ls: LocalStoreService
    ) {
       router.events.subscribe((val) => {
          if (val instanceof NavigationEnd) {
@@ -47,18 +49,28 @@ export class ContactosDetailComponent implements OnInit {
    getData() {
       this.output.ready.next(false);
 
-      this.provider.BD_ActionPost('contactos', 'getDetail', { id: this._id }).subscribe(
-         data => {
-            this.data = data
-            this.patchForm(data);
-            this.provider.BD_ActionPost('contactos', 'indexSexo').subscribe(
-               data => {
-                  this.sel['tbl_sexo_id'] = this.grup['tbl_sexo_id'] = data;
-                  this.provider.BD_ActionPost('contactos', 'indexC', {id: this._id}).subscribe(
-                     data => {
-                        this.dataToDisplay = data;
-                        this.output.masterSection.next('Contactos')
-                        this.output.detail.next(this.data['nombre'].toLowerCase() + ' ' + this.data['apellido_paterno'].toLowerCase() + ' ' + this.data['apellido_materno'].toLowerCase())
+      this.provider.BD_ActionPost('contactos', 'detail', { id: this._id }).subscribe(
+         detail => {
+            this.data = detail
+            this.patchForm(detail);
+            this.provider.BD_ActionPost('contactos', 'listas').subscribe(
+               listas => {
+                  this.sel = this.grup = listas;
+                  this.provider.BD_ActionPost('contactos', 'alumnos', {id: this._id}).subscribe(
+                     alumnos => {
+                        this.dataToDisplay = alumnos;
+                        console.log(alumnos);
+                        
+                        this.ls.update('bc', [
+                           {
+                              item: 'Contactos',
+                              link: '/m/contactos'
+                           },
+                           {
+                              item: this.data['nombre'].toLowerCase() + ' ' + this.data['apellido_paterno'].toLowerCase() + ' ' + this.data['apellido_materno'].toLowerCase(),
+                              link: null
+                           }
+                        ])
                      }
                   )
                },

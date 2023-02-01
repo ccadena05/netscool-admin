@@ -51,21 +51,20 @@ export class HorariosDetailComponent implements OnInit {
                element.link_id = 'horarios';
                element.id = this._id + '/periodo/' + element.id;
             });
-            this.ls.update('bc', {
-               m1: {
+            this.ls.update('bc', [
+               {
                   item: 'Horarios',
                   link: '/m/horarios'
                },
-               d1: {
+               {
                   item: data[0]['01_PROGRAMA_ACADEMICO'],
                   link: '/m/horarios/detail/' + this._id
                },
-               m2: {
+               {
                   item: 'Periodo',
                   link: '/m/horarios/detail/' + this._id
-               },
-               d2: null
-            })
+               }
+            ])
             this.output.ready.next(true)
         }
      )

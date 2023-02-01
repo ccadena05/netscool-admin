@@ -15,7 +15,11 @@
       <td mat-cell
          class="text-slate-500 dark:!text-slate-100 text-[80%] {{column?.header.match(matchStrings) ? '!hidden' : ''}}"
          *matCellDef="let row">
-         {{ column?.cell(row) != 'null' ? column?.cell(row) : ''}}
+         <span *ngIf="column.header != '00 '">{{ column?.cell(row) != 'null' ? column?.cell(row) : ''}}</span>
+         <img *ngIf="column.header == '00 '" (error)="img[column?.cell(row)] = true" [ngClass]="img[column?.cell(row)] == true ? 'hidden' : ''" [src]="column?.cell(row)" alt="" class="h-8 w-6 object-cover rounded-lg scale-110">
+         <div *ngIf="img && column.header == '00 '" [ngClass]="img[column?.cell(row)] == true ? '' : 'hidden'" class="h-8 w-6 bg-gradient-fuchsia rounded-lg flex shrink-0 shadow-lg shadow-fuchsia-600/40">
+            <mat-icon class="m-auto !text-white scale-90">account_circle</mat-icon>
+         </div>
       </td>
    </ng-container>
    <tr mat-header-row  *matHeaderRowDef="displayedColumns; sticky: true"></tr>

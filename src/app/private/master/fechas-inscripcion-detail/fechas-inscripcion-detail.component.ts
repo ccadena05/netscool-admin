@@ -69,42 +69,34 @@ export class FechasInscripcionDetailComponent implements OnInit {
       router.events.subscribe((val) => {
          if (val instanceof NavigationEnd) {
             this._id = this.activatedRoute.snapshot.paramMap.get('id');
+            this.getData();
          }
       });
    }
 
    ngOnInit(): void {
-      this.getData();
    }
 
    getData() {
       this.output.ready.next(false)
       this.buildForm();
-      this.provider.BD_ActionPost('fecha-inscripcion', 'getCurrent', { id: this._id }).subscribe(
+      this.provider.BD_ActionPost('fechaInscripcion', 'detail', { id: this._id }).subscribe(
          (detail: any) => {
             console.log(detail)
             this._form.patchForm(detail, this.formulario)
-            this.provider.BD_ActionPost('fecha-inscripcion', 'getPeriodo', { id: detail['tbl_periodo_id'] }).subscribe(
+            this.provider.BD_ActionPost('fechaInscripcion', 'periodo', { id: detail['tbl_periodo_id'] }).subscribe(
                (periodo: any) => {
                   this.sel = this.grup = periodo
                   console.log(periodo);
-                  this.ls.update('bc', {
-                     m1: {
+                  this.ls.update('bc', [
+                     {
                         item: 'Fechas de inscripciones',
-                        link: '/m/fecha-inscripcion'
+                        link: '/m/fechaInscripcion'
                      },
-                     d1: {
+                     {
                         item: detail?.descripcion,
                         link: null
-                     },
-                     m2: {
-                        item: null,
-                        link: null
-                     },
-                     d2: {
-                        item: null,
-                        link: null
-                  }})
+                     }])
                   this.output.ready.next(true)
                }
             )
@@ -134,6 +126,6 @@ export class FechasInscripcionDetailComponent implements OnInit {
    }
 
    update(){
-      
+
    }
 }

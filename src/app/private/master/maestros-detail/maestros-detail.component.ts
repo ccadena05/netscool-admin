@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { JwtAuthService } from 'src/app/services/auth/jwt-auth.service';
 import { FormService } from 'src/app/services/form.service';
+import { LocalStoreService } from 'src/app/services/local-store.service';
 import { OutputService } from 'src/app/services/output.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 
@@ -33,7 +34,8 @@ export class MaestrosDetailComponent implements OnInit {
       private dialog: MatDialog,
       private snackbar: MatSnackBar,
       private output: OutputService,
-      private _form: FormService
+      private _form: FormService,
+      private ls: LocalStoreService
    ) {
       router.events.subscribe((val) => {
          if (val instanceof NavigationEnd) {
@@ -131,8 +133,16 @@ export class MaestrosDetailComponent implements OnInit {
                            data=>{
                               console.log(data)
                               this.dataVacaciones = data;
-                              this.output.masterSection.next('Maestros');
-                              this.output.detail.next(this.data.rfc);
+                              this.ls.update('bc', [
+                                 {
+                                    item: 'Maestros',
+                                    link: '/m/maestros'
+                                 },
+                                 {
+                                    item: this.data['nombre'].toLowerCase() + ' ' + this.data['apellido_paterno'].toLowerCase() + ' ' + this.data['apellido_materno'].toLowerCase(),
+                                    link: null
+                                 }
+                              ])
                               this.output.ready.next(true);
                            })
                      })

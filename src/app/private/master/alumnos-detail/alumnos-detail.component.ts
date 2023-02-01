@@ -87,47 +87,34 @@ export class AlumnosDetailComponent implements OnInit, DoCheck, OnDestroy {
    }
 
    getData() {
-      this.provider.BD_ActionPost('alumnos', 'alumnosDetail', { id: this._id }).subscribe(/*{
-         next: */ (data: any) => {
-             console.log(data);
-            this.output.ready.next(false);
-            this.buildForm();
-            this._paid = data['DETAIL'].PROGRAMA_ACADEMICO_ID;
-            this.data = data;
-            this.alumno = data['DETAIL'];
-            this.patchForm(data['DETAIL']);
-            this.provider.BD_ActionPost('alumnos', 'indexC', { id: this._id }).subscribe(
-               (data: any) => {
-                  this.contactos = data;
-                  this.provider.BD_ActionPost('alumnos', 'getListas', {}).subscribe(
-                     (data: any) => {
-                        // console.log(data);
-                        if (data['Mensaje'] === '1') {
-                           // this.periodoSelect = [];
-                        } else {
-                           this.sel = this.grup = data;
+      this.output.ready.next(false);
+      this.buildForm();
+      this.provider.BD_ActionPost('alumnos', 'detail', { id: this._id }).subscribe(
+         (detail: any) => {
+            this._paid = detail['DETAIL'].PROGRAMA_ACADEMICO_ID;
+            this.data = detail;
+            this.alumno = detail['DETAIL'];
+            this.patchForm(detail['DETAIL']);
+            this.provider.BD_ActionPost('alumnos', 'contactos', { id: this._id }).subscribe(
+               (contactos: any) => {
+                  this.contactos = contactos;
+                  this.provider.BD_ActionPost('alumnos', 'listas', {}).subscribe(
+                     (listas: any) => {
+                           this.sel = this.grup = listas;
 
                            this.statusColor = status[this.data['DETAIL']['ESTADO_ALUMNO'] as keyof typeof status]
-                           this.ls.update('bc', {
-                              m1: {
+                           this.ls.update('bc', [
+                              {
                                  item: 'Alumnos',
                                  link: '/m/alumnos'
                               },
-                              d1: {
+                              {
                                  item: this.alumno.rfc,
                                  link: null
-                              },
-                              m2: {
-                                 item: null,
-                                 link: null
-                              },
-                              d2: {
-                                 item: null,
-                                 link: null
-                           }})
+                              }
+                           ])
                            this.output.ready.next(true);
 
-                        }
                      });
                })
          }

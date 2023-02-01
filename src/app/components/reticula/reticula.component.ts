@@ -7,6 +7,17 @@ import { AsignarMateriaComponent } from 'src/app/dialogs/asignar-materia/asignar
 import { JwtAuthService } from 'src/app/services/auth/jwt-auth.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 
+export const status = {
+   'morado': 'bg-purple-100',
+   'verde': 'bg-green-100',
+   'amarillo': 'bg-yellow-100',
+   'naranja': 'bg-orange-100',
+   'rosado': 'bg-rose-100',
+   'rojo': 'bg-red-100',
+   'rosa': 'bg-pink-100',
+   'gris': 'bg-gray-100',
+   'blanco': 'bg-white'
+}
 @Component({
    selector: 'app-reticula',
    templateUrl: './reticula.component.html',
@@ -18,9 +29,12 @@ export class ReticulaComponent implements OnInit, OnChanges {
    @Input() alumno: any;
    @Input() PROGRAMA_ACADEMICO_ID: any;
    @Input() modulo: any;
+   @Input() id: any;
    mod: any;
    alumn: any;
    paid: any;
+   _id: any;
+   bg: any;
    constructor(
       private provider: ProviderService,
       private jwtAuth: JwtAuthService,
@@ -32,7 +46,6 @@ export class ReticulaComponent implements OnInit, OnChanges {
    }
 
    ngOnChanges(changes: SimpleChanges) {
-      console.log(changes);
       if(changes['modulo']?.currentValue)
          this.modulo = changes['modulo']?.currentValue;
 
@@ -42,48 +55,29 @@ export class ReticulaComponent implements OnInit, OnChanges {
       if(changes['alumno']?.currentValue)
          this.alumn = changes['alumno']?.currentValue;
 
-      this.getBloquesAlumno(this.paid, this.modulo);
+      if(changes['id']?.currentValue)
+         this._id = changes['id']?.currentValue;
+
+      this.getBloquesAlumno(this.paid, this.modulo, this._id);
    }
 
-   getReticulaAlumno(paid: any, modulo: any) {
-      if (this.alumno?.id != null || paid != null) {
-         this.provider
-            .BD_ActionPost(modulo, 'getReticula', {
-               id: this.alumno?.id,
-               paid: paid,
-               //token: this.currentUser.token,
-            })
-            .subscribe({
-               next: (data: any) => {
-                   console.log(data)
-                  this.arrayBloquesMaterias = data;
-               },
-               error: (error: any) => {
-                  console.log(error);
-               }
-            });
+   getBloquesAlumno(paid: any, modulo: any, id?: any) {
+      if (id != null || paid != null && modulo) {
+         this.provider.BD_ActionPost(modulo, 'bloques', { id: id, paid: paid,}).subscribe(
+            (bloques: any) => {
+               this.arrayBloques = bloques;
+               this.provider.BD_ActionPost(modulo, 'reticula', { id: id, paid: paid }).subscribe(
+                  (reticula: any) => {
+                     this.arrayBloquesMaterias = reticula;
+                  }
+               );
+            }
+         );
       }
    }
 
-   getBloquesAlumno(paid: any, modulo: any) {
-      if (this.alumno?.id != null || paid != null && modulo) {
-         this.provider
-            .BD_ActionPost(modulo, 'getBloques', {
-               id: this.alumno?.id,
-               paid: paid,
-               //token: this.currentUser.token,
-            })
-            .subscribe({
-               next: (data2: any) => {
-                  this.arrayBloques = data2;
-                   console.log(data2);
-                  this.getReticulaAlumno(paid, modulo);
-               },
-               error: (error: any) => {
-                  console.log(error);
-               }
-            });
-      }
+   getBg(color: any){
+      return status[color as keyof typeof status]
    }
 
    asignarMateria(materia: any){

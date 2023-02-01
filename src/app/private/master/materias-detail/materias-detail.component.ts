@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { JwtAuthService } from 'src/app/services/auth/jwt-auth.service';
 import { FormService } from 'src/app/services/form.service';
+import { LocalStoreService } from 'src/app/services/local-store.service';
 import { OutputService } from 'src/app/services/output.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 
@@ -31,7 +32,8 @@ export class MateriasDetailComponent implements OnInit, OnDestroy {
       private dialog: MatDialog,
       private snackbar: MatSnackBar,
       private output: OutputService,
-      private _form: FormService
+      private _form: FormService,
+      private ls: LocalStoreService
    ) {
       router.events.subscribe((val) => {
          if (val instanceof NavigationEnd) {
@@ -73,8 +75,16 @@ export class MateriasDetailComponent implements OnInit, OnDestroy {
                      this.sel = this.grup = data;
                      // this.patchForm(this.data);
                   this._form.patchForm(this.data, this.formulario, this.checkbox)
-                     this.output.masterSection.next('Materias');
-                     this.output.detail.next(this.data['nombre']);
+                  this.ls.update('bc', [
+                     {
+                        item: 'Materias',
+                        link: '/m/materias'
+                     },
+                     {
+                        item: this.data['nombre'],
+                        link: null
+                     }
+                  ])
                   }
                )
                console.log(data);

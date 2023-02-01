@@ -37,7 +37,7 @@
 </div>
 
 <div>
-   <!-- cards -->
+
    <div #c class="w-full grid grid-cols-12 gap-6 overflow-hidden">
       <div
          [ngClass]="c.clientWidth <= 640 ? 'col-span-12' : c.clientWidth > 640 && c.clientWidth < 1024 ? 'col-span-6' : c.clientWidth >= 1024 ? 'col-span-4' : 'col-span-4'"
@@ -64,7 +64,7 @@
             <div>
                <div class="text-sm font-semibold">Materias acreditadas</div>
                <div class="text-lg font-bold">{{data?.ACREDITADAS}}
-                  <!-- <span class="text-lime-500 text-xs mx-1">{{'aa'}}</span> -->
+
                </div>
             </div>
             <div class="h-12 w-12 bg-gradient-fuchsia rounded-xl flex shrink-0 shadow-lg shadow-fuchsia-600/40">
@@ -138,7 +138,6 @@
                   <mat-icon class="flex sm:!hidden">manage_accounts</mat-icon>
                   <span class="hidden sm:!flex">GENERAL</span>
                 </ng-template>
-                {{f2.clientWidth}}
                <form [formGroup]="formulario" #f2 [ngClass]="f2.clientWidth < 640 ? 'grid-cols-3' : f2.clientWidth < 1024 && f2.clientWidth >= 640 ? 'grid-cols-6' : f2.clientWidth >= 1024 ? 'grid-cols-12' : 'grid-cols-12'" class="grid gap-x-4">
                   <mat-form-field appearance="outline" class="col-span-3">
                      <mat-label>Nombre(s)</mat-label>
@@ -200,7 +199,7 @@
                <ng-template mat-tab-label>
                   <mat-icon class="flex sm:!hidden">folder_open</mat-icon>
                   <span class="hidden sm:!flex">DOCUMENTOS</span>
-                </ng-template>{{f3.clientWidth}}
+                </ng-template>
                <form #f3 [formGroup]="formulario" [ngClass]="f3.clientWidth < 640 ? 'grid-cols-3' : f3.clientWidth < 1024 && f3.clientWidth >= 640 ? 'grid-cols-6' : f3.clientWidth >= 1024 ? 'grid-cols-12' : 'grid-cols-12'" class="grid">
                   <mat-checkbox formControlName="documento_acta_nacimiento" class="col-span-3">Acta de nacimiento</mat-checkbox>
                   <mat-checkbox formControlName="documento_certificado" class="col-span-3">Certificado</mat-checkbox>
@@ -220,10 +219,10 @@
          <div class="bg-white dark:bg-dark-blue-100 rounded-xl p-4">
          <mat-tab-group dynamicHeight>
             <mat-tab label="RETÍCULA">
-                  <app-reticula [alumno]="alumno" [PROGRAMA_ACADEMICO_ID]="_paid" [modulo]="'alumnos'" class="flex w-full"></app-reticula>
+                  <app-reticula [id]="alumno?.id" [alumno]="alumno" [PROGRAMA_ACADEMICO_ID]="_paid" [modulo]="'alumnos'" class="flex w-full"></app-reticula>
             </mat-tab>
             <mat-tab label="HISTORIAL ACADÉMICO">
-                  <app-kardex [alumnoId]="_id" [PROGRAMA_ACADEMICO_ID]="_paid"></app-kardex>
+                  <app-kardex [id]="alumno?.id" [alumnoId]="_id" [PROGRAMA_ACADEMICO_ID]="_paid"></app-kardex>
             </mat-tab>
             <mat-tab label="HISTORIAL DE PAGOS">
                   <app-pagos [alumnoId]="_id" [PROGRAMA_ACADEMICO_ID]="_paid"></app-pagos>
@@ -233,3 +232,4 @@
       </div>
    </div>
 </div>
+

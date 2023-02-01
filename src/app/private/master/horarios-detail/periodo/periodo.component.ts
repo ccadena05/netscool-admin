@@ -46,25 +46,23 @@ export class PeriodoComponent implements OnInit {
       this.provider.BD_ActionPost('horarios', 'getCargaInicial', {id: this._id}).subscribe(
          (data: any) => {
             console.log(data);
-            this.ls.update('bc', {
-               m1: {
+            this.ls.update('bc', [
+               {
                   item: 'Horarios',
                   link: '/m/horarios'
                },
-               d1: {
+               {
                   item: data['PROGRAMA_ACADEMICO'],
                   link: '/m/horarios/detail/' + this._id
                },
-               m2: {
+               {
                   item: 'Periodo',
                   link: '/m/horarios/detail/' + this._id 
                },
-               d2: {
+               {
                   item: data?.['PERIODO'],
                   link: null/* '/m/horarios/detail/' + this._id + '/periodo/' + this._pid */
-            }})
-            this.output.masterSection.next('Horarios');
-            this.output.detail.next(data.PROGRAMA_ACADEMICO);
+            }])
             this.output.ready.next(true)
          }
       )

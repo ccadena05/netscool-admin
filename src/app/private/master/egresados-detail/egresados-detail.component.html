@@ -9,7 +9,7 @@
          <mat-icon class="m-auto">expand_more</mat-icon>
       </button>
       <mat-menu #menu="matMenu" class="bg-white dark:!bg-dark-blue-50 !rounded-xl !shadow-xl">
-         <button mat-menu-item (click)="getAll()">
+         <button mat-menu-item (click)="getData()">
             <mat-icon class="text-slate-700 dark:!text-slate-300">refresh</mat-icon>
             <span class="text-slate-700 dark:!text-slate-300">Actualizar</span>
          </button>
@@ -46,14 +46,7 @@
          </div>
          <div *ngIf="!profileImg" class="h-16 w-16 shrink-0 rounded-xl relative">
             <img (error)="profileImg = true" [src]="'https://itses.edu.mx/ws-sii-v2/assets/profiles/students/' + data?.DETAIL?.rfc + '.JPG'" alt="" class="object-cover rounded-xl overflow-hidden h-16 w-16 scale-110">
-            <div [matTooltip]="data?.DETAIL?.ESTADO_ALUMNO" class="rounded-full h-4 w-4 absolute -bottom-2 -right-2  cursor-pointer"
-            [ngClass]="data?.DETAIL?.ESTADO_ALUMNO == 'ACTIVO' ? 'bg-gradient-lime' :
-            data?.DETAIL?.ESTADO_ALUMNO == 'BAJA' ? 'bg-gradient-red' :
-            data?.DETAIL?.ESTADO_ALUMNO == 'BAJA POR FALTA DE PAGO' ? 'bg-gradient-orange' :
-            data?.DETAIL?.ESTADO_ALUMNO == 'EGRESADO =)' ? 'bg-gradient-celestial' :
-            data?.DETAIL?.ESTADO_ALUMNO == 'TITULADO' ? 'bg-gradient-teal' :
-            data?.DETAIL?.ESTADO_ALUMNO == 'BAJA TEMPORAL' ? 'bg-gradient-yellow' :
-            data?.DETAIL?.ESTADO_ALUMNO == 'EGRESADO SIN TERMINAR' ? 'bg-gradient-purplelake' : ''">
+            <div [matTooltip]="data?.DETAIL?.ESTADO_ALUMNO" class="rounded-full h-4 w-4 absolute -bottom-2 -right-2 border-3 border-white dark:border-dark-blue-100 cursor-pointer {{statusColor}}">
 
             </div>
          </div>
@@ -116,7 +109,7 @@
                   <mat-checkbox formControlName="certificado" class="col-span-3 h-12">Certificado</mat-checkbox>
                   <mat-checkbox formControlName="titulacion" class="col-span-3 h-12">Título</mat-checkbox>
                   <mat-checkbox formControlName="foto2" class="col-span-3 h-12">Fotos</mat-checkbox>
-                  <search-select class="w-full col-span-3" [select]="sel['tbl_modalidad_titulacion_id']" [group]="grup['tbl_modalidad_titulacion_id']" [formCN]="'tbl_modalidad_titulacion_id'" [label]="'Modalidad de titulación'" (response)="recibiRespuesta($event, 'tbl_sangre_id')"></search-select>
+                  <!-- <search-select class="w-full col-span-3" [select]="sel?.tbl_modalidad_titulacion_id" [group]="grup?.tbl_modalidad_titulacion_id" [formCN]="'tbl_modalidad_titulacion_id'" [label]="'Modalidad de titulación'" (response)="recibiRespuesta($event, 'tbl_modalidad_titulacion_id')"></search-select> -->
                   <mat-form-field appearance="outline" class="col-span-3">
                      <mat-label>Correo personal</mat-label>
                      <input matInput type="text" formControlName="correo_personal">
@@ -156,10 +149,9 @@
                 </ng-template>
                <form #f2 [formGroup]="formulario" [ngClass]="f2.clientWidth < 640 ? 'grid-cols-3' : f2.clientWidth < 1024 && f2.clientWidth >= 640 ? 'grid-cols-6' : f2.clientWidth >= 1024 ? 'grid-cols-12' : 'grid-cols-12'" class="grid justify-items-stretch gap-x-4">
 
-                  <search-select class="w-full col-span-3" [rq]="true" [select]="sel['tbl_programa_academico_id']" [group]="grup['tbl_programa_academico_id']" [formCN]="'tbl_programa_academico_id'" [label]="'Programa Académico'" (response)="recibiRespuesta($event, 'tbl_programa_academico_id')"></search-select>
-                  <search-select class="w-full col-span-3" [rq]="true" [select]="sel['tbl_generacion_id']" [group]="grup['tbl_generacion_id']" [formCN]="'tbl_generacion_id'" [label]="'Generación'" (response)="recibiRespuesta($event, 'tbl_generacion_id')"></search-select>
-                  <!-- <search-select class="w-full col-span-3" [select]="sel['tbl_grupo_id']" [group]="grup['tbl_grupo_id']" [formCN]="'tbl_grupo_id'" [label]="'Grupo'" (response)="recibiRespuesta($event, 'tbl_grupo_id')"></search-select> -->
-                  <search-select class="w-full col-span-3" [rq]="true" [select]="sel['tbl_estado_alumno_id']" [group]="grup['tbl_estado_alumno_id']" [formCN]="'tbl_estado_alumno_id'" [label]="'Estado'" (response)="recibiRespuesta($event, 'tbl_estado_alumno_id')"></search-select>
+                  <search-select class="w-full col-span-3" [rq]="true" [select]="sel?.tbl_programa_academico_id" [group]="grup?.tbl_programa_academico_id" [formCN]="'tbl_programa_academico_id'" [label]="'Programa Académico'" (response)="recibiRespuesta($event, 'tbl_programa_academico_id')"></search-select>
+                  <search-select class="w-full col-span-3" [rq]="true" [select]="sel?.tbl_generacion_id" [group]="grup?.tbl_generacion_id" [formCN]="'tbl_generacion_id'" [label]="'Generación'" (response)="recibiRespuesta($event, 'tbl_generacion_id')"></search-select>
+                  <search-select class="w-full col-span-3" [rq]="true" [select]="sel?.tbl_estado_alumno_id" [group]="grup?.tbl_estado_alumno_id" [formCN]="'tbl_estado_alumno_id'" [label]="'Estado'" (response)="recibiRespuesta($event, 'tbl_estado_alumno_id')"></search-select>
                   <mat-form-field appearance="outline" class="col-span-3">
                      <mat-label>Inscripción</mat-label>
                      <input matInput type="text" formControlName="inscripcion">
@@ -222,7 +214,7 @@
                      <mat-error>Ingresa un valor válido</mat-error>
                   </mat-form-field>
 
-                  <search-select class="w-full col-span-3" [select]="sel['tbl_sexo_id']" [group]="grup['tbl_sexo_id']" [formCN]="'tbl_sexo_id'" [label]="'Sexo'" (response)="recibiRespuesta($event, 'tbl_sexo_id')"></search-select>
+                  <search-select class="w-full col-span-3" [select]="sel?.tbl_sexo_id" [group]="grup?.tbl_sexo_id" [formCN]="'tbl_sexo_id'" [label]="'Sexo'" (response)="recibiRespuesta($event, 'tbl_sexo_id')"></search-select>
                   <mat-form-field appearance="outline" class="col-span-3">
                      <mat-label>Código postal</mat-label>
                      <input matInput type="text" formControlName="codigo_postal">
@@ -233,12 +225,12 @@
                      <input matInput type="text" formControlName="direccion">
                      <mat-error>Ingresa un valor válido</mat-error>
                   </mat-form-field>
-                  <search-select class="w-full col-span-3" [select]="sel['tbl_pais_id']" [group]="grup['tbl_pais_id']" [formCN]="'tbl_pais_id'" [label]="'País'" (response)="recibiRespuesta($event, 'tbl_pais_id')"></search-select>
-                  <search-select class="w-full col-span-3" [select]="sel['tbl_estado_id']" [group]="grup['tbl_estado_id']" [formCN]="'tbl_estado_id'" [label]="'Estado'" (response)="recibiRespuesta($event, 'tbl_estado_id', 'tbl_municipio_id')"></search-select>
+                  <search-select class="w-full col-span-3" [select]="sel?.tbl_pais_id" [group]="grup?.tbl_pais_id" [formCN]="'tbl_pais_id'" [label]="'País'" (response)="recibiRespuesta($event, 'tbl_pais_id')"></search-select>
+                  <search-select class="w-full col-span-3" [select]="sel?.tbl_estado_id" [group]="grup?.tbl_estado_id" [formCN]="'tbl_estado_id'" [label]="'Estado'" (response)="recibiRespuesta($event, 'tbl_estado_id', 'tbl_municipio_id')"></search-select>
 
-                  <search-select class="w-full col-span-3" [select]="sel['tbl_municipio_id']" [group]="grup['tbl_municipio_id']" [formCN]="'tbl_municipio_id'" [label]="'Municipio'" (response)="recibiRespuesta($event, 'tbl_municipio_id')"></search-select>
+                  <search-select class="w-full col-span-3" [select]="sel?.tbl_municipio_id" [group]="grup?.tbl_municipio_id" [formCN]="'tbl_municipio_id'" [label]="'Municipio'" (response)="recibiRespuesta($event, 'tbl_municipio_id')"></search-select>
 
-                  <search-select class="w-full col-span-3" [select]="sel['tbl_sangre_id']" [group]="grup['tbl_sangre_id']" [formCN]="'tbl_sangre_id'" [label]="'Grupo sanguíneo'" (response)="recibiRespuesta($event, 'tbl_sangre_id')"></search-select>
+                  <search-select class="w-full col-span-3" [select]="sel?.tbl_sangre_id" [group]="grup?.tbl_sangre_id" [formCN]="'tbl_sangre_id'" [label]="'Grupo sanguíneo'" (response)="recibiRespuesta($event, 'tbl_sangre_id')"></search-select>
 
                   <mat-form-field appearance="outline" [ngClass]="f2.clientWidth < 640 ? 'col-span-3' : f2.clientWidth < 1024 && f2.clientWidth >= 640 ? 'col-span-6' : f2.clientWidth >= 1024 ? 'col-span-12' : 'col-span-12'">
                      <mat-label>Indicaciones médicas</mat-label>
@@ -265,10 +257,10 @@
          <div class="bg-white dark:bg-dark-blue-100 rounded-xl p-4">
          <mat-tab-group dynamicHeight>
             <mat-tab label="RETÍCULA">
-                  <app-reticula [alumno]="alumno" [PROGRAMA_ACADEMICO_ID]="_paid" [modulo]="'egresados'" class="flex w-full"></app-reticula>
+               <app-reticula [id]="alumno?.id" [alumno]="alumno" [PROGRAMA_ACADEMICO_ID]="_paid" [modulo]="'egresados'" class="flex w-full"></app-reticula>
             </mat-tab>
             <mat-tab label="HISTORIAL ACADÉMICO">
-                  <app-kardex [alumnoId]="_id" [PROGRAMA_ACADEMICO_ID]="_paid"></app-kardex>
+                  <app-kardex [id]="alumno?.id" [alumnoId]="_id" [PROGRAMA_ACADEMICO_ID]="_paid"></app-kardex>
             </mat-tab>
             <mat-tab label="HISTORIAL DE PAGOS">
                   <app-pagos [alumnoId]="_id" [PROGRAMA_ACADEMICO_ID]="_paid"></app-pagos>

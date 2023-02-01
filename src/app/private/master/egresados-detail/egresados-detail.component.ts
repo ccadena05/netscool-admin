@@ -1,15 +1,33 @@
-import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, DoCheck, forwardRef, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, NG_VALUE_ACCESSOR, Validators } from '@angular/forms';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { SearchSelectComponent } from 'src/app/components/search-select/search-select.component';
+import { LocalStoreService } from 'src/app/services/local-store.service';
 import { OutputService } from 'src/app/services/output.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
+
+export const status = {
+   'ACTIVO': 'bg-gradient-lime',
+   'BAJA': 'bg-gradient-red',
+   'BAJA POR FALTA DE PAGO': 'bg-gradient-orange',
+   'EGRESADO =)': 'bg-gradient-celestial',
+   'TITULADO': 'bg-gradient-teal',
+   'BAJA TEMPORAL': 'bg-gradient-yellow',
+   'EGRESADO SIN TERMINAR': 'bg-gradient-purplelake'
+}
+
+export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
+   provide: NG_VALUE_ACCESSOR,
+   useExisting: forwardRef(() => SearchSelectComponent),
+   multi: true
+};
 
 @Component({
    selector: 'app-egresados-detail',
    templateUrl: './egresados-detail.component.html',
    styleUrls: ['./egresados-detail.component.scss']
 })
-export class EgresadosDetailComponent implements OnInit, DoCheck, OnDestroy {
+export class EgresadosDetailComponent implements OnInit, DoCheck {
    _id: any;
    _paid: any;
    alumno: any;
@@ -19,7 +37,7 @@ export class EgresadosDetailComponent implements OnInit, DoCheck, OnDestroy {
    sel: any = [];
    grup: any = [];
    checkbox: any = ['kardex', 'certificado', 'titulacion', 'foto2', 'documento_acta_nacimiento', 'documento_certificado', 'documento_curp']
-
+   statusColor: any;
 
    constructor(
       private activatedRoute: ActivatedRoute,
@@ -27,12 +45,12 @@ export class EgresadosDetailComponent implements OnInit, DoCheck, OnDestroy {
       private output: OutputService,
       private provider: ProviderService,
       private formBuilder: FormBuilder,
-
+      private ls: LocalStoreService
    ) {
       router.events.subscribe((val) => {
          if (val instanceof NavigationEnd) {
             this._id = this.activatedRoute.snapshot.paramMap.get('id');
-            this.getAll();
+            this.getData();
          }
       });
    }
@@ -45,33 +63,39 @@ export class EgresadosDetailComponent implements OnInit, DoCheck, OnDestroy {
       document.querySelector('[vertical] .mat-tab-label-active')?.classList.add("border-r-3","[border-image:linear-gradient(0deg,#6C2BD9,#E74694)1]");
    }
 
-   ngOnDestroy(): void {
-
-   }
-
-   getAll() {
-      this.getData();
-      this.buildForm();
-   }
-
    getData(){
-      this.provider.BD_ActionPost('egresados', 'alumnosDetail', {id: this._id}).subscribe(
+      this.output.ready.next(false)
+      this.buildForm();
+      this.provider.BD_ActionPost('egresados', 'detail', {id: this._id}).subscribe(
       (data: any) => {
-         this.output.ready.next(false)
-         console.log(data);
          this.data = data;
          this._paid = data['DETAIL'].PROGRAMA_ACADEMICO_ID;
          this.alumno = data['DETAIL'];
-         this.output.detail.next(this.alumno.rfc);
-         this.output.masterSection.next('Egresados');
          this.patchForm(data['DETAIL']);
 
-         this.output.ready.next(true)
-         this.provider.BD_ActionPost('egresados', 'getListas', {}).subscribe(
-            (data: any) => {
-               console.log(data);
-
-               this.sel = this.grup = data;
+         this.provider.BD_ActionPost('egresados', 'listas', {}).subscribe(
+            (listas: any) => {
+               this.statusColor = status[this.data['DETAIL']['ESTADO_ALUMNO'] as keyof typeof status]
+               this.sel = this.grup = listas;
+               this.ls.update('bc', [
+                  {
+                     item: 'Egresados',
+                     link: '/m/egresados'
+                  },
+                  {
+                     item: this.alumno.rfc,
+                     link: null
+                  },
+                  {
+                     item: null,
+                     link: null
+                  },
+                  {
+                     item: null,
+                     link: null
+                  }
+               ])
+               this.output.ready.next(true)
             })
       })
    }

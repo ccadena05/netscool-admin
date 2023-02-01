@@ -32,7 +32,6 @@ export class MasterComponent implements OnInit, OnDestroy, AfterContentInit {
          if (event instanceof NavigationEnd) {
             this.modulo = this.activatedRoute.snapshot.paramMap.get('modulo');
             this.masterSection = this.findInMenu('link', '/m/' + this.modulo)
-            // this.output.masterSection.next(this.masterSection)
             this.breadcrumbs()
             this.getData();
 
@@ -49,11 +48,11 @@ export class MasterComponent implements OnInit, OnDestroy, AfterContentInit {
    }
    ngAfterContentInit(){
       this.breadcrumbs()
-      if(this.ls.getItem('bc').d1.item != null) {
+      /* if(this.ls.getItem('bc').d1.item != null) {
          let bc = this.ls.getItem('bc');
          bc.d1.item = null
          this.ls.setItem('bc', bc)
-      }
+      } */
    }
 
    ngOnDestroy(): void {
@@ -93,25 +92,12 @@ export class MasterComponent implements OnInit, OnDestroy, AfterContentInit {
    }
 
    breadcrumbs(){
-      this.ls.remove('bc')
-      this.ls.update('bc', {
-         m1: {
+      this.ls.update('bc', [
+         {
             item: this.masterSection,
             link: '/m/' + this.modulo
-         },
-         d1: {
-            item: null,
-            link: null
-         }/* ,
-         m2: {
-            item: null,
-            link: null
-         },
-         d2: {
-            item: null,
-            link: null
-         } */
-      })
+         }
+      ])
    }
 
 }
