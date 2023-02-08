@@ -37,12 +37,8 @@ export class MaestrosDetailComponent implements OnInit {
       private _form: FormService,
       private ls: LocalStoreService
    ) {
-      router.events.subscribe((val) => {
-         if (val instanceof NavigationEnd) {
-            this._id = this.activatedRoute.snapshot.paramMap.get('id');
-            this.getAll();
-         }
-      });
+      this._id = this.activatedRoute.snapshot.paramMap.get('id');
+      this.getAll();
       this.formulario = this.formBuilder.group({
          id: [''],
          rfc: [''],
@@ -100,59 +96,47 @@ export class MaestrosDetailComponent implements OnInit {
 
    getAll() {
       this.output.ready.next(false);
-      this.provider.BD_ActionPost('maestros', 'getDetail', {id: this._id}).subscribe(
-         data => {
-            console.log(data);
-
-            this.data = data;
-            this.provider.BD_ActionPost('maestros', 'getListas').subscribe(
-               data => {
-                  console.log(data);
-                  this.sel = this.grup = data;
-                  this.sel['nomenclatura'] = this.grup['nomenclatura'] = [
-                     { id: 1, name: 'Lic.' },
-                     { id: 2, name: 'Ing.' },
-                     { id: 3, name: 'Dr.' },
-                     { id: 4, name: 'C.P' },
-                     { id: 5, name: 'Mtro.' },
-                     { id: 6, name: 'Mtra.' },
-                     { id: 7, name: 'M.A.' },
-                     { id: 8, name: 'Arq.' }
-                   ];
-                  // this.patchForm(this.data);
+      this.provider.BD_ActionPost('maestros', 'detail', {id: this._id}).subscribe(
+         detail => {
+            // console.log(detail);
+            this.data = detail;
+            this.provider.BD_ActionPost('maestros', 'listas').subscribe(
+               listas => {
+                  // console.log(listas);
+                  this.sel = this.grup = listas;
                   this._form.patchForm(this.data, this.formulario, this.checkbox)
-            this.provider.BD_ActionPost('maestros', 'indexC', { id: this._id }).subscribe(
-               data=>{
-                  console.log(data)
-                  this.dataContactos = data
-                  this.provider.BD_ActionPost('maestros', 'indexAC', { id: this._id }).subscribe(
-                     data=>{
-                        console.log(data)
-                        this.dataActividades = data
-                        this.provider.BD_ActionPost('maestros', 'indexVA', { id: this._id }).subscribe(
-                           data=>{
-                              console.log(data)
-                              this.dataVacaciones = data;
-                              this.ls.update('bc', [
-                                 {
-                                    item: 'Maestros',
-                                    link: '/m/maestros'
-                                 },
-                                 {
-                                    item: this.data['nombre'].toLowerCase() + ' ' + this.data['apellido_paterno'].toLowerCase() + ' ' + this.data['apellido_materno'].toLowerCase(),
-                                    link: null
+                  this.provider.BD_ActionPost('maestros', 'contactos', { id: this._id }).subscribe(
+                     contactos => {
+                        // console.log(contactos)
+                        this.dataContactos = contactos
+                        this.provider.BD_ActionPost('maestros', 'actividades', { id: this._id }).subscribe(
+                           actividades => {
+                              // console.log(actividades)
+                              this.dataActividades = actividades
+                              this.provider.BD_ActionPost('maestros', 'vacaciones', { id: this._id }).subscribe(
+                                 vacaciones => {
+                                    // console.log(vacaciones)
+                                    this.dataVacaciones = vacaciones;
+                                    this.ls.update('bc', [
+                                       {
+                                          item: 'Maestros',
+                                          link: '/m/maestros'
+                                       },
+                                       {
+                                          item: this.data['nombre'].toLowerCase() + ' ' + this.data['apellido_paterno'].toLowerCase() + ' ' + this.data['apellido_materno'].toLowerCase(),
+                                          link: null,
+                                       }
+                                    ])
+                                    this.output.ready.next(true);
                                  }
-                              ])
-                              this.output.ready.next(true);
-                           })
-                     })
-
-
-               })
+                              )
+                           }
+                        )
+                     }
+                  )
                }
-               )
+            )
          }
-
       )
    }
 

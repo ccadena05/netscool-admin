@@ -5,7 +5,7 @@ import { BehaviorSubject, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class OutputService {
-   dataData = new Subject<any>();
+
    // detailObject = new Subject<any>();
    modulo = new Subject<any>();
    ready = new Subject<any>();

@@ -18,7 +18,7 @@ export interface GroupBy {
 export class MatTableGroupComponent implements OnInit, OnChanges {
    columns: any = [];
    displayedColumns: any = [];
-   matchStrings = /ID|id|Fecha|fecha_baja_imss|fecha_baja_laboral|fecha_ingreso|fecha_nacimiento|fecha_salida|Comprobante|comprobante|constancia|credencial|curp2|rfc2|email2|visita|codigo|DATAORDER|PERIODO_ANIO|califa|estatus|observaciones|optativa|PROMEDIO/
+   matchStrings = /_ID|_id/
    @ViewChild(MatPaginator) paginator: MatPaginator = {} as MatPaginator;
    @ViewChild(MatSort) sort: MatSort = {} as MatSort;
    @Input() dataToDisplay: any = [];

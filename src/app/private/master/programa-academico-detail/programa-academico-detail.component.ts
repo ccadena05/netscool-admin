@@ -59,22 +59,22 @@ export class ProgramaAcademicoDetailComponent implements OnInit {
 
    getAll() {
       this.output.ready.next(false)
-      this.provider.BD_ActionPost('programa_academico', 'getDetail', { id: this._id }).subscribe(
+      this.provider.BD_ActionPost('programa_academico', 'detail', { id: this._id }).subscribe(
          data => {
             this.data = data
             console.log(data)
 
-            this.provider.BD_ActionPost('programa_academico', 'getListas').subscribe(
+            this.provider.BD_ActionPost('programa_academico', 'listas').subscribe(
                data => {
                   this.sel = this.grup = data;
                   this.patchForm(this.data);
                   this.ls.update('bc', [
                      {
-                        item: 'Programa académico',
+                        item: 'Programas académicos',
                         link: '/m/programa_academico'
                      },
                      {
-                        item: this.data['carrera_descripcion'],
+                        item: this.data['descripcion'],
                         link: null
                      }
                   ])

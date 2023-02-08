@@ -14,7 +14,7 @@ import { ProviderService } from 'src/app/services/provider/provider.service';
    templateUrl: './materias-detail.component.html',
    styleUrls: ['./materias-detail.component.scss']
 })
-export class MateriasDetailComponent implements OnInit, OnDestroy {
+export class MateriasDetailComponent implements OnInit {
    _id: any;
    formulario!: FormGroup;
    data: any = [];
@@ -54,26 +54,21 @@ export class MateriasDetailComponent implements OnInit, OnDestroy {
          tbl_programa_academico_id: ['', Validators.required],
          tbl_departamento_id: [[]],
          optativa: [false, Validators.required],
-       });
+      });
    }
 
-      ngOnInit(): void {
-      }
+   ngOnInit(): void {
+   }
 
-      ngOnDestroy(): void {
-          this.output.detail.unsubscribe()
-      }
-
-      getAll() {
-         this.provider.BD_ActionPost('materias', 'getDetail', {id: this._id}).subscribe(
-            data => {
-               this.data = data
-               this.provider.BD_ActionPost('materias', 'getListas', {id: this.data['tbl_programa_academico_id']}).subscribe(
-                  data => {
-                     console.log(data);
-
-                     this.sel = this.grup = data;
-                     // this.patchForm(this.data);
+   getAll() {
+      this.provider.BD_ActionPost('materias', 'detail', { id: this._id }).subscribe(
+         detail => {
+            console.log(detail);
+            this.data = detail
+            this.provider.BD_ActionPost('materias', 'listas', { id: this.data['tbl_programa_academico_id'] }).subscribe(
+               listas => {
+                  console.log(listas);
+                  this.sel = this.grup = listas;
                   this._form.patchForm(this.data, this.formulario, this.checkbox)
                   this.ls.update('bc', [
                      {
@@ -85,40 +80,38 @@ export class MateriasDetailComponent implements OnInit, OnDestroy {
                         link: null
                      }
                   ])
-                  }
-               )
-               console.log(data);
+               }
+            )
+         }
+      )
+      this.output.ready.next(true)
+   }
 
-            }
-         )
-         this.output.ready.next(true)
-      }
-
-      update() {
-
-      }
-
-      patchForm(data: any) {
-         this.checkbox.forEach(element => {
-            data[element] = data[element] == 1 ? true : false
-        });
-         Object.keys(this.formulario?.controls).forEach(element => {
-            this.formulario.patchValue({
-               [element]: data[element]
-            })
-         });
-      }
-
-      recibiRespuesta(respuesta: any, control: any, filter?: any) {
-         let filtered = []
-
-         this.formulario.controls[control].setValue(respuesta)
-
-         if (!filter)
-            filtered[filter] = this.sel[filter]
-         else
-            filtered[filter] = this.sel[filter]?.filter((option: any) => option['padre_id'] === respuesta.toString())
-         this.grup = filtered;
-      }
+   update() {
 
    }
+
+   patchForm(data: any) {
+      this.checkbox.forEach(element => {
+         data[element] = data[element] == 1 ? true : false
+      });
+      Object.keys(this.formulario?.controls).forEach(element => {
+         this.formulario.patchValue({
+            [element]: data[element]
+         })
+      });
+   }
+
+   recibiRespuesta(respuesta: any, control: any, filter?: any) {
+      let filtered = []
+
+      this.formulario.controls[control].setValue(respuesta)
+
+      if (!filter)
+         filtered[filter] = this.sel[filter]
+      else
+         filtered[filter] = this.sel[filter]?.filter((option: any) => option['padre_id'] === respuesta.toString())
+      this.grup = filtered;
+   }
+
+}
