@@ -34,26 +34,26 @@ export class MasterComponent implements OnInit {
             this.modulo = this.activatedRoute.snapshot.paramMap.get('modulo');
             this.masterSection = this.findInMenu('link', '/m/' + this.modulo)
             this.getData();
+
          }
 
       });
     }
 
    ngOnInit(): void {
-      
+      this.breadcrumbs()
    }
 
    getData() {
       this.output.ready.next(false);
       this.dataToDisplay = []
       this.provider.BD_ActionPost(this.modulo, 'index').subscribe(
-          (data: any) => {
-            data.forEach((el: any) => {
+          (index: any) => {
+            console.log(index);
+            index.forEach((el: any) => {
                el.link_id = this.modulo;
             });
-            this.dataToDisplay = data;
-            // console.log(data);
-            this.breadcrumbs()
+            this.dataToDisplay = index;
             this.output.ready.next(true);
          }
       )

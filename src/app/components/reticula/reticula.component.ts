@@ -59,15 +59,20 @@ export class ReticulaComponent implements OnInit, OnChanges {
          this._id = changes['id']?.currentValue;
 
       this.getBloquesAlumno(this.paid, this.modulo, this._id);
+
+      // console.log(this.modulo,this.paid,this.alumn,this._id);
+      
    }
 
    getBloquesAlumno(paid: any, modulo: any, id?: any) {
       if (id != null || paid != null && modulo) {
          this.provider.BD_ActionPost(modulo, 'bloques', { id: id, paid: paid,}).subscribe(
             (bloques: any) => {
+               console.log(bloques);
                this.arrayBloques = bloques;
                this.provider.BD_ActionPost(modulo, 'reticula', { id: id, paid: paid }).subscribe(
                   (reticula: any) => {
+                     console.log(reticula);
                      this.arrayBloquesMaterias = reticula;
                   }
                );

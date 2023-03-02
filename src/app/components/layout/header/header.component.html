@@ -5,16 +5,25 @@
       <mat-icon *ngIf="sidenav.opened"> close </mat-icon>
    </div>
 
-   <div *ngIf="checkColor(); then content; else other_content"></div>
+   <!-- <div *ngIf="checkColor(); then content; else other_content"></div>
    <ng-template #content>
       <img src="assets/img/ITSESBlanco.png" class="h-8" alt="PTS" />
    </ng-template>
    <ng-template #other_content>
       <img src="assets/img/netscool2.png" class="h-8" alt="PTS" />
-   </ng-template>
+   </ng-template> -->
+
+   <!-- <div *ngIf="checkColor(); then content; else other_content"></div>
+   <ng-template #content> -->
+      <img src="assets/img/{{jwtAuth.getColor() === 'dark' ? 'ITSESBlanco' : 'netscool2'}}.png" class="h-8" alt="PTS" />
+   <!-- </ng-template>
+   <ng-template #other_content>
+      <img src="assets/img/netscool2.png" class="h-8" alt="PTS" />
+   </ng-template> -->
 
    <div class="flex gap-x-4">
-      <button (click)="changeModeColor()" id="theme-toggle">
+      <mat-icon (click)="changeMode(jwtAuth.getColor())">{{jwtAuth.getColor() + '_mode'}}</mat-icon>
+      <!-- <button (click)="changeModeColor()" id="theme-toggle">
          <div *ngIf="checkColor(); then iconLight; else iconDark"></div>
          <ng-template #iconLight>
             <mat-icon id="theme-toggle-dark-icon" class="scale-110">light_mode</mat-icon>
@@ -22,7 +31,7 @@
          <ng-template #iconDark>
             <mat-icon id="theme-toggle-light-icon" class="scale-110">dark_mode</mat-icon>
          </ng-template>
-      </button>
+      </button> -->
       <img *ngIf="avatar != ''" class="w-8 h-8 rounded-full cursor-pointer scale-125" [src]="avatar" alt="Perfil" [matMenuTriggerFor]="menu" />
       <mat-icon *ngIf="avatar == ''" class="h-8 w-8 text-transparent bg-gradient-cyan bg-clip-text cursor-pointer flex shrink-0 scale-125" [matMenuTriggerFor]="menu">
          account_circle

@@ -41,7 +41,7 @@ export class PrivateComponent implements OnInit {
    avatar: string;
    avatarPreCarga: string;
    menu: Menu[];
-   logoChange: string;
+   logoChange: any;
    ready = new BehaviorSubject(false)
    hola: boolean = false;
    // location: any;
@@ -76,7 +76,8 @@ export class PrivateComponent implements OnInit {
          ? this.jwtAuth.getUserPhoto()
          : 'assets/img/avatardefault.png';
       this.avatarPreCarga = 'assets/img/avatardefault.png';
-      this.logoChange = this.jwtAuth.getColor();
+      this.logoChange =  this.jwtAuth.getColor();
+
       this.output.ready.subscribe((data: any) => {
          this.hola = data;
          // console.log(this.hola);
@@ -89,7 +90,7 @@ export class PrivateComponent implements OnInit {
    }
    ngOnInit(): void {
       // --------
-      let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+      /* let themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
       let themeToggleLightIcon = document.getElementById(
          'theme-toggle-light-icon'
       );
@@ -99,7 +100,7 @@ export class PrivateComponent implements OnInit {
          themeToggleLightIcon?.classList.remove('hidden');
       } else {
          themeToggleDarkIcon?.classList.remove('hidden');
-      }
+      } */
 
       this.observer
          .observe(['(max-width: 768px)'])

@@ -30,20 +30,16 @@ export class PeriodoComponent implements OnInit {
       private _form: FormService,
       private ls: LocalStoreService,
    ) {
-      router.events.subscribe((val) => {
-         if (val instanceof NavigationEnd) {
-            this._id = this.activatedRoute.snapshot.paramMap.get('id');
-            this._pid = this.activatedRoute.snapshot.paramMap.get('id2');
-            this.getData();
-         }
-      });
+      this._id = this.activatedRoute.snapshot.paramMap.get('id');
+      this._pid = this.activatedRoute.snapshot.paramMap.get('id2');
+      this.getData();
    }
 
    ngOnInit(): void {
    }
 
    getData() {
-      this.provider.BD_ActionPost('horarios', 'getCargaInicial', {id: this._id}).subscribe(
+      this.provider.BD_ActionPost('horarios', 'carga_inicial', {id: this._id}).subscribe(
          (data: any) => {
             console.log(data);
             this.ls.update('bc', [
@@ -54,10 +50,6 @@ export class PeriodoComponent implements OnInit {
                {
                   item: data['PROGRAMA_ACADEMICO'],
                   link: '/m/horarios/detail/' + this._id
-               },
-               {
-                  item: 'Periodo',
-                  link: '/m/horarios/detail/' + this._id 
                },
                {
                   item: data?.['PERIODO'],

@@ -49,7 +49,7 @@ export const menu = [
           {
             item: "Fechas de inscripciones",
             icon:'calendar_today',
-            link:'/m/fechaInscripcion',
+            link:'/m/fecha_inscripcion',
             action: 'index'
           },
        ]

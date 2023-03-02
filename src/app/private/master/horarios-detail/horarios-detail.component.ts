@@ -10,40 +10,36 @@ import { OutputService } from 'src/app/services/output.service';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 
 @Component({
-  selector: 'app-horarios-detail',
-  templateUrl: './horarios-detail.component.html',
-  styleUrls: ['./horarios-detail.component.scss']
+   selector: 'app-horarios-detail',
+   templateUrl: './horarios-detail.component.html',
+   styleUrls: ['./horarios-detail.component.scss']
 })
 export class HorariosDetailComponent implements OnInit {
    _id: any;
    data: any;
 
-  constructor(
-   private provider: ProviderService,
-   private jwtAuth: JwtAuthService,
-   private activatedRoute: ActivatedRoute,
-   private formBuilder: FormBuilder,
-   private router: Router,
-   private dialog: MatDialog,
-   private snackbar: MatSnackBar,
-   private output: OutputService,
-   private _form: FormService,
-   private ls: LocalStoreService
-  ) {
-   router.events.subscribe((val) => {
-      if(val instanceof NavigationEnd){
-         this._id = this.activatedRoute.snapshot.paramMap.get('id');
-         this.getData();
-      }
-  });
-  }
+   constructor(
+      private provider: ProviderService,
+      private jwtAuth: JwtAuthService,
+      private activatedRoute: ActivatedRoute,
+      private formBuilder: FormBuilder,
+      private router: Router,
+      private dialog: MatDialog,
+      private snackbar: MatSnackBar,
+      private output: OutputService,
+      private _form: FormService,
+      private ls: LocalStoreService
+   ) {
+      this._id = this.activatedRoute.snapshot.paramMap.get('id');
+      this.getData();
+   }
 
-  ngOnInit(): void {
-  }
+   ngOnInit(): void {
+   }
 
-  getData(){
-     this.provider.BD_ActionPost('horarios', 'index_periodo', {id: this._id}).subscribe(
-        (data: any) => {
+   getData() {
+      this.provider.BD_ActionPost('horarios', 'index_periodo', { id: this._id }).subscribe(
+         (data: any) => {
             this.data = data;
             // console.log(data);
 
@@ -58,16 +54,12 @@ export class HorariosDetailComponent implements OnInit {
                },
                {
                   item: data[0]['01_PROGRAMA_ACADEMICO'],
-                  link: '/m/horarios/detail/' + this._id
-               },
-               {
-                  item: 'Periodo',
-                  link: '/m/horarios/detail/' + this._id
+                  link: null
                }
             ])
             this.output.ready.next(true)
-        }
-     )
-  }
+         }
+      )
+   }
 
 }

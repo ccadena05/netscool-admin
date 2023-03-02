@@ -29,7 +29,9 @@ export class LocalStoreService {
 
    public getItem(key: any) {
       let local = this.ls.getItem(key);
-      let value = local !== null ? JSON.parse(local) : null;
+
+
+      let value = local != null ? JSON.parse(local) : null;
       try {
          return value;
       } catch (e) {

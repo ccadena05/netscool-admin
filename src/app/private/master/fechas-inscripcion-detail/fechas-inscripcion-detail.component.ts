@@ -66,12 +66,8 @@ export class FechasInscripcionDetailComponent implements OnInit {
       private _form: FormService,
       private ls: LocalStoreService
    ) {
-      router.events.subscribe((val) => {
-         if (val instanceof NavigationEnd) {
-            this._id = this.activatedRoute.snapshot.paramMap.get('id');
-            this.getData();
-         }
-      });
+      this._id = this.activatedRoute.snapshot.paramMap.get('id');
+      this.getData();
    }
 
    ngOnInit(): void {
@@ -80,23 +76,24 @@ export class FechasInscripcionDetailComponent implements OnInit {
    getData() {
       this.output.ready.next(false)
       this.buildForm();
-      this.provider.BD_ActionPost('fechaInscripcion', 'detail', { id: this._id }).subscribe(
+      this.provider.BD_ActionPost('fecha_inscripcion', 'detail', { id: this._id }).subscribe(
          (detail: any) => {
             console.log(detail)
             this._form.patchForm(detail, this.formulario)
-            this.provider.BD_ActionPost('fechaInscripcion', 'periodo', { id: detail['tbl_periodo_id'] }).subscribe(
+            this.provider.BD_ActionPost('fecha_inscripcion', 'periodo', { id: detail['tbl_periodo_id'] }).subscribe(
                (periodo: any) => {
                   this.sel = this.grup = periodo
                   console.log(periodo);
                   this.ls.update('bc', [
                      {
                         item: 'Fechas de inscripciones',
-                        link: '/m/fechaInscripcion'
+                        link: '/m/fecha_inscripcion'
                      },
                      {
                         item: detail?.descripcion,
                         link: null
-                     }])
+                     }
+                  ])
                   this.output.ready.next(true)
                }
             )

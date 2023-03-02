@@ -1,7 +1,7 @@
 const PROTOCOL = window.location.protocol;
 const DOMINIO = window.location.hostname;
 //const DOMINIO = 'valledelamentefactura.com';
-const WSERVICE = 'ws-nc-pts';
+const WSERVICE = 'ws-nc-ii';
 export const config = {
   apiUrlBase:  PROTOCOL + '//' + DOMINIO +'/'+WSERVICE+'/',
   apiUrl:  PROTOCOL + '//' + DOMINIO +'/'+WSERVICE+'/controllers/',

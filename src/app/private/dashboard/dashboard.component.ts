@@ -9,6 +9,7 @@ import jwt_decode from 'jwt-decode';
 import { ProviderService } from 'src/app/services/provider/provider.service';
 import { Observable } from 'rxjs';
 import { DataSource } from '@angular/cdk/collections';
+import { OutputService } from 'src/app/services/output.service';
 
 funnel(Highcharts);
 
@@ -31,7 +32,8 @@ export class DashboardComponent implements OnInit {
 
    constructor(
       private jwtAuth: JwtAuthService,
-      private provider: ProviderService
+      private provider: ProviderService,
+      private output: OutputService
    ) {
 
       this.ready = false;
@@ -40,7 +42,7 @@ export class DashboardComponent implements OnInit {
       });
 
       this.displayName = this.jwtAuth.getUser().displayName;
-      this.provider.BD_ActionPost('highcharts', 'getDataCharts', { file: 'becas' }).subscribe({
+      this.provider.BD_ActionPost('highcharts', 'dataCharts', { file: 'becas' }).subscribe({
          next: (data: any) => {
             console.log(data);
             this.dataCharts = data['data'];
@@ -50,6 +52,7 @@ export class DashboardComponent implements OnInit {
             console.log(JSON.stringify(error));
          }
       });
+      this.output.ready.next(true)
       this.generarChart();
    }
 
@@ -62,7 +65,7 @@ export class DashboardComponent implements OnInit {
    }
 
    generarChart(){
-      this.provider.BD_ActionPost('highcharts', 'getDataCharts', { file: 'forecast' }).subscribe({
+      /* this.provider.BD_ActionPost('highcharts', 'getDataCharts', { file: 'forecast' }).subscribe({
          next: (data: any) => {
          this.seriesOptions = data;
          this.forecast = new Chart({
@@ -107,7 +110,7 @@ export class DashboardComponent implements OnInit {
          })
      }, error: (error: any) => {
          console.log(JSON.stringify(error));
-     }})
+     }}) */
    }
 
 }

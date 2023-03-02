@@ -83,7 +83,7 @@ const routes: Routes = [
          //   data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },
        },
        {
-         path: 'm/fechaInscripcion/detail/:id',
+         path: 'm/fecha_inscripcion/detail/:id',
          loadChildren: () =>
          import('./master/fechas-inscripcion-detail/fechas-inscripcion-detail.module').then((m) => m.FechasInscripcionDetailModule),
          //   data: { title: 'Alumnos', breadcrumb: 'ALUMNOS' },

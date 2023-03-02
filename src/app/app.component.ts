@@ -13,33 +13,32 @@ import { JwtAuthService } from './services/auth/jwt-auth.service';
 export class AppComponent implements AfterContentInit {
 
 
- 
 
 
 
 
 
 
- 
+
+
   // mode:string;
   constructor(
     private jwtAuth: JwtAuthService,
-   
+
   ) {
    // if(this.jwtAuth.getUser().mode){
       // this.mode= this.jwtAuth.getColor();
    // }else{
      // this.mode= "light";
    // }
- 
+
   // @HostBinding('class') public cssClass = 'class1';
   }
 
   ngAfterContentInit(){
-  
-   
-        document.body.classList.add(this.jwtAuth.getColor());
-       
-    
+
+   if(this.jwtAuth.getColor() !== undefined)
+      document.body.classList.add(this.jwtAuth.getColor() ?? "");
+
   }
 }

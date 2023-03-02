@@ -1,106 +1,80 @@
 <div class="bg-gradient-fuchsia w-full h-full" id="parallax">
-  <div class="">
-    <div class="container max-w-full mx-auto py-24 px-6">
-      <div class="font-sans">
-        <div class="max-w-sm mx-auto px-6">
-          <div class="relative flex flex-wrap">
-            <div class="w-full relative">
-              <div class="mt-6">
-                <div
-                  class="mb-2 pb-1border-b-2 text-center font-base text-gray-700"
-                >
-                  <!-- <span>By <a class="text-blue-500" href="https://twitter.com/framansi">@framansi</a></span> -->
-                </div>
-                <div class="text-center font-semibold text-white">
-                  <img
-                    class="h-auto w-auto "
-                    src="assets/img/netscool.png"
+   <div class="">
+      <div class="container max-w-full mx-auto py-24 px-6">
+         <div class="font-sans">
+            <div class="max-w-sm mx-auto px-6">
+               <div class="relative flex flex-wrap">
+                  <div class="w-full relative">
+                     <div class="mt-6">
+                        <div class="mb-2 pb-1border-b-2 text-center font-base text-gray-700">
+                           <!-- <span>By <a class="text-blue-500" href="https://twitter.com/framansi">@framansi</a></span> -->
+                        </div>
+                        <div class="text-center font-semibold text-white">
+                           <img class="h-auto w-auto " src="assets/img/netscool.png" />
 
-                  />
+                        </div>
+                        <form class="mt-2" [formGroup]="signinForm" (ngSubmit)="signin()">
+                           <div class="mx-auto max-w-lg">
+                              <div class="shadow-xl pt-4 pr-4 pl-4  bg-blue-100 max-w-xl rounded">
+                                 <div class="">
+                                    <mat-form-field appearance="fill">
+                                       <mat-label>Ingresa tu correo</mat-label>
+                                       <input matInput placeholder="usuario@netscool.com.mx" formControlName="email"
+                                          required />
+                                       <mat-error *ngIf="signinForm.controls['email'].invalid">{{
+                                          getErrorMessage()
+                                          }}</mat-error>
+                                    </mat-form-field>
+                                 </div>
+                                 <div class="pt-1 pb-1">
+                                    <div class="relative">
+                                       <mat-form-field appearance="fill">
+                                          <mat-label>Ingresa tu contraseña</mat-label>
+                                          <input matInput [type]="hide ? 'password' : 'text'" formControlName="password"
+                                             class="focus:ring-white focus:ring-0" />
+                                          <div class="cursor-pointer" matSuffix (click)="hide = !hide"
+                                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                             <mat-icon>{{
+                                                hide ? "visibility_off" : "visibility"
+                                                }}</mat-icon>
+                                          </div>
+                                          <mat-error>Ingresa un valor válido</mat-error>
+                                       </mat-form-field>
+                                       <div class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5">
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="pb-2">
 
-                </div>
-                <form class="mt-2" [formGroup]="signinForm" (ngSubmit)="signin()">
-                  <div class="mx-auto max-w-lg">
-                      <div class="shadow-xl pt-4 pr-4 pl-4  bg-blue-100 max-w-xl rounded">
-                    <div class="">
-                      <mat-form-field appearance="fill">
-                        <mat-label>Ingresa tu correo</mat-label>
-                        <input
-                          matInput
-                          placeholder="usuario@netscool.com.mx"
-                          formControlName="email"
-                          required
-                        />
-                        <mat-error *ngIf="signinForm.controls['email'].invalid">{{
-                          getErrorMessage()
-                        }}</mat-error>
-                      </mat-form-field>
-                    </div>
-                    <div class="pt-1 pb-1">
-                      <div class="relative">
-                        <mat-form-field appearance="fill">
-                          <mat-label>Ingresa tu contraseña</mat-label>
-                          <input matInput
-                          [type]="hide ? 'password' : 'text'"
-                          formControlName="password"
-                          class="focus:ring-white focus:ring-0"
-                          />
-                          <div
-                          class="cursor-pointer"
-                            matSuffix
-                            (click)="hide = !hide"
-                            [attr.aria-label]="'Hide password'"
-                            [attr.aria-pressed]="hide"
-                          >
-                            <mat-icon>{{
-                              hide ? "visibility_off" : "visibility"
-                            }}</mat-icon>
-                          </div>
-                          <mat-error>Ingresa un valor válido</mat-error>
-                        </mat-form-field>
-                        <div
-                          class="absolute inset-y-0 right-0 pr-3 flex items-center text-sm leading-5"
-                        ></div>
-                      </div>
-                    </div>
-                    <div class="pb-2">
-
-                    </div>
-                  </div>
-                    <div class="flex justify-between">
-                      <!-- <label class="block text-gray-500 font-bold my-4">
+                                 </div>
+                              </div>
+                              <div class="flex justify-between">
+                                 <!-- <label class="block text-gray-500 font-bold my-4">
                     <input type="checkbox"
                       class="leading-loose text-pink-600">
                       <span class="py-2 text-sm text-gray-600 leading-snug"> Remember
                       Me </span></label>  -->
-                      <label class="block text-gray-500 font-bold my-4"
-                        ><a
-                          href="#"
-                          class="cursor-pointer tracking-tighter text-gray-100 border-gray-200 hover:border-gray-400"
-                          ><span> ¿Olvidaste tu contraseña? </span></a
-                        ></label
-                      >
-                    </div>
-                    <button
-                      class="mt-3 text-lg font-semibold bg-gradient-orange w-full text-gray-100 rounded-lg px-6 py-3 block shadow-xl hover:text-gray-100 hover:bg-idea-flesh-pink-light"
-                    >
-                      Iniciar sesión
-                    </button>
+                                 <label class="block text-gray-500 font-bold my-4"><a href="#"
+                                       class="cursor-pointer tracking-tighter text-gray-100 border-gray-200 hover:border-gray-400"><span>
+                                          ¿Olvidaste tu contraseña? </span></a></label>
+                              </div>
+                              <button
+                                 class="mt-3 text-lg font-semibold bg-gradient-orange w-full text-gray-100 rounded-lg px-6 py-3 block shadow-xl hover:text-gray-100 hover:bg-idea-flesh-pink-light">
+                                 Iniciar sesión
+                              </button>
+                           </div>
+                        </form>
+                        <button (click)="configDialog()"
+                           class="mt-3 text-lg font-semibold bg-gradient-cyan w-full text-gray-100 rounded-lg px-6 py-3 block shadow-xl hover:text-gray-100 hover:bg-idea-flesh-pink-light">
+                           Configura tu institución
+                        </button>
+                     </div>
                   </div>
-                </form>
-                <button
-                      (click)="configDialog()"
-                      class="mt-3 text-lg font-semibold bg-gradient-cyan w-full text-gray-100 rounded-lg px-6 py-3 block shadow-xl hover:text-gray-100 hover:bg-idea-flesh-pink-light"
-                    >
-                      Configura tu institución
-                    </button>
-              </div>
+               </div>
             </div>
-          </div>
-        </div>
+         </div>
       </div>
-    </div>
-  </div>
+   </div>
 
 </div>
 

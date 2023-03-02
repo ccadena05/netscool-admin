@@ -35,12 +35,8 @@ export class MateriasDetailComponent implements OnInit {
       private _form: FormService,
       private ls: LocalStoreService
    ) {
-      router.events.subscribe((val) => {
-         if (val instanceof NavigationEnd) {
-            this._id = this.activatedRoute.snapshot.paramMap.get('id');
-            this.getAll();
-         }
-      });
+      this._id = this.activatedRoute.snapshot.paramMap.get('id');
+      this.getAll();
 
       this.formulario = this.formBuilder.group({
          id: ['', Validators.required],
@@ -63,11 +59,11 @@ export class MateriasDetailComponent implements OnInit {
    getAll() {
       this.provider.BD_ActionPost('materias', 'detail', { id: this._id }).subscribe(
          detail => {
-            console.log(detail);
+            // console.log(detail);
             this.data = detail
             this.provider.BD_ActionPost('materias', 'listas', { id: this.data['tbl_programa_academico_id'] }).subscribe(
                listas => {
-                  console.log(listas);
+                  // console.log(listas);
                   this.sel = this.grup = listas;
                   this._form.patchForm(this.data, this.formulario, this.checkbox)
                   this.ls.update('bc', [
