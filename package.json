@@ -32,7 +32,7 @@
     "angular-highcharts": "^13.0.1",
     "animate.css": "^4.1.1",
     "flowbite": "^1.4.7",
-    "highcharts": "^10.2.1",
+    "highcharts": "^10.3.3",
     "jwt-decode": "^3.1.2",
     "mat-progress-buttons": "^9.3.1",
     "mat-table-exporter": "^10.2.4",

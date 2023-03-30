@@ -1,6 +1,6 @@
 @for $i from 1 through 40 {
    .aspect {
-      aspect-ratio: round(random($limit: 4)) / round(random($limit: 3));
+      aspect-ratio: calc(round(random($limit: 4)) / round(random($limit: 3)));
    }
    .colss {
       columns: round(random($limit: 6)) + 2
